@@ -2,7 +2,7 @@
 layout: post
 title:  "CKAD Exam Preparation Notes"
 author: israel
-categories: [ 'Cloud Native', OSS ]
+categories: [ 'Cloud Native' ]
 tags: [containers, ckad, kubernetes certification, application, developer, cloud-native ]
 image: assets/images/ckad.jpg
 date:   2021-01-05 15:01:35 +0300
