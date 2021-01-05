@@ -450,11 +450,12 @@ img, img:hover {
     code {
         font-size: 15px;
         color:inherit;
+        background-color: #8E9AA7;
     }
     code[class*="language-"], pre[class*="language-"] {
         font-size:15px;
         margin-bottom:30px;
-        background: #94918d;
+        background: #000000;
         color:inherit;
     }
     div.code-toolbar > .toolbar a, div.code-toolbar > .toolbar button, div.code-toolbar > .toolbar span {
