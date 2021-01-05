@@ -1,13 +1,13 @@
 # Site
 name: "israelo Blogs"
 title: "israelo Blogs"
-description: "I will take you on the fabulous world of exploration. Travel, culture, lifestyle. Eat, Pray, Love!"
+description: "Thoughts on IoT and Cloud Computing"
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/logo.png'
 baseurl: /blog.israelo
-google_analytics: 'UA-xxxxxxxx-1'
+google_analytics: 'UA-186535929-1'
 disqus: 'https-iogbole-github-io'
-mailchimp-list: 'https://wowthemes.us11.list-manage.com/subscribe/post?u=8aeb20a530e124561927d3bd8&amp;id=8c3d2d214b'
+mailchimp-list: 'https://yahoo.us7.list-manage.com/subscribe/post?u=53a3df9344e4aa53e567343bd&amp;id=6b55be21ac'
 include: ["_pages"]
 permalink: /:title/
 email: israel@iospire.com
@@ -18,7 +18,7 @@ hero:
   name: Israel Ogbole
   image: https://user-images.githubusercontent.com/2548160/103445496-98488300-4c6c-11eb-9d7e-7c02104a908e.png
   say-hello: Hello, I’m <strong>Israel Ogbole</strong>
-  bio: I am a Technical Solution Architect, and my background stems from Software Engineering. I will use this space to share personal experiences with Arduino IoT, Raspberry Pi, Cloud Native technologies, and the likes. Also, I will journal Naomi's programming journey here.  Naomi is my eight-year-old daughter who loves coding and is about to graduate from scratch to core python.  
+  bio: I am a Technical Solution Architect, and my background stems from Software Engineering. I will use this space to share personal experiences with Arduino IoT, Raspberry Pi, Cloud Native technologies, and the likes. <br> Also, I will journal Naomi's programming journey here.  Naomi is my eight-year-old daughter who loves coding and is about to graduate from scratch to core python.  
   twitter: https://twitter.com/israel_ogbole # Add your Twitter handle
   #facebook: https://facebook.com/ # Add your Facebook handle
   #instagram: https://instagram.com/ # Add your Instagram handle
