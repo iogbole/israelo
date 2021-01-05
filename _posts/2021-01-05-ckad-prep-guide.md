@@ -38,7 +38,9 @@ I didn’t go through any of the video tutorials on Linux Academy, but what I ca
 
 5\. Kubernetes.io docs — Go through the [task session](https://kubernetes.io/docs/tasks/) of the docs.
 
-![](https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png)
+
+<img class="featured-image lazyimg" src="https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png"/>
+
 ### Exam Tips
 
 1.  Kubernetes.io search: I got a bit frustrated by typing long words like “persistentvolume claim” or “networkpolicy” into the search box, so one day I thought I’d try the `kubectl` shortcodes instead. Guess what? It worked! So instead of typing “persistentvolume claim” or “network policy” into the docs, I simply typed in `pvc`, `netpol`, `pv`, etc and I got the same result set. Do all you possibly can to save time.
@@ -54,7 +56,6 @@ alias kns='k config set-context --current --namespace  '
 alias kgc='k get po -l x=y'                                 
 complete -F __start_kubectl k  
 dr='--dry-run=client -o yaml'
-
 ```
 
 Don’t forget to reload your terminal by typing `source ~/.bashrc`
