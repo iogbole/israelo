@@ -3,7 +3,7 @@
 ---
 
 $brown: #B59F62;
-$teal: #3f60dc;
+$teal: #40FFDC;
 $black: #111;
 $primary: $teal;
 $dark:    $black;
@@ -25,7 +25,8 @@ body {
     background: #f4f4f4;
 }
 a {
-    color: darken($primary, 24%);
+    //color: darken($primary, 24%);
+    color: #193088
 }
 img {
     max-width:100%;
@@ -449,14 +450,13 @@ img, img:hover {
     }
     code {
         font-size: 15px;
-        color: #454545;
-        background-color: #E6E6FA;
- 
+        color: #0a0a0a;
+        background-color: #dcdcdc;
     }
     code[class*="language-"], pre[class*="language-"] {
         font-size:15px;
         margin-bottom:30px;
-        background: #ffffff;
+        background: #fff;
         color:inherit;
     }
     div.code-toolbar > .toolbar a, div.code-toolbar > .toolbar button, div.code-toolbar > .toolbar span {
