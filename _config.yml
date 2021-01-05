@@ -9,7 +9,7 @@ google_analytics: 'UA-186535929-1'
 disqus: 'https-iogbole-github-io'
 mailchimp-list: 'https://yahoo.us7.list-manage.com/subscribe/post?u=53a3df9344e4aa53e567343bd&amp;id=6b55be21ac'
 include: ["_pages"]
-permalink: /:title/
+permalink: /blog/:title/
 email: israel@israelo.io
 
 #-------------------------------
