@@ -38,6 +38,7 @@ I didn’t go through any of the video tutorials on Linux Academy, but what I ca
 
 5\. Kubernetes.io docs — Go through the [task session](https://kubernetes.io/docs/tasks/) of the docs.
 
+![](https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png)
 ### Exam Tips
 
 1.  Kubernetes.io search: I got a bit frustrated by typing long words like “persistentvolume claim” or “networkpolicy” into the search box, so one day I thought I’d try the `kubectl` shortcodes instead. Guess what? It worked! So instead of typing “persistentvolume claim” or “network policy” into the docs, I simply typed in `pvc`, `netpol`, `pv`, etc and I got the same result set. Do all you possibly can to save time.
@@ -87,4 +88,3 @@ I attempted 17 out of the 19 questions and I scored 82%.
 
 Good luck and stay hungry.
 
-![](https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png)
