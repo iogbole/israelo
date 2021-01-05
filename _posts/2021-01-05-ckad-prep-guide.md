@@ -19,8 +19,9 @@ CKAD is a hands-on performance-based exam. As a result, lots of practice to buil
 
 Whilst your mileage may differ if you are already familiar with Kubernetes and perhaps you work with it every day, be cautious of the “[course of knowledge](https://en.wikipedia.org/wiki/Curse_of_knowledge)”. Your prior knowledge, if not properly channelled can trip you. I know folks who know Kubernetes more than I do but failed the exam. You need muscle memory to help you gain speed and accuracy.
 
-<img class="lazyimg" src="https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png"/>
-
+<p class="aligncenter">
+<img class="lazyimg" src="https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png" width="700" height="550" stle/>
+</p>
 These are the materials that I used:
 
 1\. [Kubernetes Certified Application Developer (CKAD) with Tests](https://www.udemy.com/course/certified-kubernetes-application-developer/) — Fantastic Udemy course, especially if you’re new to Kubernetes. I would recommend that you start with this course.
@@ -52,7 +53,7 @@ I didn’t go through any of the video tutorials on Linux Academy, but what I ca
 5.  **Always return:** You’d need to use `sudo -i` to be able to create or edit files in certain directories, remember to type `exit` when done. Always remember to return to the master node.
 6.  **Use** `**~/.bashrc:**` Due to 4 and 5 above, do not simply type your aliases in the terminal, use `~/.bashrc` for all your aliases so you don’t have to do it all over again when you return to the master node. My `~/.bashrc` aliases in the exam look like this:
 
-```bash
+```
 alias k=kubectl  
 alias kns='k config set-context --current --namespace  ' 
 alias kgc='k get po -l x=y'                                 
@@ -68,11 +69,12 @@ My `~/.vimrc` settings look like this:
 
 set tabstop=2  
 set expandtab   
-set shiftwidth=2 # very usefuly for indentation
+set shiftwidth=2 # very useful for indentation
 
 7\. **Less is more**: Except it’s a one-liner solution, I did not use `-n <namespace>` in any questions in the exam because I sometimes forget to add `-n`. I used `kns <namespace>` to be absolutely sure. `k get po -l x=y` on the other hand, returns a decluttered name of the namespace to me. For example:
 
-~ $ k get po -l x=y  
+`~ $ k get po -l x=y`
+
 No resources found in **_israelo_** namespace.
 
 Now, go ahead and type `k config get-contexts` , the result is a lot if all you’re interested in is just the name of your current namespace.
