@@ -7,9 +7,6 @@ tags: [containers, ckad, kubernetes certification, application, developer, cloud
 image: assets/images/ckad.jpg
 date:   2020-07-06 15:01:35 +0300
 ---
-
----
-
 I passed the Certified Kubernetes Application Developer (CKAD) Exam in June 2020. These notes summarize what you should expect if you’re preparing for the CKAD exam.
 ### Preparation
 
