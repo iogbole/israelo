@@ -5,16 +5,12 @@ author: israel
 categories: [ 'Cloud Native', OSS ]
 tags: [containers, ckad, kubernetes certification, application, developer, cloud-native ]
 image: assets/images/ckad.jpg
-date:   2020-01-05 15:01:35 +0300
+date:   2020-07-06 15:01:35 +0300
 ---
 
 ---
 
-I passed the Certified Kubernetes Application Developer Exam in June 2020. These notes summarize what you should expect if you’re preparing for the CKAD exam.
-
-![](https://cdn-images-1.medium.com/max/600/1*l9za84HLq2ISOrsRAwkghw.png)
-undefined
-
+I passed the Certified Kubernetes Application Developer (CKAD) Exam in June 2020. These notes summarize what you should expect if you’re preparing for the CKAD exam.
 ### Preparation
 
 CKAD is a hands-on performance-based exam. As a result, lots of practice to build enough muscle memory over an extended period is an absolute requirement.
@@ -54,7 +50,8 @@ I didn’t go through any of the video tutorials on Linux Academy, but what I ca
 5.  **Always return:** You’d need to use `sudo -i` to be able to create or edit files in certain directories, remember to type `exit` when done. Always remember to return to the master node.
 6.  **Use** `**~/.bashrc:**` Due to 4 and 5 above, do not simply type your aliases in the terminal, use `~/.bashrc` for all your aliases so you don’t have to do it all over again when you return to the master node. My `~/.bashrc` aliases in the exam look like this:
 
-```
+```ruby
+
 alias k=kubectl  
 alias kns='k config set-context --current --namespace  ' 
 alias kgc='k get po -l x=y'                                 
