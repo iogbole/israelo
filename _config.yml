@@ -18,7 +18,7 @@ hero:
   name: Israel Ogbole
   image: https://user-images.githubusercontent.com/2548160/103445496-98488300-4c6c-11eb-9d7e-7c02104a908e.png
   say-hello: Hello, I’m <strong>Israel Ogbole</strong>
-  bio: A parent, talks, and writes about <strong>web</strong>, <strong>ethics</strong>, <strong>privacy</strong>, and dev. I share design tutorials, free resources and inspiration. Loves <a href="#">music</a> & riding his bicycle.
+  bio: I am a Technical Solution Architect, and my background stems from Software Engineering. I will use this space to share personal experiences with Arduino IoT, Raspberry Pi, Cloud Native technologies, and the likes. Also, I will journal Naomi's programming journey here.  Naomi is my eight-year-old daughter who loves coding and is about to graduate from scratch to core python.  
   twitter: https://twitter.com/israel_ogbole # Add your Twitter handle
   #facebook: https://facebook.com/ # Add your Facebook handle
   #instagram: https://instagram.com/ # Add your Instagram handle
@@ -28,23 +28,14 @@ hero:
 
 # Authors
 authors:
-  sal:
+  israel:
     name: Israel
-    display_name: israelo
-    gravatar: e56154546cf4be74e393c62d1ae9f9d4
-    email: israel@iospire.com
-    web: https://www.wowthemes.net/donate/
-    twitter: https://twitter.com/wowthemesnet
-    description: "Author of Mediumish, a Bootstrap Medium styled template available for WordPress, HTML, Ghost and Jekyll. You are currently previewing Jekyll template demo."
-  john:
-    name: John
-    display_name: John    
-    avatar: 'assets/images/avatar.png'
-    gravatar: b1cc14991db7a456fcd761680bbc8f81
-    email: wowthemesnet@gmail.com
-    web: https://www.wowthemes.net
-    twitter: https://twitter.com/wowthemesnet
-    description: "This is the author box. Write a short description of the author here. You are currently previewing Mediumish demo, a Jekyll template compatible with Github pages."
+    display_name: Israel
+    gravatar: 77792bd6ee4b9ddd999d004c6e8d9b2d
+    email: israel@israelo.io
+    web: https://www.linkedin.com/in/israelo/
+    twitter: https://twitter.com/israel_ogbole
+    description: "Parent, Engineer and a  Blogger. "
 
 # Plugins
 plugins:
