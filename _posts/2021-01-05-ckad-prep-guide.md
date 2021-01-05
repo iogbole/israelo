@@ -53,12 +53,14 @@ I didn’t go through any of the video tutorials on Linux Academy, but what I ca
 5.  **Always return:** You’d need to use `sudo -i` to be able to create or edit files in certain directories, remember to type `exit` when done. Always remember to return to the master node.
 6.  **Use** `**~/.bashrc:**` Due to 4 and 5 above, do not simply type your aliases in the terminal, use `~/.bashrc` for all your aliases so you don’t have to do it all over again when you return to the master node. My `~/.bashrc` aliases in the exam look like this:
 
-```
+```shell
+
 alias k=kubectl  
 alias kns='k config set-context --current --namespace  ' 
 alias kgc='k get po -l x=y'                                 
 complete -F __start_kubectl k  
 dr='--dry-run=client -o yaml'
+
 ```
 
 Don’t forget to reload your terminal by typing `source ~/.bashrc`
