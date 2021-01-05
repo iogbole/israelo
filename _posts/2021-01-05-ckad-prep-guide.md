@@ -5,7 +5,7 @@ author: israel
 categories: [ 'Cloud Native', OSS ]
 tags: [containers, ckad, kubernetes certification, application, developer, cloud-native ]
 image: assets/images/ckad.jpg
-date:   2020-07-06 15:01:35 +0300
+date:   2021-01-05 15:01:35 +0300
 ---
 I passed the Certified Kubernetes Application Developer (CKAD) Exam in June 2020. These notes summarize what you should expect if you’re preparing for the CKAD exam.
 ### Preparation
@@ -86,3 +86,5 @@ In summary, there’s no such thing as over-preparation in my opinion, the exam 
 I attempted 17 out of the 19 questions and I scored 82%.
 
 Good luck and stay hungry.
+
+![](https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png)
