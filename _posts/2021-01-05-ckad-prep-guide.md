@@ -7,7 +7,10 @@ tags: [containers, ckad, kubernetes certification, application, developer, cloud
 image: assets/images/ckad.jpg
 date:   2021-01-05 15:01:35 +0300
 ---
-I passed the Certified Kubernetes Application Developer (CKAD) Exam in June 2020. These notes summarize what you should expect if you’re preparing for the CKAD exam.
+
+The Certified Kubernetes Application Developer (CKAD) program has been developed by the Cloud Native Computing Foundation (CNCF), in collaboration with The Linux Foundation, to help expand the Kubernetes ecosystem through standardized training and certification.
+
+I passed the (CKAD) Exam in June 2020. These notes summarise what you should expect if you’re preparing for the CKAD exam.
 ### Preparation
 
 CKAD is a hands-on performance-based exam. As a result, lots of practice to build enough muscle memory over an extended period is an absolute requirement.
@@ -15,6 +18,8 @@ CKAD is a hands-on performance-based exam. As a result, lots of practice to buil
 > Beware of the “curse of knowledge”.
 
 Whilst your mileage may differ if you are already familiar with Kubernetes and perhaps you work with it every day, be cautious of the “[course of knowledge](https://en.wikipedia.org/wiki/Curse_of_knowledge)”. Your prior knowledge, if not properly channelled can trip you. I know folks who know Kubernetes more than I do but failed the exam. You need muscle memory to help you gain speed and accuracy.
+
+<img class="lazyimg" src="https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png"/>
 
 These are the materials that I used:
 
@@ -37,9 +42,6 @@ Most blog posts that I read before the exam gave me the impression that being ab
 I didn’t go through any of the video tutorials on Linux Academy, but what I can say is focus on each session’s practice questions about 2–3 days before the exam.
 
 5\. Kubernetes.io docs — Go through the [task session](https://kubernetes.io/docs/tasks/) of the docs.
-
-
-<img class="featured-image lazyimg" src="https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png"/>
 
 ### Exam Tips
 
