@@ -4,19 +4,10 @@ title: Home
 
 ---
 
-<!-- Posts Index
-================================================== -->
-<div class="blog-grid-container">
-    {% for post in paginator.posts %}
-        {% include postbox.html %}
-    {% endfor %}
-</div>
 
-<!-- Pagination
-================================================== -->
-<div class="bottompagination">
-<span class="navigation" role="navigation">
-    {% include pagination.html %}
-</span>
+<div class="blog-grid-container">
+   
+    <a href="{{site.baseurl}}/blog/" class="btn btn-dark"> Blogs &rarr;</a> 
+
 </div>
 
