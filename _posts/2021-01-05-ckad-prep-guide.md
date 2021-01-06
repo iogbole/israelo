@@ -81,7 +81,7 @@ No resources found in **_israelo_** namespace.
 
 Now, go ahead and type `k config get-contexts` , the result is a lot if all you’re interested in is just the name of your current namespace.
 
-![](https://cdn-images-1.medium.com/max/1200/1*qY6iMu4ScDNarozEiP-YTQ.png)
+![Cert](https://cdn-images-1.medium.com/max/1200/1*qY6iMu4ScDNarozEiP-YTQ.png)
 
 8\. **Namespaces**: When you switch to a new cluster, notice that the namespace doesn’t change automatically to the `default` namespace. **_This is so important._** So be sure to return to the default namespace if the question doesn't specify a namespace. `kns default` then `kgc` for your own peace of mind.
 
@@ -95,3 +95,4 @@ I attempted 17 out of the 19 questions and I scored 82%.
 
 Good luck and stay hungry.
 
+<i> Notice : This blog was first published on[medium](https://iogbole.medium.com/ckad-1-18-exam-preparation-notes-6c91f8140393) </i>
