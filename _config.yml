@@ -56,7 +56,7 @@ jekyll-archives:
     month: '/blog/:year/:month/'
     day: '/blog/:year/:month/:day/'
     tag: '/blog/tag/:name/'
-    category: '/category/:name/'
+    category: '/blog/category/:name/'
     
 # Pagination 
 paginate: 6
