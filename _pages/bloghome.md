@@ -6,9 +6,10 @@ permalink: "/blog/index.html"
 ---
 
 <div class="blog-grid-container">
-  {% for post in site.posts %}
-  {% include postbox.html %}
-  {% endfor %}
+
+      {% for post in paginator.posts %}
+        {% include postbox.html %}
+    {% endfor %}
 
 </div>
 
