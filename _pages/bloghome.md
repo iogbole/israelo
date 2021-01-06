@@ -8,9 +8,9 @@ permalink: "/blog/index.html"
 <!-- Posts Index
 ================================================== -->
 <div class="blog-grid-container">
-    {% for post in paginator.posts %}
+    
         {% include postbox.html %}
-    {% endfor %}
+    
 </div>
 
 <!-- Pagination
