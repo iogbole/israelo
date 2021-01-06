@@ -5,6 +5,7 @@ description: "Thoughts on IoT and Cloud Computing"
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/logo.png'
 baseurl: /blog.israelo
+blogurl: /blog.israelo/blog
 google_analytics: 'UA-186535929-1'
 disqus: 'https-iogbole-github-io'
 mailchimp-list: 'https://yahoo.us7.list-manage.com/subscribe/post?u=53a3df9344e4aa53e567343bd&amp;id=6b55be21ac'
@@ -51,15 +52,15 @@ jekyll-archives:
   enabled: all
   layout: archive
   permalinks:
-    year: '/:year/'
-    month: '/:year/:month/'
-    day: '/:year/:month/:day/'
-    tag: '/tag/:name/'
+    year: '/blog/:year/'
+    month: '/blog/:year/:month/'
+    day: '/blog/:year/:month/:day/'
+    tag: '/blog/tag/:name/'
     category: '/category/:name/'
     
 # Pagination 
 paginate: 6
-paginate_path: /page:num/
+paginate_path: /blog/page:num/
     
 # Other
 highlighter: rouge

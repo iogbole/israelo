@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Thank you for subscribing
-permalink: /thankyou
+permalink: /blog/thankyou
 comments: false
 image: assets/images/thankyou.jpg
 imageshadow: true
@@ -10,4 +10,4 @@ imageshadow: true
  Your subscription to our list has been confirmed.
  Thank you for subscribing!
 
-<a href="{{site.baseurl}}" class="btn btn-dark"> Home &rarr;</a> 
+<a href="{{site.baseurl}}/blog/" class="btn btn-dark"> Home &rarr;</a> 
