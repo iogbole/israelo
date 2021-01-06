@@ -5,19 +5,16 @@ permalink: "/blog/index.html"
 
 ---
 
-<!-- Posts Index
-================================================== -->
 <div class="blog-grid-container">
-    
-        {% include postbox.html %}
-    
+  {% for post in site.posts %}
+  {% include postbox.html %}
+  {% endfor %}
+
 </div>
 
-<!-- Pagination
-================================================== -->
+
 <div class="bottompagination">
 <span class="navigation" role="navigation">
     {% include pagination.html %}
 </span>
 </div>
-
