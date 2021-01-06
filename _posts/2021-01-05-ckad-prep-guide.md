@@ -95,4 +95,4 @@ I attempted 17 out of the 19 questions and I scored 82%.
 
 Good luck and stay hungry.
 
-<i> Notice : This blog was first published on[medium](https://iogbole.medium.com/ckad-1-18-exam-preparation-notes-6c91f8140393) </i>
+<i class="aligncenter"> Notice : This blog was first published on [medium](https://iogbole.medium.com/ckad-1-18-exam-preparation-notes-6c91f8140393) </i>
