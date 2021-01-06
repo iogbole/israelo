@@ -4,8 +4,8 @@ title: "Israel Ogbole's Blogs"
 description: "Thoughts on IoT and Cloud Computing"
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/logo.png'
-baseurl: /blog.israelo
-blogurl: /blog.israelo/blog
+baseurl: '/'
+blogurl: '/blog'
 google_analytics: 'UA-186535929-1'
 disqus: 'https-iogbole-github-io'
 mailchimp-list: 'https://yahoo.us7.list-manage.com/subscribe/post?u=53a3df9344e4aa53e567343bd&amp;id=6b55be21ac'
