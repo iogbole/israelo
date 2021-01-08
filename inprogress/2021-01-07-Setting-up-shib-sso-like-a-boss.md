@@ -7,6 +7,7 @@ tags: [sso, ldap, identity, adfs, shibboleth ]
 image: assets/images/sso.jpg
 date:   2021-07-05 06:01:35 +0300
 permalink: /test/sso
+toc: true
 beforetoc: "'One ring to rule them all, one ring to find them, One ring to bring them all, and in the darkness bind them' - Lord of the Rings."
 ---
 Single Sign-On is here to stay and its importance cannot be over emphasised, but have you ever wondered how Single Sign-On really works under the hood?  I got curious to unravel the mystery behind the working principle behind this 'one ~~ring~~ credential to rule them all' authentication method.
