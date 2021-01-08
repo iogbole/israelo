@@ -14,6 +14,7 @@ excerpt: "Setting up Shibboleth and OpenLDAP like a BOSS: Have you ever wondered
 Single Sign-On (SSO) is here to stay, and SSO's importance cannot be overemphasised; but have you ever wondered how SSO work under the hood? After being battered by various complex SSO/LDAP integration issues, I decided to unravel the mystery behind the working principle of this 'one ~~ring~~ credential to rule them all' authentication method.
 
 > *"One ring to rule them all, one ring to find them, One ring to bring them all, and in the darkness bind them" - Lord of the Rings*
+
 ## What is SSO authentication?
 
 SSO is an authentication method that enables users to securely login to one or multiple applications by using just one set of credentials. This single credential is, in most cases,  stored and managed from a central repository called LDAP. SSO is beyond being able to login to multiple applications with one set of credentials. However, when done correctly, users should ONLY have to login once to access various applications and services across different domains.
@@ -61,7 +62,7 @@ It functions in a similar way to a relational database in certain ways and can b
 This section will cover how to install and configure an OpenLDAP server on an Ubuntu server..
 
 ```c
-sudo apt-get update`
+sudo apt-get update
 sudo apt-get install slapd ldap-utils
 ```
 
@@ -125,7 +126,7 @@ You have probably heard of OKTA, OneLogin, ADFS, PingId etc, but perhaps, not so
 Modify your `/etc/hosts`:
 
 ```c
- vim /etc/hosts`
+ vim /etc/hosts
 <vm ip address> idp.appd.com
 
 ```
@@ -225,6 +226,7 @@ This is the master configuration file that defines authentication flow. In the s
         <value>%{idp.home}/conf/attribute-resolver-full.xml</value>
     </util:list>
 ```
+
 Ref: [https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-services-xml](https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-services-xml)
 
 ##### 3. attribute-filter.xml
@@ -405,7 +407,7 @@ Next, login to the Service Provide (in my case, the AppDynamics controller) and 
 
 ![appdcontroller](https://user-images.githubusercontent.com/2548160/44152163-b30fe102-a09c-11e8-8d93-21dda2e1b2e5.png)
 
-#### Connecting the dots:
+#### Connecting the dots...
 
 1. The login URL is in two parts:   [https://idp.localhost.com:8443/idp/profile/SAML2/POST/SSO?providerId=http://192.168.33.1:8090/controller](https://idp.localhost.com:8443/idp/profile/SAML2/POST/SSO?providerId=http://192.168.33.1:8090/controller). It consists of the IdP URL and the providerID parameter. The value of this parameter must correspond with the EntityID value in the controller.xml file, and it should be the Controller&#39;s URL
 2. SAML Attribute Mappings: These values correspond with the attributes that were specified in the attribute-filter.xml, uid is the user id in LDAP, givenName is the user&#39;s first name and mail are.. duh!
@@ -426,8 +428,8 @@ See the attached video for a successful validation of the above test cases.
 
 **Troubleshooting tools**
 
-1. https://idp.ssocircle.com/sso/toolbox/samlDecode.jsp : Decode SAML response 
-2. SAML Tracer - Live debug of SAML responses and transposes 
+1. https://idp.ssocircle.com/sso/toolbox/samlDecode.jsp : Decode SAML response
+2. SAML Tracer - Live debug of SAML responses and transposes
 3. https://www.samltool.com/validate_response.php : Validate SAML Responses and generate SAML metadata.
 
 
