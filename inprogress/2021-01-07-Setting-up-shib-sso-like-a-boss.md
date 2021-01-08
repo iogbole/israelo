@@ -6,6 +6,7 @@ categories: [ 'Identity Management' ]
 tags: [sso, ldap, identity, adfs, shibboleth ]
 image: assets/images/sso.jpg
 date:   2021-07-05 06:01:35 +0300
+permalink: /test/sso
 ---
 
 "One ring to rule them all, one ring to find them, One ring to bring them all, and in the darkness bind them" - Lord of the Rings.
