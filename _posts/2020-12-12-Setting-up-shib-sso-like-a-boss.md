@@ -1,18 +1,19 @@
 ---
 layout: post
-title:  "Shibboleth Idp: Tales of my journey into the SSO Dark World"
+title:  "Shibboleth Idp: Tales of my journey into the SSO Dark World "
 author: israel
 categories: [ 'Identity Management' ]
 tags: [sso, ldap, identity, adfs, shibboleth ]
 image: assets/images/sso.jpg
+#date:   2021-07-05 06:01:35 +0300
+#permalink: /test/sso
+#toc: true
 date:   2020-12-12 06:01:35 +0300
-excerpt: "Have you ever wondered how SSO work under the hood? After being battered by various complex SSO/LDAP integration issues, I decided to make it personal..."
+excerpt: "Setting up Shibboleth and OpenLDAP like a BOSS: Have you ever wondered how SSO work under the hood? After being battered by various complex SSO/LDAP integration issues, I decided to make it personal..."
 ---
-
 Single Sign-On (SSO) is here to stay, and SSO's importance cannot be overemphasised; but have you ever wondered how SSO work under the hood? After being battered by various complex SSO/LDAP integration issues, I decided to unravel the mystery behind the working principle of this 'one ~~ring~~ credential to rule them all' authentication method.
 
 > *"One ring to rule them all, one ring to find them, One ring to bring them all, and in the darkness bind them" - Lord of the Rings*
-
 ## What is SSO authentication?
 
 SSO is an authentication method that enables users to securely login to one or multiple applications by using just one set of credentials. This single credential is, in most cases,  stored and managed from a central repository called LDAP. SSO is beyond being able to login to multiple applications with one set of credentials. However, when done correctly, users should ONLY have to login once to access various applications and services across different domains.
@@ -27,10 +28,11 @@ If you have felt this pain like me, you will agree that most SSO integration pro
 
 I decided to use [Shibboleth IdP](https://www.shibboleth.net/) for three main reasons :
 
-- It is open source solution.
+- It is an open source solution.
 - It is widely used, especially in the Education sector.
 - It comes without any bells and whistles - meaning I can tinker with the configurations as much as like. 
-# Setting SSO with Shibboleth IdP and OpenLDAP like a BOSS
+
+## Setting up Shibboleth and OpenLDAP like a BOSS
 
 This post consists mainly of my notes from this rather unusual challenge. It may also serve as a hands-on tutorial to install and configure OpenSAML, OpenLDAP and integrate it with the application's Single Sign-On (SSO) authentication mechanism.
 
@@ -58,10 +60,12 @@ It functions in a similar way to a relational database in certain ways and can b
 
 This section will cover how to install and configure an OpenLDAP server on an Ubuntu server..
 
-`sudo apt-get update`
-`sudo apt-get install slapd ldap-utils`
+```c
+sudo apt-get update`
+sudo apt-get install slapd ldap-utils
+```
 
-You will be asked to enter and confirm an administrator password for the administrator LDAP account. 
+You will be asked to enter and confirm an administrator password for the administrator LDAP account.
 
 #### Reconfigure slapd
 
@@ -74,9 +78,9 @@ You will be asked a series of questions about how you&#39;d like to configure th
 - Omit OpenLDAP server configuration? No
 - DNS domain name?
   - This will create the base structure of your directory path. Read the message to understand how it works.
-  - There are no set rules for how to configure this, but we will be using appd[dot]com.  If you have an actual domain name on this server, you can use that. Otherwise, use whatever you&#39;d like.
+  - There are no set rules for how to configure this, use that whatever makes sense for your use case
 - Organization name?
-  - appD PS
+  - theCompany
 - Administrator password?
   - Use the password you configured during installation, or choose another one
 - Database backend to use? HDB
@@ -88,7 +92,7 @@ You will be asked a series of questions about how you&#39;d like to configure th
 
 Download and install Java LDAP browser - [http://jxplorer.org/downloads/index.html](http://jxplorer.org/downloads/index.html)
 
-Test your LDAP server on port 389 
+Test your LDAP server on port 389
 
 ![ldap](https://user-images.githubusercontent.com/2548160/44148801-9aeac750-a091-11e8-9e07-d2ae9bf51621.jpg)
 
@@ -120,25 +124,28 @@ You have probably heard of OKTA, OneLogin, ADFS, PingId etc, but perhaps, not so
 
 Modify your `/etc/hosts`:
 
-`vim /etc/hosts`
+```c
+ vim /etc/hosts`
+<vm ip address> idp.appd.com
 
-`<vm ip address> idp.appd.com`
+```
 
-_Note, ignore the step above if your server is assigned domain name, especially if you do not have a static IP_
+_Note, ignore the step above if your server is assigned a domain name, especially if you do not have a static IP_
 
-Download the latest version of shib from  - [https://shibboleth.net/downloads/identity-provider](https://shibboleth.net/downloads/identity-provider/). version 3.3.1 is the latest as at the time of writing this wiki.
+Download the latest version of shib from  - [https://shibboleth.net/downloads/identity-provider](https://shibboleth.net/downloads/identity-provider/). version 3.3.1 is the latest as at the time I was tinkering with it.
 
-`cd /tmp`
-
-`wget [https://shibboleth.net/downloads/identity-provider/3.3.1/shibboleth-identity-provider-3.3.1.zip](https://shibboleth.net/downloads/identity-provider/3.3.1/shibboleth-identity-provider-3.3.1.zip)`
-
-`unzip shibboleth-identity-provider-3.3.1.zip`
+```c
+cd /tmp
+wget https://shibboleth.net/downloads/identity-provider/3.3.1/shibboleth-identity-provider-3.3.1.zip
+unzip shibboleth-identity-provider-3.3.1.zip
+```
 
 Next, change to your desired user (I am using root), then change directory to the shibboleth directory.
 
-`sudo su -`
-
-`cd /tmp/shibboleth-identity-provider-3.3.1/bin & source /etc/environment`
+```c
+sudo su -
+cd /tmp/shibboleth-identity-provider-3.3.1/bin & source /etc/environment
+```
 
 Execute the install script.
 
@@ -146,31 +153,33 @@ Execute the install script.
 
 Sample response to the install prompts are:
 
-Installation Directory: _[/opt/shibboleth-idp]_
+>Installation Directory: _[/opt/shibboleth-idp]_
+>
+>Hostname: _[idp.appd.com]_
+>
+>SAML EntityID: _[https://idp.appd.com/idp/shibboleth]_
+>
+>Attribute Scope: _[appd.com]_
 
-Hostname: _[idp.appd.com]_
-
-SAML EntityID: _[https://idp.appd.com/idp/shibboleth]_
-
-Attribute Scope: _[appd.com]_
-
-Backchannel PKCS12 Password: _#PASSWORD-FOR-BACKCHANNEL#_
-
-Re-enter password: _#PASSWORD-FOR-BACKCHANNEL#_
-
-Cookie Encryption Key Password: _#PASSWORD-FOR-COOKIE-ENCRYPTION#_
-
-Re-enter password: _#PASSWORD-FOR-COOKIE-ENCRYPTION#_
+>Backchannel PKCS12 Password: _#PASSWORD-FOR-BACKCHANNEL#_
+>
+>Re-enter password: _#PASSWORD-FOR-BACKCHANNEL#_
+>
+>Cookie Encryption Key Password: _#PASSWORD-FOR-COOKIE-ENCRYPTION#_
+>
+>Re-enter password: _#PASSWORD-FOR-COOKIE-ENCRYPTION#_
 
 ### Configure Shibboleth
 
 Import the JST libraries to visualize the IdP status page:
 
-`cd /opt/shibboleth-idp/edit-webapp/WEB-INF/lib`
+```c
 
-`wget https://build.shibboleth.net/nexus/service/local/repositories/thirdparty/content/javax/servlet/jstl/1.2/jstl-1.2.jar`
+cd /opt/shibboleth-idp/edit-webapp/WEB-INF/lib
+wget https://build.shibboleth.net/nexus/service/local/repositories/thirdparty/content/javax/servlet/jstl/1.2/jstl-1.2.jar
+cd /opt/shibboleth-idp/bin ; ./build.sh -Didp.target.dir=/opt/shibboleth-idp
 
-`cd /opt/shibboleth-idp/bin ; ./build.sh -Didp.target.dir=/opt/shibboleth-idp`
+```
 
 Shib&#39;s configuration needs a lot of patience, it&#39;s like peeling an onion - one layer at a time and sometimes it makes tear up.  I&#39;d open a new terminal and tail the logs in the test case sessions.
 
@@ -278,7 +287,7 @@ Ref : [https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-idp
 
 ##### 6. controller.xml
 
-This is where it got a bit challenging, unlike most applications I have worked with in the past, AppD doesn&#39;t provide or generate it&#39;s own SAML metadata. This limitation makes it slightly difficult to integrate the Controller with non-cloud based IdPs like ADFS, PingFed, especially Shibboleth. I was able to generate a working Controller metadata after a few iterations, and it can be re-used by changing the controller&#39;s URL. Download it from  [https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-controller-xml](https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-controller-xml), modify it i.e change the controller URL and copy it to _/opt/shibboleth-idp/metadata_
+This is where it got a bit challenging, unlike most applications I have worked with in the past, The Service Provider I used to test this out, AppD, does not provide or generate it&#39;s own SAML metadata. This limitation makes it slightly difficult to integrate the Controller with non-cloud based IdPs like ADFS, PingFed, especially Shibboleth. I was able to generate a working Controller metadata after a few iterations, and it can be re-used by changing the controller&#39;s URL. Download it from  [https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-controller-xml](https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-controller-xml), modify it i.e change the controller URL and copy it to _/opt/shibboleth-idp/metadata_
 
 ##### 7. metadata-providers.xml
 
@@ -328,64 +337,60 @@ Ref: [https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-logb
 
 ##### 10. Install NTP
 
-`sudo apt-get install ntp`
-
-`sudo service ntp restart`
-
+```c
+sudo apt-get install ntp
+sudo service ntp restart
+```
 ### Install Tomcat 8
 
 Download tomcat 8 from  [https://tomcat.apache.org/download-80.cgi](https://tomcat.apache.org/download-80.cgi) . unzip it to /opt/tomcat or where ever you prefer.
 
 1. Set **CATALINA_HOME** in your /etc/environment file
 
-`sudo vi /etc/environment`
+    `sudo vi /etc/environment`
 
-``
-paste: export CATALINA_HOME='/opt/apache-tomcat-8.5.15'
-``
+    paste: `export CATALINA_HOME='/opt/apache-tomcat-8.5.15'`
 
-`source /etc/environment`
+    `source /etc/environment`
 
 2. Copy this [sh file](https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-setenv-sh)  into CATALINA_HOME/bin
 
 3. Whilst in CATALINA_HOME/bin, make the following scripts executable.
 
-`sudo chmod +x setenv.sh catalina.sh shutdown.sh startup.sh`
+    `sudo chmod +x setenv.sh catalina.sh shutdown.sh startup.sh`
 
-4. server.xml
+4. `vi server.xml` and comment out port 8080, and add the following block of code to open port 8433.
 
-Comment out port 8080, and add the following block of code to open port 8433. 
+    ```xml
+    <Connector protocol="org.apache.coyote.http11.Http11NioProtocol" port="8443" maxThreads="200" scheme="https" secure="true" SSLEnabled="true" keystoreFile="/opt/shibboleth-idp/credentials/idp-backchannel.p12" keystorePass="thecompany"
+    clientAuth="false" sslProtocol="TLS"/>
+    ```
 
-```xml
-<Connector protocol="org.apache.coyote.http11.Http11NioProtocol" port="8443" maxThreads="200" scheme="https" secure="true" SSLEnabled="true" keystoreFile="/opt/shibboleth-idp/credentials/idp-backchannel.p12" keystorePass="thecompany"
-clientAuth="false" sslProtocol="TLS"/>
-```
+    _Note : KeystorePass should be the same as the backchannel password you provided whilst installing shibboleth_
 
-_Note : KeystorePass should be the same as the backchannel password you provided whilst installing shibboleth_
+    Ref  [https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-server-xml](https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-server-xml)
 
-Ref  [https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-server-xml](https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-server-xml)
+5. In `idp.xml`
 
-5. idp.xml
+    In order to run the IdP, Tomcat must be informed of the location of the IdP war file. This should be done with a context descriptor by creating the file CATALINA_BASE/conf/Catalina/localhost/idp.xml and placing the following content in it:
 
-In order to run the IdP, Tomcat must be informed of the location of the IdP war file. This should be done with a context descriptor by creating the file CATALINA_BASE/conf/Catalina/localhost/idp.xml and placing the following content in it:
+    ```xml
+    <Context docBase="/opt/shibboleth-idp/war/idp.war"
+    privileged="true"
+    antiResourceLocking="false"
+    unpackWAR="false"
+    swallowOutput="true" />
+   ```
 
-```xml
-<Context docBase="/opt/shibboleth-idp/war/idp.war"
-privileged="true"
-antiResourceLocking="false"
-unpackWAR="false"
-swallowOutput="true" />
-```
-     
-unpackWAR isn&#39;t part of the default settings, I added it to optimize tomcat startup time.
+_Note: Unpacking the WAR file is not part of the default settings, I added it to optimize tomcat startup time_
 
 #### TEST CASE #1
 
 1. start tomcat:  `sudo ./catalina.sh run`
 2. Access tomcat home page [https://tomcat-server-fqdn:8443](https://server-fqdn:8443)
-3.Access idp status page at [https://tomcat-server-fqdn:8443/idp/status](https://tomcat-server-fqdn:8443/idp/status)
+3. Access idp status page at [https://tomcat-server-fqdn:8443/idp/status](https://tomcat-server-fqdn:8443/idp/status)
 
-![shibb](https://user-images.githubusercontent.com/2548160/44152318-24ed39b4-a09d-11e8-84de-c0f4663b7fe9.png)
+    ![shibb](https://user-images.githubusercontent.com/2548160/44152318-24ed39b4-a09d-11e8-84de-c0f4663b7fe9.png)
 
 4. Use IDP_HOME/log/idp-process.log and catalina.out logs to debug any issues until the 2 test cases pass.
 
