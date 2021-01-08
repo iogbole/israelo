@@ -5,8 +5,8 @@ author: israel
 categories: [ 'Identity Management' ]
 tags: [sso, ldap, identity, adfs, shibboleth ]
 image: assets/images/sso.jpg
-date:   2021-07-05 06:01:35 +0300
-permalink: /test/sso
+date:   2020-12-12 06:01:35 +0300
+#permalink: /test/sso
 toc: true
 ---
 <i>"One ring to rule them all, one ring to find them, One ring to bring them all, and in the darkness bind them" - Lord of the Rings </i>
@@ -59,7 +59,6 @@ It functions in a similar way to a relational database in certain ways and can b
 This section will cover how to install and configure an OpenLDAP server on an Ubuntu server..
 
 `sudo apt-get update`
-
 `sudo apt-get install slapd ldap-utils`
 
 You will be asked to enter and confirm an administrator password for the administrator LDAP account. 
