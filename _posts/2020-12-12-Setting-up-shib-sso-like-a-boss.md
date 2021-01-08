@@ -31,7 +31,6 @@ I decided to use [Shibboleth IdP](https://www.shibboleth.net/) for three main re
 - It is open source solution.
 - It is widely used, especially in the Education sector.
 - It comes without any bells and whistles - meaning I can tinker with the configurations as much as like. 
-
 # Setting SSO with Shibboleth IdP and OpenLDAP like a BOSS
 
 This post consists mainly of my notes from this rather unusual challenge. It may also serve as a hands-on tutorial to install and configure OpenSAML, OpenLDAP and integrate it with the application's Single Sign-On (SSO) authentication mechanism.
