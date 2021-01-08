@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Shibboleth Idp: Tales of my journey into the SSO Dark World "
+title:  "Setting up Shibboleth like a BOSS: Tales of my journey into the SSO Dark World"
 author: israel
 categories: [ 'Identity Management' ]
 tags: [sso, ldap, identity, adfs, shibboleth ]
@@ -9,7 +9,7 @@ image: assets/images/sso.jpg
 #permalink: /test/sso
 #toc: true
 date:   2020-12-12 06:01:35 +0300
-excerpt: "Setting up Shibboleth and OpenLDAP like a BOSS: Have you ever wondered how SSO work under the hood? After being battered by various complex SSO/LDAP integration issues, I decided to make it personal..."
+excerpt: "Have you ever wondered how SSO work under the hood? After being battered by various complex SSO/LDAP integration issues, I decided to make it personal..."
 ---
 Single Sign-On (SSO) is here to stay, and SSO's importance cannot be overemphasised; but have you ever wondered how SSO work under the hood? After being battered by various complex SSO/LDAP integration issues, I decided to unravel the mystery behind the working principle of this 'one ~~ring~~ credential to rule them all' authentication method.
 
