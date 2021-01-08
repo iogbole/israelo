@@ -40,6 +40,7 @@ This post consists mainly of my notes from this rather unusual challenge. It may
 The diagram below depicts the end of these setup guide:
  
  ![SSO]({{ site.baseurl }}/assets/images/sso_flow.png)
+
 ### Hardware Requirements
 
 - CPU: 2 Core
