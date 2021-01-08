@@ -7,12 +7,9 @@ tags: [sso, ldap, identity, adfs, shibboleth ]
 image: assets/images/sso.jpg
 date:   2021-07-05 06:01:35 +0300
 permalink: /test/sso
+beforetoc: "'One ring to rule them all, one ring to find them, One ring to bring them all, and in the darkness bind them' - Lord of the Rings."
 ---
-
-"One ring to rule them all, one ring to find them, One ring to bring them all, and in the darkness bind them" - Lord of the Rings.
-
-Have you ever wondered how Single Sign-On really works, may be you're wondering what SSO is? 
-
+Single Sign-On is here to stay and its importance cannot be over emphasised, but have you ever wondered how Single Sign-On really works under the hood?  I got curious to unravel the mystery behind the working principle behind this 'one ~~ring~~ credential to rule them all' authentication method.
 ## What is SSO authentication?
 
 SSO is an authentication method that enables users to securely login to one or multiple applications by using just one set of credentials. This single credential is, in most cases,  stored and managed from a central repository called LDAP. SSO is beyond being able to login to multiple applications with one set of credentials. However, when done correctly, users should ONLY have to login once to access various applications and services across different domains.
@@ -37,8 +34,7 @@ This post consist mainly of my notes from this rather unusual challenge, and it 
 
 The diagram below depicts the end of these setup guide:
  
- ![SSO]({{ site.baseurl }}/assets/images/sso_comp.jpg)
-
+ ![SSO]({{ site.baseurl }}/assets/images/sso_flow.png)
 ### Hardware Requirements
 
 - CPU: 2 Core
@@ -245,6 +241,7 @@ This configuration file acts like shib&#39;s custom officer, it ensures only att
 In this case, we will be releasing giveName, uid and mail attributes to the Service Provider which is the Service Provider (SP) in this context.
 
 Further, if you need to provision more that one relying party trust (i.e 2 or more Service Providers), use an OR condition in the PolicyRequirementRule element instead:
+
  ```xml 
          <PolicyRequirementRule xsi:type="OR">
             <Rule xsi:type="Requester" value="http://192.168.33.1:8090/controller" />
