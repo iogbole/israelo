@@ -14,17 +14,15 @@ Have you ever wondered how Single Sign-On really works, may be you're wondering 
 
 ## What is SSO authentication?
 
-SSO is an authentication method that enables users to securely login to one or multiple applications by using just one set of credentials. This single credential is, in most cases,  stored and managed from a central repository called LDAP. SSO is beyond being able to login to multiple applications with one set of credentials. However, when done correctly, users should ONLY have to login once to access various applications and services across different domains. 
+SSO is an authentication method that enables users to securely login to one or multiple applications by using just one set of credentials. This single credential is, in most cases,  stored and managed from a central repository called LDAP. SSO is beyond being able to login to multiple applications with one set of credentials. However, when done correctly, users should ONLY have to login once to access various applications and services across different domains.
 
-Single Sign-On involves three elements: 
+There are various types of SSO authentication, such as Kerberos, Smart-card, IWA, SAML, etc.  This blog post focuses on SAML 2.0, which as three main components as shown in the diagram below:
 
-- The user or service requesting access
-- The Service Provider - The application/website
-The Identity Provider  - The real dark-side - 
+![SSO]({{ site.baseurl }}/assets/images/sso_comp.jpg)
 
-https://cdn.brandfolder.io/C7PZW4QI/as/q079kh-96soyo-6479ff/sso_diagram.auto
+I have worked on the Service Provider side of the SSO flow for nearly all of my career; thus, I have seen my fair share of SSO integration complexities and issues.
 
-I have worked on the Service Provider side of the SSO flow for nearly all of my career; thus, I have seen my fair share of SSO integration complexities and issues. If you have felt this pain like me, you will agree that most problems lie within the IdP –– it's the black-box that a few people know how it works and how to troubleshoot. So, I gave myself an unusual challenge to delve into the IdP black-box, to understand how it works and explain the concept to my colleagues. Doing this will also mean that we have an SSO lab that can be used for internal testing and PoCs.  
+If you have felt this pain like me, you will agree that most SSO integration problems lie within the IdP –– it's the black-box that a few people know how it works and how to troubleshoot. So, I gave myself an unusual challenge to delve into the IdP black-box, to understand how it works and explain the concept to my colleagues. Doing this will also mean that we have an SSO lab that can be used for internal testing and PoCs.  
 
 I decided to use (Shibboleth IdP)[https://www.shibboleth.net/] for two main  reasons :
 
@@ -32,15 +30,19 @@ I decided to use (Shibboleth IdP)[https://www.shibboleth.net/] for two main  rea
 - It is widely used, especially in the Education sector.
 - It comes without any bells and whistles - meaning I can tinker with the configurations as much as like :) 
 
-# Setting up AppDynamics Single Sign-On (SSO) with Shibboleth and OpenLDAP like a BOSS
+# Setting SSO with Shibboleth IdP and OpenLDAP like a BOSS
 
-This post consist mainly of my notes from this rather unusual challenge, and it will also a serve as hands-on tutorial on how to install and configure OpenSAML, OpenLDAP and integrate it with the an applications's Single Sign-On (SSO) authentication mechanism.
+This post consist mainly of my notes from this rather unusual challenge, and it will also serve as a hands-on tutorial on how to install and configure OpenSAML, OpenLDAP and integrate it with the an application's Single Sign-On (SSO) authentication mechanism.
+
+The diagram below depicts the end of these setup guide:
+ 
+ ![SSO]({{ site.baseurl }}/assets/images/sso_comp.jpg)
 
 ### Hardware Requirements
 
 - CPU: 2 Core
-- RAM: 8 GB
-- HDD: 20 GB
+- RAM: 4-8 GB
+- HDD: 10 GB
 - Ubuntu 14 or greater
 
 ### Software Requirements
@@ -116,7 +118,7 @@ to set the JAVA_HOME environment variable.
 
 ### Install Shibboleth
 
-You have probably heard of OKTA, OneLogin, ADFS, PingId etc, but not so much of Shibboleth. Shibboleth performs exact functions (and even more IMHO) as the popular Identity Providers; it is an open source SAML Identity Provider and it has out of the box support for LDAP, Kerberos, JAAS, X.509, SPNEGO. It also supports multifactor authentication with DUO, google,OpenID etc 
+You have probably heard of OKTA, OneLogin, ADFS, PingId etc, but perhaps, not so much about Shibboleth. Shibboleth performs exact functions (and even more IMHO) as the popular Identity Providers; it is an open source SAML Identity Provider and it has out of the box support for LDAP, Kerberos, JAAS, X.509, SPNEGO. It also supports multifactor authentication with DUO, google,OpenID etc.
 
 Modify your `/etc/hosts`:
 
@@ -189,7 +191,7 @@ Uncomment the &#39;core schema attributes&#39; block, then scroll to the bottom 
         ldapURL="%{idp.attribute.resolver.LDAP.ldapURL}"
         baseDN="%{idp.attribute.resolver.LDAP.baseDN}" 
         principal="%{idp.attribute.resolver.LDAP.bindDN}"
-        principalCredential="appdynamics"
+        principalCredential="thecompany"
         connectTimeout="%{idp.attribute.resolver.LDAP.connectTimeout}"
         responseTimeout="%{idp.attribute.resolver.LDAP.responseTimeout}">
         <FilterTemplate>
@@ -239,9 +241,9 @@ This configuration file acts like shib&#39;s custom officer, it ensures only att
     </AttributeFilterPolicy>
 ```
 
-In this case, we will be releasing giveName, uid and mail attributes to the AppDynamics controller which is the Service Provider (SP) in this context.
+In this case, we will be releasing giveName, uid and mail attributes to the Service Provider which is the Service Provider (SP) in this context.
 
-Further, if you need to provision more that one relying party trust (i.e 2 or more AppDynamics controller in this case), use an OR condition in the PolicyRequirementRule element instead:
+Further, if you need to provision more that one relying party trust (i.e 2 or more Service Providers), use an OR condition in the PolicyRequirementRule element instead:
  ```xml 
          <PolicyRequirementRule xsi:type="OR">
             <Rule xsi:type="Requester" value="http://192.168.33.1:8090/controller" />
@@ -257,7 +259,7 @@ Ref:  [https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-att
   -   Comment out line 19 : idp.authn.LDAP.trustCertificates
   -   Comment out line 22: idp.authn.LDAP.trustStore
   -   Update idp.authn.LDAP.baseDN  to whatever your baseDn value is, mine is  ou=uk,dc=appd,dc=com
-  -   Update idp.authn.LDAP.bindDN and idp.authn.LDAP.bindDNCredential   with LDAP username and password:   uid=israel,ou=system  and appdynamics
+  -   Update idp.authn.LDAP.bindDN and idp.authn.LDAP.bindDNCredential with LDAP username and password:   uid=israel,ou=system  and thecompany
   -   Change line 40 to reflect your base DN: idp.authn.LDAP.dnFormat  = uid=%s,ou=uk,dc=appd,dc=com
   -   Change line 24 to :   idp.authn.LDAP.returnAttributes  = cn,givenName
 
@@ -356,7 +358,7 @@ paste: export CATALINA_HOME='/opt/apache-tomcat-8.5.15'
 Comment out port 8080, and add the following block of code to open port 8433. 
 
 ```xml
-<Connector protocol="org.apache.coyote.http11.Http11NioProtocol" port="8443" maxThreads="200" scheme="https" secure="true" SSLEnabled="true" keystoreFile="/opt/shibboleth-idp/credentials/idp-backchannel.p12" keystorePass="appdynamics"
+<Connector protocol="org.apache.coyote.http11.Http11NioProtocol" port="8443" maxThreads="200" scheme="https" secure="true" SSLEnabled="true" keystoreFile="/opt/shibboleth-idp/credentials/idp-backchannel.p12" keystorePass="thecompany"
 clientAuth="false" sslProtocol="TLS"/>
 ```
 
@@ -388,13 +390,14 @@ unpackWAR isn&#39;t part of the default settings, I added it to optimize tomcat 
 
 4. Use IDP_HOME/log/idp-process.log and catalina.out logs to debug any issues until the 2 test cases pass.
 
-### Controller Integration
+### SP Integration
+Note: I used an onpremise version of AppDynamics an SP to test this out. The steps should however be similar with any other SAML 2.0 SP integration.
 
 Copy the IdP signing certificate (without any whitespace) by executing :
 
 `sudo cat /opt/shibboleth-idp/credentials/idp-signing.crt`
 
-Next, login to the controller and follow the instructions as shown below:
+Next, login to the Service Provide (in my case, the AppDynamics controller) and follow the instructions as shown below:
 
 ![appdcontroller](https://user-images.githubusercontent.com/2548160/44152163-b30fe102-a09c-11e8-8d93-21dda2e1b2e5.png)
 
@@ -407,7 +410,7 @@ Next, login to the controller and follow the instructions as shown below:
 
 #### TEST CASE #2
 
-Attempt to log in to your controller from a new browser session
+Attempt to log in to your Service Provider. I used the following steps whilst testing from a browser with AppDynamics controller. 
 
 1. AppDynamics Controller successfully redirects to IdP login page
 2. IdP successfully authenticates the user against your LDAP server
@@ -424,9 +427,6 @@ See the attached video for a successful validation of the above test cases.
 2. SAML Tracer - Live debug of SAML responses and transposes 
 3. https://www.samltool.com/validate_response.php : Validate SAML Responses and generate SAML metadata.
 
-[TODO]
-
-**Troubleshooting tips**
 
 **References:**
 
@@ -435,20 +435,3 @@ See the attached video for a successful validation of the above test cases.
 3.Shibboleth documentation - https://wiki.shibboleth.net/confluence/display/IDP30/Configuration 
 4.How to use ADFS to restrict access to a relying party trust (controller) - https://blogs.technet.microsoft.com/israelo/2015/03/27/restricting-access-to-yammer-using-adfs-claims-transformation-rule/ 
 5.How to Install OpenLDAP - https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-a-basic-ldap-server-on-an-ubuntu-12-04-vps 
-
-Edit message
-
-Write a small message here explaining this change. (Optional)
-© 2018 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Press h to open a hovercard with more details.

@@ -30,7 +30,7 @@ These are the materials that I used:
 
 > ‘CKAD Exercises’ is not enough though, seriously!
 
-![](https://cdn-images-1.medium.com/max/600/1*10Rw_8fLdUefu4Q6K_f9ww.png)
+![CKAD Cert](https://cdn-images-1.medium.com/max/600/1*10Rw_8fLdUefu4Q6K_f9ww.png)
 
 Most blog posts that I read before the exam gave me the impression that being able to answer all the questions in CKAD Exercises is an indication that one is ready for the exam. Whilst this assertion may be true for older versions of the exam, I found it not to be true in my experience with version 1.18. The exercises provide a good foundation, but the actual exam questions are a lot harder and are not as straightforward. I felt the need for more time-bound practices so I went back to the [KodeKloud course](https://kodekloud.com/p/kubernetes-certification-course-labs) via Udemy but this time, I focused ONLY on the mock exams and the lightning labs. You may skip the ReplicaSets and Ingress Controller questions as it’s not relevant to the exam (anymore). Stick to the [curriculum](https://github.com/cncf/curriculum).
 
