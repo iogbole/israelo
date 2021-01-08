@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Shibboleth Idp: Tales of my journey into the SSO Dark World"
+title:  "Shibboleth Idp: Tales of my journey into the SSO Dark World c"
 author: israel
 categories: [ 'Identity Management' ]
 tags: [sso, ldap, identity, adfs, shibboleth ]
