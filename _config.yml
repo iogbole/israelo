@@ -12,7 +12,7 @@ mailchimp-list: 'https://israelo.us7.list-manage.com/subscribe/post?u=53a3df9344
 include: ["_pages"]
 permalink: /blog/:title/
 email: israel@israelo.io
-formspree: xqkgwlbl
+formspree: "/f/xqkgwlbl"
 
 #-------------------------------
 # Hero Settings
