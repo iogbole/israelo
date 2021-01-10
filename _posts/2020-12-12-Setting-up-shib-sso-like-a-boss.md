@@ -33,13 +33,13 @@ I decided to use [Shibboleth IdP](https://www.shibboleth.net/) for three main re
 
 - It is an open source solution.
 - It is widely used, especially in the Education sector.
-- It comes without any bells and whistles - meaning I can tinker with the configurations as much as like. 
+- It comes without any bells and whistles - meaning I can tinker with the configurations as much as like.
 
 ## Setting up Shibboleth and OpenLDAP like a BOSS
 
-This post consists mainly of my notes from this rather unusual challenge. It may also serve as a hands-on tutorial to install and configure OpenSAML, OpenLDAP and integrate it with the application's Single Sign-On (SSO) authentication mechanism.
+This post consists mainly of my notes from this rather unusual challenge. It may also serve as a hands-on tutorial to install and configure OpenSAML, OpenLDAP and integrate it with an application's Single Sign-On (SSO) authentication mechanism.
 
-The diagram below depicts the end of these setup guide:
+The diagram below depicts the end goal of this setup guide:
  
  ![SSO]({{ site.baseurl }}/assets/images/sso_flow.png)
 
@@ -400,7 +400,7 @@ _Note: Unpacking the WAR file is not part of the default settings, I added it to
 4. Use IDP_HOME/log/idp-process.log and catalina.out logs to debug any issues until the 2 test cases pass.
 
 ### SP Integration
-Note: I used an onpremise version of AppDynamics an SP to test this out. The steps should however be similar with any other SAML 2.0 SP integration.
+Note: I used an onpremise version of AppDynamics an SP to test this out. The steps should however be similar with any other SAML 2.0 SP integration. I would probably use NextCloudPi to test it out later too. 
 
 Copy the IdP signing certificate (without any whitespace) by executing :
 
