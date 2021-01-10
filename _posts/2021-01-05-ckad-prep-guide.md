@@ -4,8 +4,9 @@ title:  "CKAD Exam Preparation Notes"
 author: israel
 categories: [ 'Cloud Native' ]
 tags: [containers, ckad, kubernetes certification, application, developer, cloud-native ]
-image: https://user-images.githubusercontent.com/2548160/104124266-c7838200-5347-11eb-817d-80b0d3512fb8.jpg
+image: https://user-images.githubusercontent.com/2548160/104125779-ea666400-5350-11eb-8986-333a1ff5662e.png
 date:   2021-01-05 15:01:35 +0300
+excerpt: The Certified Kubernetes Application Developer (CKAD) program was developed by the Cloud Native Computing Foundation (CNCF). I passed the exam and these notes summarise what you should expect if you’re preparing it. 
 ---
 
 The Certified Kubernetes Application Developer (CKAD) program has been developed by the Cloud Native Computing Foundation (CNCF), in collaboration with The Linux Foundation, to help expand the Kubernetes ecosystem through standardized training and certification.
