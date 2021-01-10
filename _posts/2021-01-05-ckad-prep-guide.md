@@ -21,7 +21,7 @@ CKAD is a hands-on performance-based exam. As a result, lots of practice to buil
 Whilst your mileage may differ if you are already familiar with Kubernetes and perhaps you work with it every day, be cautious of the “[course of knowledge](https://en.wikipedia.org/wiki/Curse_of_knowledge)”. Your prior knowledge, if not properly channelled can trip you. I know folks who know Kubernetes more than I do but failed the exam. You need muscle memory to help you gain speed and accuracy.
 
 <p class="aligncenter">
-<img class="lazyimg" src="https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png" width="700" height="550" stle/>
+<img class="lazyimg" src="https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png" width="700" height="550"/>
 </p>
 These are the materials that I used:
 
