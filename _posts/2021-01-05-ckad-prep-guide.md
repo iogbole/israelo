@@ -93,8 +93,10 @@ Now, go ahead and type `k config get-contexts` , the result is a lot if all you
 In summary, there’s no such thing as over-preparation in my opinion, the exam is hard, no doubt. Use practice environments that can vet and score your performance under time pressure — good examples are killer.sh and KodeKloud.
 
 I attempted 17 out of the 19 questions and I scored 82%.
+ 
+Please post a comment below if you have any questions.
 
-Good luck and stay hungry.
+Good luck and stay hungry!
 
 <i class="aligncenter"> Notice : This blog was first published on [medium](https://iogbole.medium.com/ckad-1-18-exam-preparation-notes-6c91f8140393) </i>
 
