@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "CKAD Exam Preparation Notes"
+title:  "The Ultimate CKAD Prep Guide"
 author: israel
 categories: [ 'Cloud Native' ]
 tags: [containers, ckad, kubernetes certification, application, developer, cloud-native ]
@@ -93,7 +93,7 @@ Now, go ahead and type `k config get-contexts` , the result is a lot if all you
 In summary, there’s no such thing as over-preparation in my opinion, the exam is hard, no doubt. Use practice environments that can vet and score your performance under time pressure — good examples are killer.sh and KodeKloud.
 
 I attempted 17 out of the 19 questions and I scored 82%.
- 
+
 Please post a comment below if you have any questions.
 
 Good luck and stay hungry!
