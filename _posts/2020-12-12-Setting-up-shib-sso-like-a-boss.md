@@ -2,7 +2,7 @@
 layout: post
 title:  "Setting up Shibboleth like a BOSS: Tales of my journey into the SSO Dark World"
 author: israel
-categories: [ 'Identity Management' ]
+categories: [ 'Identity Management', 'Cloud Native'  ]
 tags: [sso, ldap, identity, adfs, shibboleth ]
 image: assets/images/sso.jpg
 #date:   2021-07-05 06:01:35 +0300
