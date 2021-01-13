@@ -26,7 +26,7 @@ We are of different races,<br/>
 Yet, we had a lot in common. <br/>
 Immigrants from our home countries, <br/>
 With similar challenges, yet not giving excuses, <br/>
-working hard to make a better life for our loved ones.<br/>
+Working hard to make a better life for our loved ones.<br/>
 I love you so much, my brother, <br/>
 My brother from a different mother.<br/>
 Oh,  how I will miss you.<br/>
@@ -48,7 +48,7 @@ If I said it hadn't affected me,<br/>
 I'd just be bluffing.<br/>
 If I could change everything,<br/>
 You know I would.<br/>
-The Terraform plan for 2021 I shared with you in our last 1:1,  <br/>
+The <a href="https://www.israelo.io/blog/terrform/" target="_blank">Terraform plan</a> for 2021 I shared with you in our last 1:1,  <br/>
 I got it done. I passed it. <br/>
 But it was a day too late. A few hours too late.<br/>
 I did what you would have wanted <br/>
