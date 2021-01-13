@@ -8,7 +8,7 @@ image: https://user-images.githubusercontent.com/2548160/104447887-54bb1680-5594
 date:   2021-01-13 15:01:35 +0300
 excerpt: "Farewell my friend, Ioannis. Sorry, you had to close the chapter this soon. I am happy for the opportunity to have mentored you...You spoke about your recovery from COVID, and I told you about my recovery from COVID, too. But COVID came back for you, this time, not to spare. 
 "
-permalink: "/draf/i"
+permalink: "/draft/i"
 ---
 
 Farewell my friend, Ioannis<br/>
@@ -52,7 +52,7 @@ The <a href="https://www.israelo.io/blog/terrform/" target="_blank">Terraform pl
 I got it done. I passed it. <br/>
 But it was a day too late. A few hours too late.<br/>
 I did what you would have wanted <br/>
-By posting the news on LinkedId, <br/>
+By posting the news on LinkedIn, <br/>
 Except you weren't there to cheer me on. <br/>
 Since the loss of you, <br/>
 I've learned to live for each day <br/>
