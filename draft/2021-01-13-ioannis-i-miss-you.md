@@ -11,12 +11,12 @@ excerpt: "Farewell my friend, Ioannis. Sorry, you had to close the chapter this 
 permalink: "/draf/i"
 ---
 
-Farewell my friend, Ioannis
-Sorry, you had to close the chapter this soon. 
-I am happy for the opportunity to have mentored you,
-Though I wonder to what end, now that you are gone.
-So glad I was when we finally got the chance to work on the same account.
-The lunch we shared,
+Farewell my friend, Ioannis<br/>
+Sorry, you had to close the chapter this soon. <br/>
+I am happy for the opportunity to have mentored you,<br/>
+Though I wonder to what end, now that you are gone.<br/>
+So glad I was when we finally got the chance to work on the same account.<br/>
+The lunch we shared,<br/>
 The protein bar chat,
 The home gym chat, 
 Your crazy Masters degree idea still gives me a chuckle.
