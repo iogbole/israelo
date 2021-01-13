@@ -15,7 +15,7 @@ Farewell my friend, Ioannis<br/>
 Sorry, you had to close the chapter this soon. <br/>
 I am happy for the opportunity to have mentored you,<br/>
 Though I wonder to what end, now that you are gone.<br/>
-So glad I was when we finally got the chance to work on the same account.<br/>
+So glad I was, when we finally got the chance to work on the same account.<br/>
 The lunch we shared,<br/>
 The protein bar chat,<br/>
 The home gym chat, <br/>
