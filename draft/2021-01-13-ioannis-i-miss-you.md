@@ -30,12 +30,12 @@ Working hard to make a better life for our loved ones.<br/>
 I love you so much, my brother, <br/>
 My brother from a different mother.<br/>
 Oh,  how I will miss you.<br/>
-If only, If only, If only I knew...<br/>
+If only, if only, if only I knew...<br/>
 I laid in bed, in the dark and kept thinking loud to myself,<br/>
-If only, If only, If only I knew...<br/>
+If only, if only, if only I knew...<br/>
 I felt the blow of your demise the hardest when all was dark,<br/>
 In the quiet of the night, whilst I reminisced, wondering...<br/>
-If only, If only I knew <br/>
+If only, if only I knew <br/>
 That our 1:1 call on the 11 Dec 2020 was the last one.<br/>
 You spoke about your recovery from COVID,<br/>
 and I told you about my family's recovery from COVID, too<br/>
