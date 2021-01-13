@@ -38,7 +38,7 @@ In the quiet of the night, whilst I reminisced, wondering...
 If only, If only I knew 
 That our 1:1 call on the 11 Dec 2020 was the last one.
 You spoke about your recovery from COVID,
-and I told you about my recovery from COVID, too
+and I told you about my family's recovery from COVID, too
 But COVID came back for you, this time, not to spare. 
 Your friendship was a blessing,
 And I will miss you so.
@@ -48,7 +48,7 @@ If I said it hadn't affected me,
 I'd just be bluffing.
 If I could change everything,
 You know I would.
-The Terraform plan for 2021 I shared with you, 
+The Terraform plan for 2021 I shared with you in our last 1:1,  
 I got it done. I passed it. 
 But it was a day too late. A few hours too late.
 I did what you would have wanted
