@@ -77,5 +77,5 @@ Rest On. <br/>
 Till we meet again. <br/>
 
 <p class="aligncenter">
-<img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/104448358-f478a480-5594-11eb-9997-bdfb96612ef2.jpeg"/>
+<img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/104448358-f478a480-5594-11eb-9997-bdfb96612ef2.jpeg" alt="Ioannis" width="560" height="600"/>
 </p>
