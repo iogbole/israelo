@@ -8,7 +8,6 @@ image: https://user-images.githubusercontent.com/2548160/104447887-54bb1680-5594
 date:   2021-01-13 15:01:35 +0300
 excerpt: "Farewell my friend, Ioannis. Sorry, you had to close the chapter this soon. I am happy for the opportunity to have mentored you...You spoke about your recovery from COVID, and I told you about my recovery from COVID, too. But COVID came back for you, this time, not to spare. 
 "
-permalink: "/draft/i"
 ---
 
 Farewell my friend, Ioannis<br/>
