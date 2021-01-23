@@ -66,7 +66,7 @@ I am thankful for the moment we shared <br/>
 I am thankful for the passion we shared.<br/>
 I am thankful for all you shared with me. <br/>
 I am thankful for the blessing you were to many people. <br/>
-Your memory will leave on; my colleague turned friend <br/>
+Your memory will live on; my colleague turned friend <br/>
 Goodbye? No, I won't say that. <br/>
 Goodnight? Perhaps so. <br/>
 Good night, for now, Ionnais <br/>
