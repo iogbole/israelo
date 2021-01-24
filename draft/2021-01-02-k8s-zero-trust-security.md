@@ -88,7 +88,7 @@ In addition to authentication and encryption, different service meshes support v
 
 While Service meshes offer several Zero Trust Security's core benefits, they not provide a <b> complete </b> zero-trust solution for Kubernetes clusters. Even if you cannot achieve a perfect zero-trust architecture in your Kubernetes clusters, any incremental changes you make in Service Mesh direction will help protect your cluster, and its workloads as most tools that are primarily built to provide Kubernetes Security leverages the mesh. This brings us to Portshift.
 
-## portshift
+## Portshift
 
 Portshift came into my radar when Cisco announced its acquisition.
 
@@ -109,4 +109,4 @@ Kubernetes default Network Policies are porous and should not be used as-is in P
 
 - https://www.gartner.com/en/documents/3986053/market-guide-for-zero-trust-network-access
 
--  
+
