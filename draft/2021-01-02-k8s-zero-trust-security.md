@@ -4,7 +4,7 @@ title:  "Kubernetes: Implementing Runtime Zero Trust Security"
 author: israel
 categories: [ 'Cloud Native' ]
 tags: [containers, kubernetes, application, developer, cloud-native, security ]
-image: https://user-images.githubusercontent.com/2548160/104125779-ea666400-5350-11eb-8986-333a1ff5662e.png
+image: https://user-images.githubusercontent.com/2548160/105642941-b462cd00-5e84-11eb-9650-18c117c5379a.png
 date:   2021-01-10 15:01:35 +0300
 excerpt: "In a containerised environment such as Kubernetes, Zero trust security must be baked into the design, build, development and runtime stages. Kubernetes defaults are generally not suited for Production use as it comes with a wide range of liberal policies...
 "
@@ -89,10 +89,9 @@ In addition to authentication and encryption, different service meshes support v
 While Service meshes offer several Zero Trust Security's core benefits, they not provide a <strong> complete </strong> zero-trust solution for Kubernetes clusters. Even if you cannot achieve a perfect zero-trust architecture in your Kubernetes clusters, any incremental changes you make in Service Mesh direction will help protect your cluster, and its workloads as most tools that are primarily built to provide Kubernetes Security leverages the mesh. This brings us to Portshift.
 ## Enter porshift
 
-Porshift came into my radar when Cisco announced its acquisition. Portshift is Kubernetes-Native Security Platform that provides a Single Pane of glass for Containers and Kubernetes. It encrypts Intra and iter cluster communications and provides security insights into CI/CD pipelines and Kubernetes runtime. 
+Porshift came into my radar when Cisco announced its acquisition. <a href="https://www.portshift.io/" target="_blank"> Portshift </a> is a  Kubernetes-Native Security Platform that provides a Single Pane of glass for Containers and Kubernetes. It encrypts Intra and iter cluster communications and provides security insights into CI/CD pipelines and Kubernetes runtime. 
 
-What distinguishes Portshift (in my opinion) is their agentless approach. I have had over 4 years experience in the Application Performance Monitoring (APM) industry, and I am well acquainted with the pains, overhead and constraints that agent-based implementation can cause, especially in a containerised environment. 
-The agentless approach means it is easy to scale Kubernetes deployments with Portshift. It also means that it is lightweight and has fewer footprints whilst protecting solutions Kubernetes deployments from threats and threats vulnerabilities across images, containers, runtime deployments and Kubernetes infrastructure.
+What distinguishes Portshift (in my opinion) is their agentless approach. I have had over 4 years experience in the Application Performance Monitoring (APM) industry, and I am well acquainted with the pains, overhead and constraints that agent-based implementation can cause, especially in a containerised environment.  The agentless approach means it is easy to scale Kubernetes deployments with Portshift. It also means that it is lightweight and has fewer footprints whilst protecting solutions Kubernetes deployments from threats and threats vulnerabilities across images, containers, runtime deployments and Kubernetes infrastructure.
 ## Summary
 
 As applications and networks are becoming increasingly complex, so is security threats. The traditional security perimeter (or firewall) around organisations infrastructure, apps and data is simply no longer sufficient and does not work with cloud-native and micro-services architecture. Adopting a zero-trust network model is the best practice for securing workloads and hosts in your cloud-native strategy.
