@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Kubernetes: Implementing Runtime Zero Trust Security"
+title:  "Implementing Zero Trust Security in Kubernetes"
 author: israel
 categories: [ 'Cloud Native' ]
 tags: [containers, kubernetes, application, developer, cloud-native, security ]
@@ -16,6 +16,7 @@ As the complexity of the cloud and corporate networks increases to support the i
 Zero Trust Network Access (ZTN), focuses on improving the security of internal application traffic. Zero Trust is a security paradigm centred on the notion that organisations should not automatically trust anything inside or outside its perimeters and instead must verify anything and everything trying to connect to its systems before granting access. Simply put, the Zero Trust model is anchored on the assumption that everything and everyone is a malicious entity. As a result, Service providers must trust no one and always verify requests. 
 
 The Zero Trust model overturns the long-held traditional view that every entity - be it the application, server, networking software or hardware,  found in an internal network could be trusted. Zero-trust is the foundation of a growing number of security-first infrastructures or popularly known as the SecDevOps. Instead of assuming every entity on a network can be trusted without verification, it takes a rather pragmatic approach of believing that nothing can be trusted- not even the infrastructure itself can be trusted.
+
 ## Principle of a Zero Trust Architecture 
 
 Zero-trust architectures generally follow these principles:
@@ -28,13 +29,13 @@ Zero-trust architectures generally follow these principles:
 
 - All network connections and transactions should be subject to continuous monitoring for analysis. 
 
-## Implementing Zero-trust model in Kubernetes
+## Implementing Zero Security model in Kubernetes
 
 In a containerised environment such as Kubernetes, Zero trust security must be baked into the design, build, development and runtime stages. Kubernetes defaults are generally not suited for Production use as it comes with a wide range of liberal policies. Kubernetes policies need to be configured inline with the security and business objective. Let's consider some of the ways to implement Zero trust in Kubernetes.
 
 Like most things with Kubernetes, there are several methods of implementing zero-trust principles within a Kubernetes cluster - with varying results. Zero Trust can be implemented in Kubernetes by using Network Policies (recommended for small workloads) and/or Service meshes. Network Policies may be sufficient for a small to medium-sized Kubernetes workloads.
 
-## Network Policy
+### Network Policy
 
 Kubernetes, by default, allows all pods to communicate with each other and the internet.  Network Policies are used to implement zero-trust pod communication policy by creating a deny-all policy that prevents inbound and outbound communications between pods by default.
 
@@ -51,7 +52,6 @@ spec:
   - Egress
 
 ```
-
 The example policy shown above denies both ingress and egress traffics to/from all pods by default. Once this is in place, other policies can then be created to override the default deny-all Network Policy by explicitly defining pod labels allowed to communicate with each other. For example, the Network Policy below restricts ingress to `db` pod from ONLY the `api` and `web` pods respectively:
 
 
@@ -79,21 +79,34 @@ spec:
 
 In other words, only pods whose labels matches: (`app: zenithcv` and `role: db`) and (`app: zenithcv` and `role: api`) are allowed to connect to the database pod. 
 
-## Service Mesh
+### Service Mesh
 
 While Network Policy works excellent, it is difficult to scale. This is one of many reasons why Service meshes have emerged as a popular solution for many to achieve their Zero trust architecture’s goals. Service meshes create a virtual network layer to connect and control distributed application services. Although most service mesh solutions did not initially focus on network security but focused on facilitating and managing intelligent service discovery and request routing, the most popular open-source projects now provide features suitable for zero trust architecture. Service meshes are increasingly becoming popular; they eliminate many of the burdens of making significant changes to enable strict authentication and authorisation controls by creating overlays that do not require individual applications modification.
 
 Kubernetes Service meshes such as HashiCorp Consul, Istio, Linkerd and the like typically use point-to-point, distributed routing mechanism, which creates each cluster pod proxy instance. These proxies can manage client TLS certificates, which the proxy can use to prove its identity when making connections to other services or receiving connections from other clients. The method of using TLS certificates to provide identity certification on the client and server is called Mutual Transport Layer Security (mTLS). In addition to performing connection authentication, mTLS is also used to encrypt network connections.
 In addition to authentication and encryption, different service meshes support various authorisation sources, ranging from static lists to integrations with third-party single sign-on or other services.
 
-While Service meshes offer several Zero Trust Security's core benefits, they not provide a <strong> complete </strong> zero-trust solution for Kubernetes clusters. Even if you cannot achieve a perfect zero-trust architecture in your Kubernetes clusters, any incremental changes you make in Service Mesh direction will help protect your cluster, and its workloads as most tools that are primarily built to provide Kubernetes Security leverages the mesh. This brings us to Portshift.
-## Enter porshift
+While Service meshes offer several Zero Trust Security's core benefits, they not provide a <b> complete </b> zero-trust solution for Kubernetes clusters. Even if you cannot achieve a perfect zero-trust architecture in your Kubernetes clusters, any incremental changes you make in Service Mesh direction will help protect your cluster, and its workloads as most tools that are primarily built to provide Kubernetes Security leverages the mesh. This brings us to Portshift.
 
-Porshift came into my radar when Cisco announced its acquisition. <a href="https://www.portshift.io/" target="_blank"> Portshift </a> is a  Kubernetes-Native Security Platform that provides a Single Pane of glass for Containers and Kubernetes. It encrypts Intra and iter cluster communications and provides security insights into CI/CD pipelines and Kubernetes runtime. 
+## portshift
+
+Portshift came into my radar when Cisco announced its acquisition.
+
+<a href="https://www.portshift.io/" target="_blank"> Portshift </a> is a Kubernetes-Native Security Platform that provides a Single Pane of glass for Containers and Kubernetes. It encrypts Intra and iter cluster communications and provides security insights into CI/CD pipelines and Kubernetes runtime.
 
 What distinguishes Portshift (in my opinion) is their agentless approach. I have had over 4 years experience in the Application Performance Monitoring (APM) industry, and I am well acquainted with the pains, overhead and constraints that agent-based implementation can cause, especially in a containerised environment.  The agentless approach means it is easy to scale Kubernetes deployments with Portshift. It also means that it is lightweight and has fewer footprints whilst protecting solutions Kubernetes deployments from threats and threats vulnerabilities across images, containers, runtime deployments and Kubernetes infrastructure.
+
 ## Summary
 
 As applications and networks are becoming increasingly complex, so is security threats. The traditional security perimeter (or firewall) around organisations infrastructure, apps and data is simply no longer sufficient and does not work with cloud-native and micro-services architecture. Adopting a zero-trust network model is the best practice for securing workloads and hosts in your cloud-native strategy.
 
-Kubernetes default Network Policies are porous and should not be used as-is in Production. Network Policies and Service Meshes are a great way to start exploring and implementing Zero Trust Security in Kubernetes, but they do not provide the full benefits of Zero Trust Security. Solutions such as portshift may be considered.
+Kubernetes default Network Policies are porous and should not be used as-is in Production. Network Policies and Service Meshes are a great way to start exploring and implementing Zero Trust Security in Kubernetes, but they do not provide the full benefits of Zero Trust Security. Solutions such as Portshift may be considered.
+
+
+## References: 
+
+- https://www.ciosummits.com/wp-zero-trust.pdf
+
+- https://www.gartner.com/en/documents/3986053/market-guide-for-zero-trust-network-access
+
+-  
