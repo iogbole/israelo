@@ -11,13 +11,15 @@ excerpt: "In a containerised environment such as Kubernetes, Zero trust security
 permalink: /draft/zero.html
 ---
 
-As the complexity of the cloud and corporate networks increases to support the increasingly complex distributed applications and a dynamic mobile workforce,  threat models and methods used to penetrate and infiltrate networks are also advancing. Traditional secure perimeter boundaries can only be used as a first-line defence to protect the internal network, not as a comprehensive strategy to protect the infrastructure and data, especially in a cloud-native environment. Strong security requires a combination of control and strategy to stand a test of time. 
+Zero trust security is an IT security model that requires strict identity verification for every person and device trying to access resources on a private network, regardless of whether they are sitting within or outside of the network perimeter. There is no single specific technology associated with a zero trust architecture; it is a holistic cyber security approach that combines multiple different principles and technologies.
 
-Zero Trust Network Access (ZTN), focuses on improving the security of internal application traffic. Zero Trust is a security paradigm centred on the notion that organisations should not automatically trust anything inside or outside its perimeters and instead must verify anything and everything trying to connect to its systems before granting access. Simply put, the Zero Trust model is anchored on the assumption that everything and everyone is a malicious entity. As a result, Service providers must trust no one and always verify requests. 
+Traditional IT network security is based on the castle-and-moat concept. In castle-and-moat security, it is difficult to obtain access from outside the network, but by default, everyone inside the network is trusted. The problem with this approach is that once an attacker gains access to the network, they can freely control all content inside
 
-The Zero Trust model overturns the long-held traditional view that every entity - be it the application, server, networking software or hardware,  found in an internal network could be trusted. Zero-trust is the foundation of a growing number of security-first infrastructures or popularly known as the SecDevOps. Instead of assuming every entity on a network can be trusted without verification, it takes a rather pragmatic approach of believing that nothing can be trusted- not even the infrastructure itself can be trusted.
+This vulnerability in castle-and-moat security systems is exacerbated by the fact that companies no longer have their data in just one place. Today, information is often spread across cloud vendors, which makes it more difficult to have a single security control for an entire network.
 
-## Principle of a Zero Trust Architecture 
+Zero trust security means that no one is trusted by default from inside or outside the network, and verification is required from everyone trying to gain access to resources on the network. This added layer of security has been shown to prevent data breaches. A recent IBM-sponsored study demonstrated that the average cost of a single data breach is over $3 million. Considering that figure, it should come as no surprise that many organizations are now eager to adopt a zero-trust security policy.
+
+## Principle of Zero Trust Architecture
 
 Zero-trust architectures generally follow these principles:
 
@@ -37,7 +39,7 @@ Like most things with Kubernetes, there are several methods of implementing zero
 
 ### Network Policy
 
-Kubernetes, by default, allows all pods to communicate with each other and the internet.  Network Policies are used to implement zero-trust pod communication policy by creating a deny-all policy that prevents inbound and outbound communications between pods by default.
+Kubernetes, by default, allows all pods to communicate with each other and the internet. Network Policies are used to implement zero-trust pod communication policy by creating a deny-all policy that prevents inbound and outbound communications between pods by default.
 
 ```yaml 
 
