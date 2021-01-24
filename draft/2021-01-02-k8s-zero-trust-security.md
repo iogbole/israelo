@@ -3,103 +3,98 @@ layout: post
 title:  "Kubernetes: Implementing Runtime Zero Trust Security"
 author: israel
 categories: [ 'Cloud Native' ]
-tags: [containers, ckad, kubernetes certification, application, developer, cloud-native ]
+tags: [containers, kubernetes, application, developer, cloud-native, security ]
 image: https://user-images.githubusercontent.com/2548160/104125779-ea666400-5350-11eb-8986-333a1ff5662e.png
 date:   2021-01-10 15:01:35 +0300
-excerpt: The Certified Kubernetes Application Developer (CKAD) program was developed by the Cloud Native Computing Foundation (CNCF). I passed the exam and these notes summarise what you should expect if you’re preparing it. 
+excerpt: "In a containerised environment such as Kubernetes, Zero trust security must be baked into the design, build, development and runtime stages. Kubernetes defaults are generally not suited for Production use as it comes with a wide range of liberal policies...
+"
+permalink: /draft/zero.html
 ---
 
-The Certified Kubernetes Application Developer (CKAD) program has been developed by the Cloud Native Computing Foundation (CNCF), in collaboration with The Linux Foundation, to help expand the Kubernetes ecosystem through standardized training and certification.
+As the complexity of the cloud and corporate networks increases to support the increasingly complex distributed applications and a dynamic mobile workforce,  threat models and methods used to penetrate and infiltrate networks are also advancing. Traditional secure perimeter boundaries can only be used as a first-line defence to protect the internal network, not as a comprehensive strategy to protect the infrastructure and data, especially in a cloud-native environment. Strong security requires a combination of control and strategy to stand a test of time. 
 
-I passed the (CKAD) Exam in June 2020. These notes summarise what you should expect if you’re preparing for the CKAD exam.
-### Preparation
+Zero Trust Network Access (ZTN), focuses on improving the security of internal application traffic. Zero Trust is a security paradigm centred on the notion that organisations should not automatically trust anything inside or outside its perimeters and instead must verify anything and everything trying to connect to its systems before granting access. Simply put, the Zero Trust model is anchored on the assumption that everything and everyone is a malicious entity. As a result, Service providers must trust no one and always verify requests. 
 
-CKAD is a hands-on performance-based exam. As a result, lots of practice to build enough muscle memory over an extended period is an absolute requirement.
+The Zero Trust model overturns the long-held traditional view that every entity - be it the application, server, networking software or hardware,  found in an internal network could be trusted. Zero-trust is the foundation of a growing number of security-first infrastructures or popularly known as the SecDevOps. Instead of assuming every entity on a network can be trusted without verification, it takes a rather pragmatic approach of believing that nothing can be trusted- not even the infrastructure itself can be trusted.
+## Principle of a Zero Trust Architecture 
 
-> Beware of the “curse of knowledge”.
+Zero-trust architectures generally follow these principles:
 
-Whilst your mileage may differ if you are already familiar with Kubernetes and perhaps you work with it every day, be cautious of the “[course of knowledge](https://en.wikipedia.org/wiki/Curse_of_knowledge)”. Your prior knowledge, if not properly channelled can trip you. I know folks who know Kubernetes more than I do but failed the exam. You need muscle memory to help you gain speed and accuracy.
+- Authorisation grants should follow the principle of least privilege, allowing only the bare minimum permissions required for a client’s workload.
 
-<p class="aligncenter">
-<img class="lazyimg" src="https://miro.medium.com/max/500/1*l9za84HLq2ISOrsRAwkghw.png" width="700" height="550"/>
-</p>
-These are the materials that I used:
+- Security controls should apply equally to all entities - including apps and infrastructure, regardless of their network location.
 
-1\. [Kubernetes Certified Application Developer (CKAD) with Tests](https://www.udemy.com/course/certified-kubernetes-application-developer/) — Fantastic Udemy course, especially if you’re new to Kubernetes. I would recommend that you start with this course.
+- Network connections should be authenticated at both ends, by the server and the client. Client authentication by the server is generally expected now, but clients should also verify that they have connected to a valid server. 
 
-2\. [CKAD Exercises](https://github.com/dgkanatsios/CKAD-exercises/) — I got bored of watching Udemy videos mid-way into the course, this is not a reflection on the quality of the content, it’s due to my personality and the way I learn. I like to get stuck in. I wanted to dig deeper the moment I felt comfortable with the general concept; my quest led me to [CKDA Exercises](https://github.com/dgkanatsios/CKAD-exercises/). I went over the whole exercises (the _number of times is withheld so you can do it at your pace_) until I could answer ALL the questions without looking at the answers or making reference to the documentation, except for the persistent volume and network policy questions. I was also lucky enough to able to contribute to the CKAD Exercises repo.
+- All network connections and transactions should be subject to continuous monitoring for analysis. 
 
-> ‘CKAD Exercises’ is not enough though, seriously!
+## Implementing Zero-trust model in Kubernetes
 
-![CKAD Cert](https://cdn-images-1.medium.com/max/600/1*10Rw_8fLdUefu4Q6K_f9ww.png)
+In a containerised environment such as Kubernetes, Zero trust security must be baked into the design, build, development and runtime stages. Kubernetes defaults are generally not suited for Production use as it comes with a wide range of liberal policies. Kubernetes policies need to be configured inline with the security and business objective. Let's consider some of the ways to implement Zero trust in Kubernetes.
 
-Most blog posts that I read before the exam gave me the impression that being able to answer all the questions in CKAD Exercises is an indication that one is ready for the exam. Whilst this assertion may be true for older versions of the exam, I found it not to be true in my experience with version 1.18. The exercises provide a good foundation, but the actual exam questions are a lot harder and are not as straightforward. I felt the need for more time-bound practices so I went back to the [KodeKloud course](https://kodekloud.com/p/kubernetes-certification-course-labs) via Udemy but this time, I focused ONLY on the mock exams and the lightning labs. You may skip the ReplicaSets and Ingress Controller questions as it’s not relevant to the exam (anymore). Stick to the [curriculum](https://github.com/cncf/curriculum).
+Like most things with Kubernetes, there are several methods of implementing zero-trust principles within a Kubernetes cluster - with varying results. Zero Trust can be implemented in Kubernetes by using Network Policies (recommended for small workloads) and/or Service meshes. Network Policies may be sufficient for a small to medium-sized Kubernetes workloads.
 
-3\. CKAD Simulator — My preparation took a bit longer because the exams were upgraded from Kubernetes 1.16 to 1.18 when I was almost ready to sit for it, I had to add about 3 more weeks to practice on 1.18 to unlearn the deprecated commands and to learn the new 1.18 imperative commands. The contents on [killer.sh](https://killer.sh/ckad) simulator is excellent, especially with the new scoring system. The exam environment and layout is kind of similar to the actual exam. Aim to score ≥ 60% and pay close attention to the network policy question — note the difference in the way ports are defined as an OR or an AND operator.
+## Network Policy
 
-4\. Linux Academy — My crusade for more practice led me to the [Linux Academy CKAD](https://linuxacademy.com/course/certified-kubernetes-application-developer-ckad/) course. At first, I was disappointed as the test environment is in version 1.13 (at the time of writing this note), the tutor solved most of the questions by writing YAML too; don’t do this in the exam, use imperative commands wherever possible. Having said that and without going into too much detail (for obvious reasons), I attribute my success to the ‘quality’ of Linux academy’s CKAD practice questions. Take all the CKAD practice questions in Linux academy very seriously.
+Kubernetes, by default, allows all pods to communicate with each other and the internet.  Network Policies are used to implement zero-trust pod communication policy by creating a deny-all policy that prevents inbound and outbound communications between pods by default.
 
-> Take all the CKAD practice questions in Linux academy very seriously
+```yaml 
 
-I didn’t go through any of the video tutorials on Linux Academy, but what I can say is focus on each session’s practice questions about 2–3 days before the exam.
-
-5\. Kubernetes.io docs — Go through the [task session](https://kubernetes.io/docs/tasks/) of the docs.
-
-### Exam Tips
-
-1.  Kubernetes.io search: I got a bit frustrated by typing long words like “persistentvolume claim” or “networkpolicy” into the search box, so one day I thought I’d try the `kubectl` shortcodes instead. Guess what? It worked! So instead of typing “persistentvolume claim” or “network policy” into the docs, I simply typed in `pvc`, `netpol`, `pv`, etc and I got the same result set. Do all you possibly can to save time.
-2.  **VIM**: Get comfortable with VIM text editor. Please refer to the “[CKAD browser terminal](https://codeburst.io/the-ckad-browser-terminal-10fab2e8122e)” guide.
-3.  **Use AutoComplete:** Autocomplete is enabled for you in the exam, but it will not work if you have the `k=kubectl` alias set. One of the first things I did in the exam was to add `complete -F __start_kubectl k` command to `~/.bashrc`. I memorized the command, but you don’t have to as you can copy it from the [docs](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#bash). Autocomplete is an absolute time-saver. For example, if I need to quickly delete a pod called webone, I’d type: `k del_<tab-key>_ po we_<tab-key>_ --for_<tab-key>_ --gr_<tab-key>_ 0.` This translates to `k delete po webone --force —-grace-period 0`
-4.  **Persistent Volumes:** Practice this [Persistent Volume question](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/) thoroughly. I will, however, recommend that you practice this on a cluster with 2 or more worker nodes for the following reasons: `i)` SSH into any of the nodes and create the said file `ii)` You need to `sudo -i` to be able to create files in some directories such /etc/, /opt/ etc. `iii)` Type `exit` to return to the master node `iv)` Ensure that the nginx pod is scheduled on the intended node by using either nodeName (this is faster), nodeSelector or nodeAffinity.
-5.  **Always return:** You’d need to use `sudo -i` to be able to create or edit files in certain directories, remember to type `exit` when done. Always remember to return to the master node.
-6.  **Use** `**~/.bashrc:**` Due to 4 and 5 above, do not simply type your aliases in the terminal, use `~/.bashrc` for all your aliases so you don’t have to do it all over again when you return to the master node. My `~/.bashrc` aliases in the exam look like this:
-
-```shell
-
-alias k=kubectl  
-alias kns='k config set-context --current --namespace  ' 
-alias kgc='k get po -l x=y'                                 
-complete -F __start_kubectl k  
-dr='--dry-run=client -o yaml'
+apiVersion: networking.k8s.io/v1 
+kind: NetworkPolicy 
+metadata:   
+  name: deny-all 
+spec:   
+  podSelector: {}  #Blank {} applies to all pods  
+  policyTypes:   
+  - Ingress   
+  - Egress
 
 ```
 
-Don’t forget to reload your terminal by typing `source ~/.bashrc`
+The example policy shown above denies both ingress and egress traffics to/from all pods by default. Once this is in place, other policies can then be created to override the default deny-all Network Policy by explicitly defining pod labels allowed to communicate with each other. For example, the Network Policy below restricts ingress to `db` pod from ONLY the `api` and `web` pods respectively:
 
-I bet you’re familiar with all of the above aliases, except you’re questioning why I’d need to do alias `kgc=’k get po -l x=y’` instead of `kgc=‘k config get-contexts’`? Your answer is in tip #7.
 
-My `~/.vimrc` settings look like this:
+```yaml
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: db-allow-services
+spec:
+  podSelector:
+    matchLabels:
+      app: zenithcv
+      role: db
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: zenithcv
+          role: web
+    - podSelector:
+        matchLabels:
+          app: zenithcv
+          role: api
+```
 
-set tabstop=2  
-set expandtab   
-set shiftwidth=2 # very useful for indentation
+In other words, only pods whose labels matches: (`app: zenithcv` and `role: db`) and (`app: zenithcv` and `role: api`) are allowed to connect to the database pod. 
 
-7\. **Less is more**: Except it’s a one-liner solution, I did not use `-n <namespace>` in any questions in the exam because I sometimes forget to add `-n`. I used `kns <namespace>` to be absolutely sure. `k get po -l x=y` on the other hand, returns a decluttered name of the namespace to me. For example:
+## Service Mesh
 
-`~ $ k get po -l x=y`
+While Network Policy works excellent, it is difficult to scale. This is one of many reasons why Service meshes have emerged as a popular solution for many to achieve their Zero trust architecture’s goals. Service meshes create a virtual network layer to connect and control distributed application services. Although most service mesh solutions did not initially focus on network security but focused on facilitating and managing intelligent service discovery and request routing, the most popular open-source projects now provide features suitable for zero trust architecture. Service meshes are increasingly becoming popular; they eliminate many of the burdens of making significant changes to enable strict authentication and authorisation controls by creating overlays that do not require individual applications modification.
 
-No resources found in **_israelo_** namespace.
+Kubernetes Service meshes such as HashiCorp Consul, Istio, Linkerd and the like typically use point-to-point, distributed routing mechanism, which creates each cluster pod proxy instance. These proxies can manage client TLS certificates, which the proxy can use to prove its identity when making connections to other services or receiving connections from other clients. The method of using TLS certificates to provide identity certification on the client and server is called Mutual Transport Layer Security (mTLS). In addition to performing connection authentication, mTLS is also used to encrypt network connections.
+In addition to authentication and encryption, different service meshes support various authorisation sources, ranging from static lists to integrations with third-party single sign-on or other services.
 
-Now, go ahead and type `k config get-contexts` , the result is a lot if all you’re interested in is just the name of your current namespace.
+While Service meshes offer several Zero Trust Security's core benefits, they not provide a <strong> complete </strong> zero-trust solution for Kubernetes clusters. Even if you cannot achieve a perfect zero-trust architecture in your Kubernetes clusters, any incremental changes you make in Service Mesh direction will help protect your cluster, and its workloads as most tools that are primarily built to provide Kubernetes Security leverages the mesh. This brings us to Portshift.
+## Enter porshift
 
-![Cert](https://cdn-images-1.medium.com/max/1200/1*qY6iMu4ScDNarozEiP-YTQ.png)
+Porshift came into my radar when Cisco announced its acquisition. Portshift is Kubernetes-Native Security Platform that provides a Single Pane of glass for Containers and Kubernetes. It encrypts Intra and iter cluster communications and provides security insights into CI/CD pipelines and Kubernetes runtime. 
 
-8\. **Namespaces**: When you switch to a new cluster, notice that the namespace doesn’t change automatically to the `default` namespace. **_This is so important._** So be sure to return to the default namespace if the question doesn't specify a namespace. `kns default` then `kgc` for your own peace of mind.
+What distinguishes Portshift (in my opinion) is their agentless approach. I have had over 4 years experience in the Application Performance Monitoring (APM) industry, and I am well acquainted with the pains, overhead and constraints that agent-based implementation can cause, especially in a containerised environment. 
+The agentless approach means it is easy to scale Kubernetes deployments with Portshift. It also means that it is lightweight and has fewer footprints whilst protecting solutions Kubernetes deployments from threats and threats vulnerabilities across images, containers, runtime deployments and Kubernetes infrastructure.
+## Summary
 
-9\. **Deployment Strategy**: There is no mention of [deployment strategy](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy) in any of the practice resources I mentioned above, including CKAD Exercises. Learn the two types of deployment strategies — Recreate and Rolling update. Know how to change `maxUnavailable` and `maxSurge` values. Practice how to avoid downtime by combining rolling update with `readinesssProbe` and `livenessProbe`
+As applications and networks are becoming increasingly complex, so is security threats. The traditional security perimeter (or firewall) around organisations infrastructure, apps and data is simply no longer sufficient and does not work with cloud-native and micro-services architecture. Adopting a zero-trust network model is the best practice for securing workloads and hosts in your cloud-native strategy.
 
-10\. **Immutable objects**: Pods are immutable objects so before you delete a pod, remember to take a backup (`k get po webone -o yaml > 1.pod.yaml`). This also applies to any YAML file that you’re asked to modify. Take a backup before you edit it.
-
-In summary, there’s no such thing as over-preparation in my opinion, the exam is hard, no doubt. Use practice environments that can vet and score your performance under time pressure — good examples are killer.sh and KodeKloud.
-
-I attempted 17 out of the 19 questions and I scored 82%.
-
-Please post a comment below if you have any questions.
-
-Good luck and stay hungry!
-
-<i class="aligncenter"> Notice : This blog was first published on [medium](https://iogbole.medium.com/ckad-1-18-exam-preparation-notes-6c91f8140393) </i>
-
-<p class="aligncenter">
-<img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/104130796-b730ce80-536a-11eb-97e8-79b6d2339726.jpg"/>
-</p>
+Kubernetes default Network Policies are porous and should not be used as-is in Production. Network Policies and Service Meshes are a great way to start exploring and implementing Zero Trust Security in Kubernetes, but they do not provide the full benefits of Zero Trust Security. Solutions such as portshift may be considered.
