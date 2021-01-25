@@ -17,7 +17,7 @@ Traditional IT network security is based on the castle-and-moat concept. In cast
 
 This vulnerability in castle-and-moat security systems is exacerbated by the emergence of micro-services and cloud-native technologies. Organisations no longer have their applications and data in just one place - behind a dedicated firewall. Cloud-native makes it more difficult to have a single security control for an entire network.
 
-Zero trust is the foundation of a growing trend of security-first infrastructures, and it is one of the core philosophies of the  <a href="https://dodcio.defense.gov/Portals/0/Documents/DoD%20Enterprise%20DevSecOps%20Reference%20Design%20v1.0_Public%20Release.pdf" target="_blank"><b>DevSecOps</b></a>culture. The Zero trust model overturns the long-held traditional view that every entity (be it the application, server, networking software or hardware) found in an internal network could be trusted, not even the infrastructure itself should be trusted. This added layer of security has been shown to prevent data breaches.
+Zero trust is the foundation of a growing trend of security-first infrastructures, and it is one of the core philosophies of the  <a href="https://dodcio.defense.gov/Portals/0/Documents/DoD%20Enterprise%20DevSecOps%20Reference%20Design%20v1.0_Public%20Release.pdf" target="_blank"><b>DevSecOps</b></a> culture. The Zero trust model overturns the long-held traditional view that every entity (be it the application, server, networking software or hardware) found in an internal network could be trusted, not even the infrastructure itself should be trusted. This added layer of security has been shown to prevent data breaches.
 
 According to a recent publication by the <a href ="https://securitybrief.eu/story/data-breaches-costing-companies-millions-could-incident-response-help" target="_blank"> securitybrief.eu </a>, data breaches cost companies $3.86 million per breach. The other none quantifiable cost that is often not talked about is reputation. Considering the consequences of a data breach to organisations, it should come as no surprise that many organisations are now eager to adopt a zero-trust security policy.
 
@@ -103,9 +103,9 @@ What distinguishes Portshift (in my opinion) is their agentless approach. I have
 
 ## Summary
 
-As applications and networks are becoming increasingly complex, so is security threats. The traditional security perimeter (or firewall) around organisations infrastructure, apps and data is simply no longer sufficient and does not work with cloud-native and micro-services architecture. Adopting a zero-trust network model is the best practice for securing workloads and hosts in your cloud-native strategy.
+As applications and networks are becoming increasingly complex, so are security threats. The traditional security perimeter around organisations infrastructure, apps and data is no longer sufficient and does not work with cloud-native and micro-services architecture. Building a Zero trust model into architectures from the ground-up is the best approach for securing cloud-native infrastructure and workloads.
 
-Kubernetes default Network Policies are porous and should not be used as-is in Production. Network Policies and Service Meshes are a great way to start exploring and implementing Zero Trust Security in Kubernetes, but they do not provide the full benefits of Zero Trust Security. Solutions such as Portshift may be considered.
+Kubernetes default Network Policies are porous and should not be used as-is in Production. Network Policies and Service Meshes are good entrypoints way to start exploring and implementing Zero Trust Security in Kubernetes, but they do not provide the full benefits of Zero Trust Security. Kubernetes-native security solutions such as Portshift may come handy. 
 
 ## References:
 
