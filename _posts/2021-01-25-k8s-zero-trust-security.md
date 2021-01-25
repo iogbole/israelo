@@ -4,7 +4,7 @@ title:  "Implementing Zero Trust Security in Kubernetes"
 author: israel
 categories: [ 'Cloud Native' ]
 tags: [containers, kubernetes, application, developer, cloud-native, security ]
-image: https://user-images.githubusercontent.com/2548160/105642941-b462cd00-5e84-11eb-9650-18c117c5379a.png
+image: https://user-images.githubusercontent.com/2548160/105699638-96867e00-5eff-11eb-825f-b9d93cea87ad.png
 date:   2021-01-25 11:10:35 +0300
 excerpt: "Traditional network security is based on the military inspired castle-and-moat design. The vulnerability in castle-and-moat security systems is exacerbated by the emergence of micro-services and cloud-native technologies...The question is,  how can a Zero trust model be implemented in a Kubernetes environment?..."
 permalink: /blog/k8s-zero-trust-security.html
