@@ -105,10 +105,12 @@ What distinguishes Portshift (in my opinion) is their agentless approach. I have
 
 As applications and networks are becoming increasingly complex, so are security threats. The traditional security perimeter around organisations infrastructure, apps and data is no longer sufficient and does not work with cloud-native and micro-services architecture. Building a Zero trust model into architectures from the ground-up is the best approach for securing cloud-native infrastructure and workloads.
 
-Kubernetes default Network Policies are porous and should not be used as-is in Production. Network Policies and Service Meshes are good entrypoints way to start exploring and implementing Zero Trust Security in Kubernetes, but they do not provide the full benefits of Zero Trust Security. Kubernetes-native security solutions such as Portshift may come handy. 
+Kubernetes default Network Policies are porous and should not be used as-is in Production. Network Policies and Service Meshes are good entrypoints way to start exploring and implementing Zero Trust Security in Kubernetes, but they do not provide the full benefits of Zero Trust Security. Kubernetes-native security solutions such as Portshift may come handy. Portshift uses an agentless approach which makes it lightweigt and easy to scale. 
 
 ## References:
 
 - https://www.ciosummits.com/wp-zero-trust.pdf
 
 - https://www.gartner.com/en/documents/3986053/market-guide-for-zero-trust-network-access
+
+- https://www.portshift.io/product/kubernetes-security
