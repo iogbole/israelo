@@ -15,9 +15,11 @@ Zero trust security is an IT security model that requires strict identity verifi
 
 Traditional IT network security is based on the castle-and-moat concept. In castle-and-moat security, it is difficult to obtain access from outside the network, but by default, everyone inside the network is trusted. The problem with this approach is that once an attacker gains access to the network, they can freely control all content inside
 
-This vulnerability in castle-and-moat security systems is exacerbated by the fact that companies no longer have their data in just one place. Today, information is often spread across cloud vendors, which makes it more difficult to have a single security control for an entire network.
+This vulnerability in castle-and-moat security systems is exacerbated by the emergence of micro-services and cloud-native technologies. Organisations no longer have their applications and data in just one place - behind a dedicated firewall. Cloud-native makes it more difficult to have a single security control for an entire network.
 
-Zero trust security means that no one is trusted by default from inside or outside the network, and verification is required from everyone trying to gain access to resources on the network. This added layer of security has been shown to prevent data breaches. A recent IBM-sponsored study demonstrated that the average cost of a single data breach is over $3 million. Considering that figure, it should come as no surprise that many organizations are now eager to adopt a zero-trust security policy.
+Zero trust is the foundation of a growing trend of security-first infrastructures, and it is one of the philosophies that that drives the <a href="https://dodcio.defense.gov/Portals/0/Documents/DoD%20Enterprise%20DevSecOps%20Reference%20Design%20v1.0_Public%20Release.pdf" target="_blank"><b>DevSecOps culture </b> </a>.  The Zero trust model overturns the long-held traditional view that every entity - be it the application, server, networking software or hardware, found in an internal network could be trusted, not even the infrastructure itself should be trusted. This added layer of security has been shown to prevent data breaches.
+
+According to a recent publication by the <a href ="https://securitybrief.eu/story/data-breaches-costing-companies-millions-could-incident-response-help" target="_blank"> securitybrief.eu </a>, data breaches cost companies $3.86 million per breach. The other none quantifiable cost that is often not talked about is reputation. Considering the consequences of a data breach to organisations, it should come as no surprise that many organisations are now eager to adopt a zero-trust security policy.
 
 ## Principle of Zero Trust Architecture
 
@@ -27,19 +29,19 @@ Zero-trust architectures generally follow these principles:
 
 - Security controls should apply equally to all entities - including apps and infrastructure, regardless of their network location.
 
-- Network connections should be authenticated at both ends, by the server and the client. Client authentication by the server is generally expected now, but clients should also verify that they have connected to a valid server. 
+- Network connections should be authenticated at both ends, by the server and the client. Client authentication by the server is generally expected now, but clients should also verify that they have connected to a valid server.
 
-- All network connections and transactions should be subject to continuous monitoring for analysis. 
+- All network connections and transactions should be subject to continuous monitoring for analysis.
 
 ## Implementing Zero Security model in Kubernetes
 
-In a containerised environment such as Kubernetes, Zero trust security must be baked into the design, build, development and runtime stages. Kubernetes defaults are generally not suited for Production use as it comes with a wide range of liberal policies. Kubernetes policies need to be configured inline with the security and business objective. Let's consider some of the ways to implement Zero trust in Kubernetes.
+In a containerised environment such as Kubernetes, Zero trust security must be baked into the design, build, development and runtime stages. Kubernetes defaults are generally not suited for production use as it comes with a wide range of liberal policies. Kubernetes policies need to be configured inline with the security and business objective.
 
-Like most things with Kubernetes, there are several methods of implementing zero-trust principles within a Kubernetes cluster - with varying results. Zero Trust can be implemented in Kubernetes by using Network Policies (recommended for small workloads) and/or Service meshes. Network Policies may be sufficient for a small to medium-sized Kubernetes workloads.
+Like most things with Kubernetes, there are several methods of implementing zero-trust principles within a Kubernetes cluster - with varying results. Zero Trust can be implemented in Kubernetes by using Network Policies (recommended for small workloads) and/or Service meshes. Network Policies may be sufficient for a small to medium-sized Kubernetes workloads.  Let's consider some of the ways to implement Zero trust in Kubernetes.
 
 ### Network Policy
 
-Kubernetes, by default, allows all pods to communicate with each other and the internet. Network Policies are used to implement zero-trust pod communication policy by creating a deny-all policy that prevents inbound and outbound communications between pods by default.
+Kubernetes, by default, allows all pods to communicate with each other and the internet. Network Policies can be used to implement zero-trust between pods by creating a deny-all policy that prevents inbound and outbound communications between pods by default.
 
 ```yaml 
 
@@ -54,6 +56,7 @@ spec:
   - Egress
 
 ```
+
 The example policy shown above denies both ingress and egress traffics to/from all pods by default. Once this is in place, other policies can then be created to override the default deny-all Network Policy by explicitly defining pod labels allowed to communicate with each other. For example, the Network Policy below restricts ingress to `db` pod from ONLY the `api` and `web` pods respectively:
 
 
@@ -104,11 +107,8 @@ As applications and networks are becoming increasingly complex, so is security t
 
 Kubernetes default Network Policies are porous and should not be used as-is in Production. Network Policies and Service Meshes are a great way to start exploring and implementing Zero Trust Security in Kubernetes, but they do not provide the full benefits of Zero Trust Security. Solutions such as Portshift may be considered.
 
-
-## References: 
+## References:
 
 - https://www.ciosummits.com/wp-zero-trust.pdf
 
 - https://www.gartner.com/en/documents/3986053/market-guide-for-zero-trust-network-access
-
-
