@@ -6,7 +6,7 @@ categories: [ 'Identity Management', 'Cloud Native'  ]
 tags: [sso, ldap, identity, adfs, shibboleth ]
 image: assets/images/sso.jpg
 #date:   2021-07-05 06:01:35 +0300
-#permalink: /test/sso
+permalink: /blog/setup-shib-sso-like-a-boss.html
 #toc: true
 date:   2020-12-12 06:01:35 +0300
 excerpt: "Have you ever wondered how SSO work under the hood? I was battered by various complex SSO/LDAP integration issues, I decided to make it personal..."
