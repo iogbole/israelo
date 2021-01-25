@@ -20,7 +20,7 @@ Zero trust is the foundation of a growing trend of security-first infrastructure
 
 According to a recent publication by the <a href ="https://securitybrief.eu/story/data-breaches-costing-companies-millions-could-incident-response-help" target="_blank"> securitybrief.eu </a>, data breaches cost companies $3.86 million per breach. The other none quantifiable cost that is often not talked about is reputation. Considering the consequences of a data breach to organisations, it should come as no surprise that many organisations are now eager to adopt a zero-trust security policy.
 
-Considering that Kubernetes plays a massive role in enabling cloud-native deployments, the question is,  how can a Zero trust model be implemented in a Kubernetes environment? First, let's review the core principles of a Zero trust architect, then see how they apply to Kubernetes.
+Moreso, since Kubernetes plays a massive role in enabling cloud-native deployments, the question is,  how can a Zero trust model be implemented in a Kubernetes environment? First, let's review the core principles of a Zero trust architecture, then see how they apply to Kubernetes.
 ## Principle of Zero Trust Architecture
 
 Zero-trust architectures generally follow these principles:
