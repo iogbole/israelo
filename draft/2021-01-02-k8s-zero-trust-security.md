@@ -11,9 +11,9 @@ excerpt: "In a containerised environment such as Kubernetes, Zero trust security
 permalink: /draft/zero.html
 ---
 
-Zero trust security is an IT security model that requires strict identity verification for every person and device trying to access resources on a private network, regardless of whether they are sitting within or outside of the network perimeter. There is no single specific technology associated with a zero trust architecture; it is a holistic cyber security approach that combines multiple different principles and technologies.
+Zero trust security is an information technology security model that requires ascetic verification for everyone and everything trying to access resources on a private network, regardless of whether they are sitting within or outside of the network perimeter. There is no single specific technology associated with a zero trust architecture; it is a holistic cyber security methodology that combines various  principles and technology tenets.
 
-Traditional IT network security is based on the castle-and-moat concept. In castle-and-moat security, it is difficult to obtain access from outside the network, but by default, everyone inside the network is trusted. The problem with this approach is that once an attacker gains access to the network, they can freely control all content inside
+Traditional network security is based on the military inspired castle-and-moat design. In a castle-and-moat security model, it is difficult to obtain access from outside the network, but by default, everyone inside the network is trusted. The problem with this approach is that once an attacker gains access to the network, they can freely control all content inside. 
 
 This vulnerability in castle-and-moat security systems is exacerbated by the emergence of micro-services and cloud-native technologies. Organisations no longer have their applications and data in just one place - behind a dedicated firewall. Cloud-native makes it more difficult to have a single security control for an entire network.
 
