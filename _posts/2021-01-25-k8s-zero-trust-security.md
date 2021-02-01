@@ -7,7 +7,7 @@ tags: [containers, kubernetes, application, developer, cloud-native, security ]
 image: https://user-images.githubusercontent.com/2548160/105699638-96867e00-5eff-11eb-825f-b9d93cea87ad.png
 date:   2021-01-25 11:10:35 +0300
 excerpt: "Traditional network security is based on the military inspired castle-and-moat design. The vulnerability in castle-and-moat security systems is exacerbated by the emergence of micro-services and cloud-native technologies...The question is,  how can a Zero trust model be implemented in a Kubernetes environment?..."
-permalink: /blog/k8s-zero-trust-security.html
+#permalink: /blog/k8s-zero-trust-security.html
 ---
 
 Zero trust security is an information technology security model that requires ascetic verification for everyone and everything trying to access resources on a private network, regardless of whether they are sitting within or outside of the network perimeter. There is no single specific technology associated with a zero trust architecture; it is a holistic cyber security methodology that combines various  principles and technology tenets.
