@@ -64,7 +64,7 @@ ga('send', 'pageview');
 <!-- End Sidebar Navigation
 ================================================== -->
 
-<div class="site-content {% if page.url == '/blog/' or  page.url contains '/blog/page' %} disable_firstpage {% endif %}">
+<div class="site-content {% if  page.url == '/' or  page.url == '/blog/' or  page.url contains '/blog/page'  %} disable_firstpage {% endif %}">
 
 <div class="container">
 
@@ -78,7 +78,7 @@ ga('send', 'pageview');
 
     <!-- Site Tag
     ================================================== -->
-    {% if page.url == '/blog/' or  page.url contains '/blog/page' %}
+    {% if page.url == '/' page.url == '/blog/' or  page.url contains '/blog/page' %}
     
     {% include hero.html %}
     <hr>
