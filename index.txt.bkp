@@ -1,19 +1,16 @@
 ---
 layout: default
-title: Welcome
-permalink: '/'
+title: Home
+comments: false
+
 ---
 
-<div class="blog-grid-container">
-   
-    <a href="{{ site.blogurl }}" class="btn btn-dark"> Read the Blogs &rarr;</a> 
-</div>
+
 
 <!-- Posts Index
 ================================================== -->
 <div class="blog-grid-container">
     {% for post in paginator.posts %}
-
         {% include postbox.html %}
     {% endfor %}
 </div>
@@ -25,4 +22,14 @@ permalink: '/'
     {% include pagination.html %}
 </span>
 </div>
+
+
+
+<!--
+
+<div class="blog-grid-container">
+   
+    <a href="{{ site.blogurl }}" class="btn btn-dark"> Read the Blogs &rarr;</a> 
+</div>
+--->
 
