@@ -29,6 +29,7 @@ In the end, I ended up building a Pi Project that does the following:
 2. <b> Network Attached Storage </b>
 
    The NAS server serves two purposes:
+   
     a) It manages the NFS share and raid replication that is used for the wordpress MySQL (Kubernetes) persistent storage.
 
     b) It is used to sync photos, files, videos etc from our phones and laptops. We also stream contents from the NAS server to TV. It's more or less private cloud for the family.  
