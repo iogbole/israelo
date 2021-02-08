@@ -26,15 +26,17 @@ In the end, I ended up building a Pi Project that does the following:
 
     I containerised all the sites so I can use Kubernetes to orchestrate the deployments. The Rancher K3s Kubernetes cluster is managed via Ansible playbooks. I used K3s because it is lightweight and super efficient on the Pi. 
 
-2. Network Attached Storage : 
+2. <b> Network Attached Storage </b>
 
-   This serves two purposes:
-        - It manages the NFS share and raid replication that is used for the wordpress MySQL (Kubernetes) persistent storage. 
-        - It is used to sync photos, files, videos etc from our phones and laptops. We also stream contents from the NAS server to TV. It's more or less private cloud for the family. 
+   The NAS server serves two purposes:
 
-    I used the NextCloud opensource software to manage the NAS server. It has a a really good app for Android, iPhones.
+        - It manages the NFS share and raid replication that is used for the wordpress MySQL (Kubernetes) persistent storage.
 
-The result is shown the the picture below: 
+        - It is used to sync photos, files, videos etc from our phones and laptops. We also stream contents from the NAS server to TV. It's more or less private cloud for the family.  
+
+    I used <a href="https://nextcloud.com/"> NextCloud</a> open source software to manage the NAS server. It has a really good app for Android, iPhones.
+
+The result of my setup is shown the the picture below: 
 
 A cased up Pi booting from an SSD drive (using a SATA III USB 3 converter).
 
@@ -43,12 +45,14 @@ A cased up Pi booting from an SSD drive (using a SATA III USB 3 converter).
 <br>
 </p>
 
-Stack `em up! 
+Stack `em up!   
 
 <p class="aligncenter">
 <img alt ="stack" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/107226410-00c81400-6a12-11eb-9dbc-d35b0d69dd17.jpg"/> 
 <br>
 </p>
+
+I stacked cased Pis up using glue dots, and a Rubber ring to hold the SSD drives together. I will explain why I did not use the regular Pi cluster casings in consequent blog posts.
 
 <p class="aligncenter">
 <img alt="stack2" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/107226521-26edb400-6a12-11eb-8b3b-20421fde95ff.jpg"/> 
