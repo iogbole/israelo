@@ -18,7 +18,7 @@ The Raspberry Pi, 4 Model B, is the latest version (as at the time of writing) o
 
 I host a few <a href="https://woocommerce.com/" target="_blank"> woo-commerce </a> (side-hustle) projects and websites for friends and family with a hosting company. I read about the Raspberry Pi 4 boards, and I was super impressed by this small computer board's power. I did the maths; it worked out cheaper to host my sites (including the WordPress woo-commerce site) from home using a cluster of Pis - so I decided to build a Raspberry Pi cluster for my projects -  including a Network Attached Storage (NAS) server.  That said, the cost-saving element of the story is only an excuse to justify getting the Pi toys. I derive a lot of fun tinkering with programmable boards.
 
-I will use the Ras will document my experience and the wrong/right decisions I made whilst tinkering with the Raspberry Pi. 
+I will use this Raspberry Pi blog post series to document and share my experience,  and the wrong/right decisions I made whilst tinkering with the Raspberry Pi.
 
 In the end, I ended up building a Pi Project that does the following:
 
