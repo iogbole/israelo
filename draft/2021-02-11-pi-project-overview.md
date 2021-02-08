@@ -63,7 +63,7 @@ I stacked the cased Raspberry Pis up using glue dots (they hold very well), and 
 
 These are some of the components that I used:
 
-1. One 8GB RAM and two 4GB RAM Raspberry Pi 4 boards:
+1. One 8GB RAM and two 4GB RAM Raspberry Pi 4 boards
 
     The 8GB RAM board is used as a NAS Server, NFS persistent storage, and a Kubernetes worker node.
 
@@ -77,16 +77,16 @@ These are some of the components that I used:
 
     I bought all three  Raspberry Pi boards from  <a href="https://uk.rs-online.com/web/c/raspberry-pi-arduino-development-tools/raspberry-pi-shop/raspberry-pi/" target="_blank"> RS-Components. </a>
 
-2. SSD drives: 
+2. Three SSD drives:
 
     I used a 500GB repurposed SSD for the NAS server, and two 250GB SSD drives for the master and worker nodes. However, I bought these <a href="https://www.amazon.co.uk/gp/product/B077XVTTJC/ref=ppx_yo_dt_b_asin_title_o09_s00?ie=UTF8&psc=1" target="_blank"> SATA III 2.5 inch enclosures. </a>
 
-    A combination of SSD and USB 3 gives you speed.
+    A combination of SSD and USB 3 gives you speed, which is most needed by the Kubernetes master node. 
 
-3. Acrylic case with fan and 4pcs Heat sinks - The famous Pi cluster case didn't work for me, because of the SSDs. I had to return it. 
+3. Acrylic case with a fan and 4pcs Heat sinks - The famous Pi cluster case didn't work for me, because of the SSDs. I had to return it. 
    I also needed the flexibility to be able to take the boards apart if needed in the future. Amazon <a href="https://www.amazon.co.uk/gp/product/B07TVLTMX3/ref=ppx_yo_dt_b_asin_title_o06_s00?ie=UTF8&psc=1" target="_blank">link </a>
  
-4. USB Power - You need a 5V and 3.1A power supply for each board.  Amazon <a href="https://www.amazon.co.uk/gp/product/B083184N9N/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1" target="_blank">link </a>
+4. USB Power - You need a 5V and 3.1A constant power supply for each board. I bought an extension cable that can also be used as plug.  Amazon <a href="https://www.amazon.co.uk/gp/product/B083184N9N/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1" target="_blank">link </a>
 
 5. 3 park of 1.5m USB C cables.  Amazon <a href="https://www.amazon.co.uk/gp/product/B07CJJHVKX/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&psc=1" target="_blank">link </a>
 
@@ -95,9 +95,7 @@ Amazon <a href="https://www.amazon.co.uk/gp/product/B07RMXNLF4/ref=ppx_yo_dt_b_a
 
 5. SD Card Reader. Amazon <a href="https://www.amazon.co.uk/gp/product/B07KVZJH2D/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1" target="_blank">link </a> 
 
-In the next blog post, we will explore how to configure your Raspberry Pis. 
-
-Please leave a comment below if you have any questions.
+In the next blog post, I will explore how to configure your Raspberry Pis.
 
 <p class="aligncenter">
 <video width="618" height="347" controls preload> 
@@ -105,3 +103,5 @@ Please leave a comment below if you have any questions.
     <source src="https://raw.githubusercontent.com/iogbole/blog.israelo/stage/assets/videos/pivid.webm" media="only screen and (max-device-width: 568px)"></source>
 </video>
 </p>
+
+Please leave a comment below if you have any questions. 
