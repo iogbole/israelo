@@ -67,9 +67,9 @@ These are some of the components that I used:
 
     The 8GB RAM board is used as a NAS Server, NFS persistent storage, and a Kubernetes worker node.
 
-    The first 4GB RAM board is used as the Kubernetes master node. I also configured it as a worker node; however, I used NodeAffinity to selectively run lightweight workloads on this node. 
+    The first 4GB RAM board is used as the Kubernetes master node. I also configured it as a worker node; however, I ensure to use <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity" target="_blank">NodeAffinity </a> to selectively run lightweight workloads on this nodes. 
 
-    The second 4GB RAM  board is a Kubernetes worker node - again, I used node affinity to schedule heavier workloads on this node. 
+    The second 4GB RAM  board is a Kubernetes worker node - again, I used NodeAffinity to schedule heavier workloads on this node.
 
     All three nodes run the Raspberry Pi OS.
 
@@ -104,4 +104,4 @@ In the next blog post, I will explore how to configure your Raspberry Pis.
 </video>
 </p>
 
-Please leave a comment below if you have any questions. 
+Please leave a comment below if you have any questions.
