@@ -6,7 +6,9 @@ categories: [ 'Cloud Native', 'Edge Computing', 'Pi' ]
 tags: [containers, raspberry, cloud-native, pi, IoT, edge ]
 image: https://user-images.githubusercontent.com/2548160/107218082-0b30e080-6a07-11eb-80e7-c62e4f1197d2.jpg
 date:   2021-02-08 15:01:35 +0300
-excerpt: "Terraform is a declarative orchestration tool for provisioning and versioning of infrastructure. I have been working with Terraform at my workplace for a while, albeit from a Monitoring-as-Code perspective. Here is how I prepared for and passe the Terraform Certification exam..."
+excerpt: "The Raspberry Pi Project: Overview"
+
+permalink: /draft/pi
 
 ---
 
