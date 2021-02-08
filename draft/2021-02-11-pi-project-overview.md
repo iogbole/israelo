@@ -18,7 +18,7 @@ The Raspberry Pi 4 Model B is the latest version (as at the of writing this blog
 
 I host a few <a href="https://woocommerce.com/" target="_blank"> woo-commerce </a> (side-hustle) projects and websites for fiends and family with a hosting company. I read about the Raspberry Pi 4 boards and I was super impressed by the power of this small computer board. I did the maths, it worked out cheeper to host my sites (including the Wordpress woocommerce site) from home using a cluster of Pis - so I decided to build a Raspberry Pi cluster for my projects -  including a Network Attached Storage (NAS) server.  That said, the cost saving element of the story is only an excuse to justify getting the Pi toys, I derive a lot of fun tinkering with programmable boards.
 
-This blog posts will document my experience and the wrong/right decisions I made whilst tinkering with the Raspberry Pi. 
+I will use the Ras will document my experience and the wrong/right decisions I made whilst tinkering with the Raspberry Pi. 
 
 In the end, I ended up building a Pi Project that does the following:
 
@@ -29,14 +29,13 @@ In the end, I ended up building a Pi Project that does the following:
 2. <b> Network Attached Storage </b>
 
    The NAS server serves two purposes:
+    a) It manages the NFS share and raid replication that is used for the wordpress MySQL (Kubernetes) persistent storage.
 
-        - It manages the NFS share and raid replication that is used for the wordpress MySQL (Kubernetes) persistent storage.
+    b) It is used to sync photos, files, videos etc from our phones and laptops. We also stream contents from the NAS server to TV. It's more or less private cloud for the family.  
 
-        - It is used to sync photos, files, videos etc from our phones and laptops. We also stream contents from the NAS server to TV. It's more or less private cloud for the family.  
+   I used <a href="https://nextcloud.com/"> NextCloud</a> open source software to manage the NAS server. It has a really good app for Android, iPhones.
 
-    I used <a href="https://nextcloud.com/"> NextCloud</a> open source software to manage the NAS server. It has a really good app for Android, iPhones.
-
-The result of my setup is shown the the picture below: 
+The result of my setup is shown the the picture below:
 
 A cased up Pi booting from an SSD drive (using a SATA III USB 3 converter).
 
@@ -45,7 +44,7 @@ A cased up Pi booting from an SSD drive (using a SATA III USB 3 converter).
 <br>
 </p>
 
-Stack `em up!   
+Stack `em up!
 
 <p class="aligncenter">
 <img alt ="stack" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/107226410-00c81400-6a12-11eb-9dbc-d35b0d69dd17.jpg"/> 
