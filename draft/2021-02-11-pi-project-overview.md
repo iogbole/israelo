@@ -14,7 +14,7 @@ permalink: /draft/pi
 
 Raspberry Pi is a series of small single-board computers developed in the United Kingdom by the Raspberry Pi Foundation in association with Broadcom.
 
-The Raspberry Pi 4 Model B is the latest version (as at the of writing this blog) of the low-cost Raspberry Pi computer. The Pi isn't like your typical device; in its cheapest form it doesn't have a case, and is simply a credit-card sized electronic board -- of the type you might find inside a PC or laptop, but much smaller.
+The Raspberry Pi 4 Model B is the latest version (as at the time of writing) of the low-cost Raspberry Pi computer. The Pi isn't like your typical device; in its cheapest form it doesn't have a case, and is simply a credit-card sized electronic board -- of the type you might find inside a PC or laptop, but much smaller.
 
 I host a few <a href="https://woocommerce.com/" target="_blank"> woo-commerce </a> (side-hustle) projects and websites for fiends and family with a hosting company. I read about the Raspberry Pi 4 boards and I was super impressed by the power of this small computer board. I did the maths, it worked out cheeper to host my sites (including the Wordpress woocommerce site) from home using a cluster of Pis - so I decided to build a Raspberry Pi cluster for my projects -  including a Network Attached Storage (NAS) server.  That said, the cost saving element of the story is only an excuse to justify getting the Pi toys, I derive a lot of fun tinkering with programmable boards.
 
@@ -29,7 +29,7 @@ In the end, I ended up building a Pi Project that does the following:
 2. <b> Network Attached Storage </b>
 
    The NAS server serves two purposes:
-   
+
     a) It manages the NFS share and raid replication that is used for the wordpress MySQL (Kubernetes) persistent storage.
 
     b) It is used to sync photos, files, videos etc from our phones and laptops. We also stream contents from the NAS server to TV. It's more or less private cloud for the family.  
@@ -52,23 +52,57 @@ Stack `em up!
 <br>
 </p>
 
-I stacked the cased Pis up using glue dots, and a rubber ring to hold the SSD drives together. I will explain why I did not use the regular Pi cluster casings in consequent blog posts.
+I stacked the cased Raspberry Pis up using glue dots (they hold very well), and a rubber ring to hold the SSD drives together. I will explain why I did not use the regular Pi cluster casings in consequent blog posts.
 
 <p class="aligncenter">
 <img alt="stack2" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/107226521-26edb400-6a12-11eb-8b3b-20421fde95ff.jpg"/> 
 <br>
 </p>
 
-## Components 
+## Components
 
+These are some of the components that I used:
+
+1. One 8GB RAM and two 4GB RAM Raspberry Pi 4 boards:
+
+    The 8GB RAM board is used as a NAS Server, NFS persistent storage and as a Kubernetes worker node.
+
+    The first 4GB RAM board is used as the Kubernetes Master node. I also configured it as worker node, however I used NodeAffinity to selectively run lightweight workloads on it.
+
+    The second 4GB RAM  board is a Kubernetes worker node - again, I used node affinity to schedule heavier workloads on this node. 
+
+    All three nodes runs the Raspberry Pi OS.
+
+    The 8GB RAM node is still heavily under utilised - roughly under 3GB RAM utilisation on average. So it's probably not worth the investment, the 4GB is just was it's needed for my kind of workloads.
+
+    I bought all three  Raspberry Pi boards from  <a href="https://uk.rs-online.com/web/c/raspberry-pi-arduino-development-tools/raspberry-pi-shop/raspberry-pi/" target="_blank"> RS-Components. </a>
+
+2. SSD drives: 
+
+    I used a 500GB repurposed SSD for the NAS server, and two 250GB SSD drives for the master and worker nodes. However, I bought these <a href="https://www.amazon.co.uk/gp/product/B077XVTTJC/ref=ppx_yo_dt_b_asin_title_o09_s00?ie=UTF8&psc=1" target="_blank"> SATA III 2.5 inch enclosures. </a>
+
+    A combination of SSD and USB 3 gives you speed.
+
+3. Acrylic case with fan and 4pcs Heat sinks - The popular Pi cluster case just didn't work for me, because of the SSDs. 
+   I also needed the flexibility to be able to take the boards apart if needed in the future. Amazon <a href="https://www.amazon.co.uk/gp/product/B07TVLTMX3/ref=ppx_yo_dt_b_asin_title_o06_s00?ie=UTF8&psc=1" target="_blank">link </a>
+ 
+4. USB Power - You need a 5V and 3.1A power supply for each board.  Amazon <a href="https://www.amazon.co.uk/gp/product/B083184N9N/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1" target="_blank">link </a>
+
+5. 3 park of 1.5m USB C cables.  Amazon <a href="https://www.amazon.co.uk/gp/product/B07CJJHVKX/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&psc=1" target="_blank">link </a>
+
+4. Silicon Power 32GB 3D NAND High Speed MicroSD Card. You will need at least one SSD card to boot the Raspberry Pis. 
+Amazon <a href="https://www.amazon.co.uk/gp/product/B07RMXNLF4/ref=ppx_yo_dt_b_asin_title_o07_s00?ie=UTF8&psc=1" target="_blank">link </a>
+
+5. SD Card Reader. Amazon <a href="https://www.amazon.co.uk/gp/product/B07KVZJH2D/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1" target="_blank">link </a> 
+
+In the next blog post, we will explore how to configure your Raspberry Pis. 
 
 Please leave a comment below if you have any questions.
 
-Good luck and stay hungry!
-
 <p class="aligncenter">
-<img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/104319297-94bcc380-54d8-11eb-83b1-1b992f4bdaff.JPG"/> 
-<br>
-<font size="-3">Img source : beariscool</font>
-
+<video width="618" height="347" controls preload> 
+    <source src="/assests/videos/pivid.webm" media="only screen and (min-device-width: 568px)"></source>
+    <source src="/assests/videos/pivid.webm" media="only screen and (max-device-width: 568px)"></source>
+</video>
 </p>
+
