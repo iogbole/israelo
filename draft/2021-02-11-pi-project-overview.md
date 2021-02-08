@@ -101,8 +101,8 @@ Please leave a comment below if you have any questions.
 
 <p class="aligncenter">
 <video width="618" height="347" controls preload> 
-    <source src="assests/videos/pivid.webm" media="only screen and (min-device-width: 568px)"></source>
-    <source src="assests/videos/pivid.webm" media="only screen and (max-device-width: 568px)"></source>
+    <source src="https://raw.githubusercontent.com/iogbole/blog.israelo/stage/assets/videos/pivid.webm" media="only screen and (min-device-width: 568px)"></source>
+    <source src="https://raw.githubusercontent.com/iogbole/blog.israelo/stage/assets/videos/pivid.webm" media="only screen and (max-device-width: 568px)"></source>
 </video>
 </p>
 
