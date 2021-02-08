@@ -51,7 +51,7 @@ Stack `em up!
 <br>
 </p>
 
-I stacked cased Pis up using glue dots, and a Rubber ring to hold the SSD drives together. I will explain why I did not use the regular Pi cluster casings in consequent blog posts.
+I stacked the cased Pis up using glue dots, and a rubber ring to hold the SSD drives together. I will explain why I did not use the regular Pi cluster casings in consequent blog posts.
 
 <p class="aligncenter">
 <img alt="stack2" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/107226521-26edb400-6a12-11eb-8b3b-20421fde95ff.jpg"/> 
