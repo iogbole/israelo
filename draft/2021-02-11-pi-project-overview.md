@@ -6,7 +6,7 @@ categories: [ 'Cloud Native', 'Edge Computing', 'Pi' ]
 tags: [containers, raspberry, cloud-native, pi, IoT, edge ]
 image: https://user-images.githubusercontent.com/2548160/107218082-0b30e080-6a07-11eb-80e7-c62e4f1197d2.jpg
 date:   2021-02-08 15:01:35 +0300
-excerpt: "I have few sites "
+excerpt: "I had a few websites running on a managed hosting platform. This blog series describes how I am now running those public-facing websites (including a NAS server) from home using a Kubernetes Cluster running on the Raspberry Pi..."
 
 permalink: /draft/pi
 
