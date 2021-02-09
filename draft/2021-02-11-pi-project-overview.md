@@ -16,9 +16,16 @@ Raspberry Pi is a series of small single-board computers developed in the United
 
 The Raspberry Pi, 4 Model B, is the latest version (as at the time of writing) of the low-cost Raspberry Pi computer. The Pi isn't like your typical device; in its cheapest form it doesn't have a case, and is simply a credit-card sized electronic board - of the type you might find inside a PC or laptop, but much smaller.
 
-I host a few <a href="https://woocommerce.com/" target="_blank"> woo-commerce </a> (side-hustle) projects and websites for friends and family with a hosting company. I read about the Raspberry Pi 4 boards, and I was super impressed by this small computer board's power. I did the maths; it worked out cheaper to host my sites (including the WordPress woo-commerce site) from home using a cluster of Pis - so I decided to build a Raspberry Pi cluster for my projects -  including a Network Attached Storage (NAS) server.  That said, the cost-saving element of the story is only an excuse to justify getting the Pi toys. I derive a lot of fun tinkering with programmable boards.
+I host a few <a href="https://woocommerce.com/" target="_blank"> woo-commerce </a> (side-hustle) projects and websites for friends and family with a hosting company. I read about the Raspberry Pi 4 boards, and I was super impressed by this small computer board's power. I did the maths; it worked out cheaper to host my sites (including the WordPress woo-commerce site) from home using Raspberry Pis - so I decided to build a Kubernetes cluster using Raspberry Pis to host my projects. That said, the cost-saving element of the story is only an excuse to justify getting myself some Pi toys. I derive a lot of fun tinkering with programmable boards.
+
+Furthermore, some of my sites require a database, so there was a need to set up persistent storage for the database pod. This is where the Pi NAS server came in the picture. As well as all the benefits that a regular NAS server provides, I configured mine to host and manage the Kubernetes NFS volume - this lets me mount NFS volumes on multiple pods.
 
 I will use this Raspberry Pi blog post series to document and share my experience,  and the wrong/right decisions I made whilst tinkering with the Raspberry Pi.
+
+<p class="aligncenter">
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-cOix8JhjmQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
+
 
 In the end, I ended up building a Pi Project that does the following:
 
@@ -86,7 +93,7 @@ These are some of the components that I used:
 3. Acrylic case with a fan and 4pcs Heat sinks - The famous Pi cluster case didn't work for me, because of the SSDs. I had to return it. 
    I also needed the flexibility to be able to take the boards apart if needed in the future. The fan keeps the board cool, but it can be a little bit noisy when used with the 5V GPIO pin.  Amazon <a href="https://www.amazon.co.uk/gp/product/B07TVLTMX3/ref=ppx_yo_dt_b_asin_title_o06_s00?ie=UTF8&psc=1" target="_blank">link </a>
  
-4. USB Power - You need a 5V and 3.1A constant power supply for each board. I bought an extension cable that can also be used as plug.  Amazon <a href="https://www.amazon.co.uk/gp/product/B083184N9N/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1" target="_blank">link </a>
+4. USB Power - You need a 5V and 3.1A constant power supply for each board. I bought an extension cable that can also be used as a three-pin plug.  Amazon <a href="https://www.amazon.co.uk/gp/product/B083184N9N/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1" target="_blank">link </a>
 
 5. 3 park of 1.5m USB C cables.  Amazon <a href="https://www.amazon.co.uk/gp/product/B07CJJHVKX/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&psc=1" target="_blank">link </a>
 
@@ -95,10 +102,6 @@ Amazon <a href="https://www.amazon.co.uk/gp/product/B07RMXNLF4/ref=ppx_yo_dt_b_a
 
 5. SD Card Reader. Amazon <a href="https://www.amazon.co.uk/gp/product/B07KVZJH2D/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1" target="_blank">link </a> 
 
-In the next blog post, I will explore how to configure your Raspberry Pis.
-
-<p class="aligncenter">
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-cOix8JhjmQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</p>
+In the next blog post, I describe how to configure your the Raspberry Pi. 
 
 Please leave a comment below if you have any questions.
