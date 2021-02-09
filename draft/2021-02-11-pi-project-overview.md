@@ -14,13 +14,13 @@ permalink: /draft/pi
 
 Raspberry Pi is a series of small single-board computers developed in the United Kingdom by the Raspberry Pi Foundation in association with Broadcom.
 
-The Raspberry Pi, 4 Model B, is the latest version (as at the time of writing) of the low-cost Raspberry Pi computer. The Pi isn't like your typical device; in its cheapest form it doesn't have a case, and is simply a credit-card sized electronic board - of the type you might find inside a PC or laptop, but much smaller.
+The Raspberry Pi, 4 Model B, is the latest version (as at the time of writing) of the low-cost Raspberry Pi computer. The Pi isn't like your typical device; in its cheapest form it doesn't have a case, and is simply a credit-card sized electronic board, similar to the type you might find inside a PC or laptop, but much smaller.
 
-I had a few websites and <a href="https://woocommerce.com/" target="_blank"> woo-commerce </a> (side-hustle) projects hosted by a managed web hosting company. I read about the Raspberry Pi 4 boards, and I was super impressed by this small computer board's power. I did the maths; it worked out cheaper to host my sites (including the WordPress woo-commerce site) from home using Raspberry Pis - so I decided to build a Kubernetes cluster using Raspberry Pis to host my projects. That said, the cost-saving element of the story is only an excuse to justify getting myself some Pi toys. I derive a lot of fun tinkering with programmable boards.
+I had a few websites and <a href="https://woocommerce.com/" target="_blank"> woo-commerce </a> (side-hustle) projects hosted by a managed web hosting company. I read about the Raspberry Pi 4 boards, and I was super impressed by this small computer board's power. I did the maths; it worked out cheaper to host my sites (including the WordPress woo-commerce site) from home using Raspberry Pi - so I decided to build a Kubernetes cluster using Raspberry Pis to host my projects. That said, the cost-saving element of the story is only an excuse to justify getting myself some Pi toys. I derive a lot of fun tinkering with programmable boards.
 
 Furthermore, some of my sites require databases, so there was a need to set up persistent storage for the database pods. This is where the idea of (Pi) NAS server came into the picture. As well as all the benefits that a regular NAS server provides, I configured mine to host and manage the Kubernetes NFS volume - this lets me mount <a href="https://kubernetes.io/docs/concepts/storage/volumes/" target="_blank"> NFS volumes </a> on multiple pods.
 
-I will use these Raspberry Pi blog series to document and share my experience, and the wrong/right decisions I made whilst tinkering with the Raspberry Pi.
+I will use the Raspberry Pi blog series to document and share my experience, and the wrong/right decisions I made whilst tinkering with the Raspberry Pi.
 
 <p class="aligncenter">
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-cOix8JhjmQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -30,7 +30,7 @@ In the end, I ended up building a Pi Project that does the following:
 
 1. <b> K3s Kubernetes Cluster </b>
 
-    I containerised all the sites so I can use Kubernetes to orchestrate the deployments. The Rancher K3s Kubernetes cluster is managed via Ansible playbooks. I used K3s because it is lightweight and super-efficient on the Pi. 
+    I containerised all the sites so I can use Kubernetes to orchestrate the deployments. The Rancher K3s Kubernetes cluster is managed via Ansible playbooks. I used K3s because it's lightweight and super-efficient on the Pi. 
 
 2. <b> Network Attached Storage </b>
 
@@ -106,3 +106,23 @@ In the next blog post, I wil describe how to configure your the Raspberry Pi.
 Stay hungry! 
 
 Please leave a comment below if you have any questions.
+
+
+- name: appd-log-analytics
+        image: appdynamics/analytics-agent:20.6.0-win
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: "c:/logdir"
+          name: log-volume
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        #windows analytics agent requires a minimum of 1GB heap space to start. 
+        resources: 
+          requests: 
+            memory: "1Gi"
+          limits: 
+            memory: "1.5Gi"
+        envFrom:
+        - configMapRef:
+            name: analytics-agent-config
