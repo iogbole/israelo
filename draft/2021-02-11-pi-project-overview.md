@@ -98,10 +98,7 @@ Amazon <a href="https://www.amazon.co.uk/gp/product/B07RMXNLF4/ref=ppx_yo_dt_b_a
 In the next blog post, I will explore how to configure your Raspberry Pis.
 
 <p class="aligncenter">
-<video width="618" height="347" controls preload> 
-    <source src="https://youtu.be/UCgDUlSpPLo" media="only screen and (min-device-width: 568px)"></source>
-    <source src="https://youtu.be/UCgDUlSpPLo" media="only screen and (max-device-width: 568px)"></source>
-</video>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-cOix8JhjmQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 
 Please leave a comment below if you have any questions.
