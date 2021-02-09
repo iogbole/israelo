@@ -1,12 +1,12 @@
 ---
 layout: post
-title:  "The Raspberry Pi Project: Overview"
+title:  "Raspberry Pi Kubernetes Cluster: Getting Started"
 author: israel
 categories: [ 'Cloud Native', 'Edge Computing', 'Pi' ]
 tags: [containers, raspberry, cloud-native, pi, IoT, edge ]
 image: https://user-images.githubusercontent.com/2548160/107218082-0b30e080-6a07-11eb-80e7-c62e4f1197d2.jpg
 date:   2021-02-08 15:01:35 +0300
-excerpt: "The Raspberry Pi Project: Overview"
+excerpt: "I have few sites "
 
 permalink: /draft/pi
 
@@ -16,11 +16,11 @@ Raspberry Pi is a series of small single-board computers developed in the United
 
 The Raspberry Pi, 4 Model B, is the latest version (as at the time of writing) of the low-cost Raspberry Pi computer. The Pi isn't like your typical device; in its cheapest form it doesn't have a case, and is simply a credit-card sized electronic board - of the type you might find inside a PC or laptop, but much smaller.
 
-I host a few <a href="https://woocommerce.com/" target="_blank"> woo-commerce </a> (side-hustle) projects and websites for friends and family with a hosting company. I read about the Raspberry Pi 4 boards, and I was super impressed by this small computer board's power. I did the maths; it worked out cheaper to host my sites (including the WordPress woo-commerce site) from home using Raspberry Pis - so I decided to build a Kubernetes cluster using Raspberry Pis to host my projects. That said, the cost-saving element of the story is only an excuse to justify getting myself some Pi toys. I derive a lot of fun tinkering with programmable boards.
+I had a few websites and <a href="https://woocommerce.com/" target="_blank"> woo-commerce </a> (side-hustle) projects hosted by a managed web hosting company. I read about the Raspberry Pi 4 boards, and I was super impressed by this small computer board's power. I did the maths; it worked out cheaper to host my sites (including the WordPress woo-commerce site) from home using Raspberry Pis - so I decided to build a Kubernetes cluster using Raspberry Pis to host my projects. That said, the cost-saving element of the story is only an excuse to justify getting myself some Pi toys. I derive a lot of fun tinkering with programmable boards.
 
-Furthermore, some of my sites require databases, so there was a need to set up persistent storage for the database pods. This is where the idea of Pi NAS server came in the picture. As well as all the benefits that a regular NAS server provides, I configured mine to host and manage the Kubernetes NFS volume - this lets me mount <a href="https://kubernetes.io/docs/concepts/storage/volumes/" target="_blank"> NFS volumes </a> on multiple pods.
+Furthermore, some of my sites require databases, so there was a need to set up persistent storage for the database pods. This is where the idea of (Pi) NAS server came into the picture. As well as all the benefits that a regular NAS server provides, I configured mine to host and manage the Kubernetes NFS volume - this lets me mount <a href="https://kubernetes.io/docs/concepts/storage/volumes/" target="_blank"> NFS volumes </a> on multiple pods.
 
-I will use this Raspberry Pi blog post series to document and share my experience,  and the wrong/right decisions I made whilst tinkering with the Raspberry Pi.
+I will use these Raspberry Pi blog series to document and share my experience, and the wrong/right decisions I made whilst tinkering with the Raspberry Pi.
 
 <p class="aligncenter">
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-cOix8JhjmQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
