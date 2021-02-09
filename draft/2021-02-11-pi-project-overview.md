@@ -26,7 +26,6 @@ I will use this Raspberry Pi blog post series to document and share my experienc
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-cOix8JhjmQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 
-
 In the end, I ended up building a Pi Project that does the following:
 
 1. <b> K3s Kubernetes Cluster </b>
