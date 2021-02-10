@@ -17,20 +17,19 @@ Time moves quickly, but the evolution of technology advances at an even more rap
 
 Coding is a creative activity that any kid can engage in, and teaching kids how to code should be top of mind for parents and guardians - even those who cannot code. The benefits of learning to code are enormous: building simple animations and games helps kids refine their design, logic, and problem-solving abilities, and also allows them to express ideas and creativity in unique ways.
 
-The schools are closed due to the COVID-19 lockdown, and like many parents, we have to homeschool our children. My wife is awfully good at the formal education curriculum, so I added a little twist to my tutoring sessions - coding. Beyond coding, I also encourage them to present their learnings back to me. I believe these are soft skills that will immensely help them in any career of their choice. 
+The schools are closed due to the COVID-19 lockdown, and like many parents, we have to homeschool our children. My wife is awfully good at the formal education curriculum, so I added a little twist to my tutoring sessions - coding. Beyond coding, I also encourage them to present their learnings back to me. I believe these are soft skills that will immensely help them in any career of their choice.
 
-
-These are some of the tips to get your kids excited about coding: 
+These are some of the tips to get your kids excited about coding :
 
 <b> Capitalise on their passion </b>
 
-My eight year old loves cooking, so we tend to tailor our activities and exercises on cooking, baking and restaurant themes. It's important that they enjoy the process. Relate the coding lessons to one or more areas of their interests. Similarly, my five-year-old is so interested in space subjects - so we create animations and stories about the galaxy, rocket ships and similar themes. 
+My eight year old loves cooking, so we tend to tailor our activities and exercises on cooking, baking and restaurant themes. It's important that they enjoy the process. Relate the coding lessons to one or more areas of their interests. Similarly, my five-year-old is so interested in space subjects - so we create animations and stories about the galaxy, rocket ships and similar themes.
 
 <b> Keep your hands off the keyboard and mouse. </b>
 
 Coding is a skill that is learned with hands-on practice, so let the kids drive. Avoid jumping in to type on the keyboard when working with kids, even temporarily. If they have to click on a menu or button, point to the screen with your finger instead of taking the mouse and clicking it yourself. Whenever there is code to be typed, have them type it. It may be faster if you did it yourself, but your Kid needs the practice more than you.
 
- <b> Know their limits, and respect it </b> 
+<b> Know their limits, and respect it </b>
 
 Introducing children to coding will open up a whole world of possibilities for them later in life, not to mention the enjoyment they'll get from having new tools and toys to play with today. But it's also important to remember that coding isn't for everyone. Not every child likes to plays football or dance, and not everyone will like to code either. Don't force it. Show them the site or app, provide some support, and let them drive. If they don't show an immediate interest, they may yet come back to it later.  Know their boundaries and limits. 
 
