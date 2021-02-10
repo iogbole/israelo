@@ -15,7 +15,7 @@ Time moves quickly, but the evolution of technology advances at an even more rap
 
 Coding is a creative activity that any kid can engage in, and teaching kids how to code should be top of mind for parents and guardians - even those who cannot code. The benefits of learning to code are enormous: building simple animations and games helps kids refine their design, logic, and problem-solving abilities, and also allows them to express ideas and creativity in unique ways.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UCgDUlSpPLo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>s
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UCgDUlSpPLo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 The schools are closed due to the COVID-19 lockdown, and like many parents, we have to homeschool our children. My wife is awfully good at the formal education curriculum, so I added a little twist to my tutoring sessions - coding. Beyond coding, I also encourage them to present their learnings back to me. I believe these are soft skills that will immensely help them in any career of their choice.
 
