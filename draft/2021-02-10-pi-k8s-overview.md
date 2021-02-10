@@ -19,6 +19,8 @@ I had a few websites and <a href="https://woocommerce.com/" target="_blank"> woo
 
 Furthermore, some of my sites require databases, so there was a need to set up persistent storage for the database pods. This is where the idea of a NAS server crawled into the picture. As well as all the benefits that a regular NAS server provides, I configured mine to host and manage the Kubernetes NFS volume - this lets me mount <a href="https://kubernetes.io/docs/concepts/storage/volumes/" target="_blank"> NFS volumes </a> on multiple pods.
 
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-cOix8JhjmQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 I will use the Raspberry Pi blog series to document and share my experience, and the wrong/right decisions I made whilst tinkering with the Raspberry Pi.
 
 In the end, I ended up building a Pi Project that does the following:
@@ -62,7 +64,7 @@ I stacked the cased Raspberry Pis up using glue dots (they hold very well), and 
 
 ## Components
 
-These are some of the components that I used: 
+These are some of the components that I used:
 
 1. One 8GB RAM and two 4GB RAM Raspberry Pi 4 boards
 
@@ -96,8 +98,8 @@ Amazon <a href="https://www.amazon.co.uk/gp/product/B07RMXNLF4/ref=ppx_yo_dt_b_a
 
 5. SD Card Reader. Amazon <a href="https://www.amazon.co.uk/gp/product/B07KVZJH2D/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1" target="_blank">link </a> 
 
-In the next blog post, I wil describe how to configure your the Raspberry Pi. 
+In the next blog post, I wil describe how to configure your the Raspberry Pi.
 
-Stay hungry! 
+Stay hungry!
 
 Please leave a comment below if you have any questions.
