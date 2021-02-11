@@ -5,7 +5,7 @@ author: israel
 categories: [ 'Cloud Native', 'Pi' ]
 tags: [containers, raspberry,  pi, cloud-native, kubernetes, IoT, edge ]
 image: https://user-images.githubusercontent.com/2548160/107711684-f0d55c00-6cbf-11eb-8985-59b1ecd9b064.jpg
-date:   2021-02-11 15:01:35 +0300
+date:   2021-02-12 15:01:35 +0300
 excerpt: "I had a few websites running on a managed hosting platform. This blog series describes how I am now running those public-facing websites (including a NAS server) from home using a Raspberry Pi Kubernetes Cluster..."
 
 ---
@@ -16,7 +16,7 @@ The Raspberry Pi, 4 Model B, is the latest version (as at the time of writing) o
 
 I had a few websites and <a href="https://woocommerce.com/" target="_blank"> woo-commerce </a> projects hosted by a managed web hosting company, it recently occurred to me that I could host my projects from home after reading about the Raspberry Pi 4's impressive specification. I did the maths; it worked out cheaper to host my sites (including the WordPress woo-commerce site) from home, so I decided to build a Kubernetes cluster using Raspberry Pi boards. That said, the cost-saving part of the decision process was only an excuse to justify getting myself some Pi toys. I derive a lot of fun tinkering with programmable boards.
 
-Furthermore, some of my sites require databases, so there was a need to set up persistent storage for the database pods. This is where the idea of a NAS server crawled into the picture. As well as all the benefits that a regular NAS server provides, I configured mine to host and manage the Kubernetes NFS volume - this lets me mount <a href="https://kubernetes.io/docs/concepts/storage/volumes/" target="_blank"> NFS volumes </a> on multiple pods.
+Furthermore, some of my sites require databases, so there was a need to set up persistent storage for the database pods. The idea of a NAS server crawled into the picture at this point. As well as all the benefits that a regular NAS server provides, I configured mine to host and manage the Kubernetes NFS volume - this lets me mount <a href="https://kubernetes.io/docs/concepts/storage/volumes/" target="_blank"> NFS volumes </a> on multiple pods.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-cOix8JhjmQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
