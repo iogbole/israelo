@@ -4,11 +4,10 @@ title:  "Raspberry Pi Kubernetes Cluster: Getting Started"
 author: israel
 categories: [ 'Cloud Native', 'Pi' ]
 tags: [containers, raspberry,  pi, cloud-native, kubernetes, IoT, edge ]
-image: https://user-images.githubusercontent.com/2548160/107218082-0b30e080-6a07-11eb-80e7-c62e4f1197d2.jpg
+image: https://user-images.githubusercontent.com/2548160/107708528-8a4e3f00-6cbb-11eb-9303-11121ab5784b.jpg
 date:   2021-02-11 15:01:35 +0300
-excerpt: "I had a few websites running on a managed hosting platform. This blog series describes how I am now running those public-facing websites (including a NAS server) from home using a Kubernetes Cluster running on the Raspberry Pi..."
+excerpt: "I had a few websites running on a managed hosting platform. This blog series describes how I am now running those public-facing websites (including a NAS server) from home using a Raspberry Pi Kubernetes Cluster..."
 
-permalink: /draft/pi
 ---
 
 Raspberry Pi is a series of small single-board computers developed in the United Kingdom by the Raspberry Pi Foundation in association with Broadcom.
