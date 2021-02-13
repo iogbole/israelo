@@ -82,14 +82,14 @@ License: https://www.wowthemes.net/freebies-license/
     margin-bottom: 1.5rem;
 }
 
-.author-thumb {
+.feature-author-thumb {
     width: 40px;
     height: 40px;
     margin-right: 13px;
     border-radius: 100%;
 }
 
-.author-meta {
+.feature-author-meta {
     flex: 1 1 auto;
     white-space: nowrap !important;
     text-overflow: ellipsis !important;
