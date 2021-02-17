@@ -4,14 +4,13 @@ title:  "Tips To Get Your Kids Excited About Coding"
 author: israel
 categories: [ 'Personal' ]
 tags: [coding, kids, STEM]
-image: https://user-images.githubusercontent.com/2548160/107218082-0b30e080-6a07-11eb-80e7-c62e4f1197d2.jpg
+image: https://user-images.githubusercontent.com/2548160/108276439-ba8c5680-716f-11eb-9cf0-b0823c12eba1.jpg
 date:   2021-02-08 15:01:35 +0300
-excerpt: "I had a few websites running on a managed hosting platform. This blog series describes how I am now running those public-facing websites (including a NAS server) from home using a Kubernetes Cluster running on the Raspberry Pi..."
+excerpt: "Coding is a creative activity that any kid can engage in, and teaching kids how to code should be top of mind for parents and guardians. Here are some lessons learnt from teaching my kids how to code.."
 
-permalink: /draft/na
 ---
 
-Time moves quickly, but the evolution of technology advances at an even more rapid pace. Ten years ago, self-driving cars were merely a dream; today, they're being tested and created by the leading car manufacturers worldwide. These technology advancements have one thing in common: they start as a single line of code. Coding could someday very well become an integral part of early education as reading, writing, and maths.  
+Time moves quickly, but the evolution of technology advances at an even more rapid pace. 20 years ago, self-driving cars were merely a dream; today, they're being tested and created by the leading car manufacturers worldwide. These technology advancements have one thing in common: they start as a single line of code. Coding could someday very well become an integral part of early education as reading, writing, and maths.  
 
 Coding is a creative activity that any kid can engage in, and teaching kids how to code should be top of mind for parents and guardians - even those who cannot code. The benefits of learning to code are enormous: building simple animations and games helps kids refine their design, logic, and problem-solving abilities, and also allows them to express ideas and creativity in unique ways.
 
@@ -27,7 +26,7 @@ These are some of the tips to get your kids excited about coding:
 
 <b> Know their limits, and respect it </b>
 
-Introducing children to coding will open up a whole world of possibilities for them later in life, not to mention the enjoyment they'll get from having new tools and toys to play with today. But it's also essential to be conscious of the fact that coding isn't for everyone. Not every child likes to play football or dance, and not everyone will like to code either. Don't force it. Show them the site or app, provide some support, and let them drive. If they don't show an immediate interest, they may yet come back to it later.  Know their boundaries and limits. 
+Introducing children to coding will open up a whole world of possibilities for them later in life, not to mention the enjoyment they'll get from having new tools and toys to play with today. But it's also essential to be conscious of the fact that coding isn't for everyone. Not every child likes to play football or dance, and not everyone will like to code either. Please don't force it. Show them the site or app, provide some support, and let them drive. If they don't show an immediate interest, they may yet come back to it later.  Know their boundaries and limits. 
 
 <b> Let them drive </b>
 
@@ -35,7 +34,7 @@ Coding is a skill that is learned with hands-on practice, so let the kids drive.
 
 <b> Capitalise on their passion </b>
 
-My eight year old loves cooking, so we tend to tailor our lesson activities and exercises on cooking, baking,  restaurant...themes. It's important that they enjoy the process. Relate the coding lessons to one or more areas of their interests. Similarly, my five-year-old is in interested in space subjects - so we create animations and stories about the galaxy, rocket ships and similar themes.
+My eight year old loves cooking, so we tend to tailor our lesson activities and exercises on cooking, baking, restaurant themes. It's important that they enjoy the process. Relate the coding lessons to one or more areas of their interests. Similarly, my five-year-old is interested in space subjects - so we create animations and stories about the galaxy, rocket ships and similar themes.
 
 <b> Get the right tools </b>
 
