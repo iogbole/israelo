@@ -6,7 +6,7 @@ categories: [ 'Personal' ]
 tags: [coding, kids, STEM]
 image: https://user-images.githubusercontent.com/2548160/108276439-ba8c5680-716f-11eb-9cf0-b0823c12eba1.jpg
 date:   2021-02-18 15:01:35 +0300
-excerpt: "Coding is a creative activity that any kid can engage in, and teaching kids how to code should be top of mind for parents and guardians. Here are some lessons learnt from teaching my kids how to code.."
+excerpt: "Coding is a creative activity that any kid can engage in, and teaching kids how to code should be top of mind for parents and guardians. Here are some of the tips to get your kids excited about coding"
 
 ---
 
@@ -14,13 +14,11 @@ Time moves quickly, but the evolution of technology advances at an even more rap
 
 Coding is a creative activity that any kid can engage in, and teaching kids how to code should be top of mind for parents and guardians - even those who cannot code. The benefits of learning to code are enormous: building simple animations and games helps kids refine their design, logic, and problem-solving abilities, and also allows them to express ideas and creativity in unique ways.
 
-Now that schools are closed due to the COVID-19 lockdown, like many other parents, we are homeschooling our children, and coding is part of the subject we teach them at home. But beyond coding, we encourage our kids to present their learnings and aspirations back to us. I believe these are soft skills that will immensely help them in any career of their choice.
-
-<!--<iframe width="560" height="315" src="https://www.youtube.com/embed/UCgDUlSpPLo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-
  <p style="position: relative; padding: 30px 0px 57% 0px; height: 0; overflow: hidden;">
  <iframe src="https://www.youtube.com/embed/UCgDUlSpPLo" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display: block; margin: 0px auto; position: absolute; top: 0; left: 0;"></iframe>
  </p>
+
+Now that schools are closed due to the COVID-19 lockdown, like many other parents, we are homeschooling our children, and coding is part of the subject we teach them at home. But beyond coding, we encourage our kids to present their learnings and aspirations back to us. I believe these are soft skills that will immensely help them in any career of their choice.
 
 These are some of the tips to get your kids excited about coding:
 
