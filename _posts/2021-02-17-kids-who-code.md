@@ -5,7 +5,7 @@ author: israel
 categories: [ 'Personal' ]
 tags: [coding, kids, STEM]
 image: https://user-images.githubusercontent.com/2548160/108276439-ba8c5680-716f-11eb-9cf0-b0823c12eba1.jpg
-date:   2021-02-08 15:01:35 +0300
+date:   2021-02-18 15:01:35 +0300
 excerpt: "Coding is a creative activity that any kid can engage in, and teaching kids how to code should be top of mind for parents and guardians. Here are some lessons learnt from teaching my kids how to code.."
 
 ---
