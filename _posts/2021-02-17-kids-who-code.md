@@ -18,30 +18,25 @@ Coding is a creative activity that any kid can engage in, and teaching kids how 
  <iframe src="https://www.youtube.com/embed/UCgDUlSpPLo" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display: block; margin: 0px auto; position: absolute; top: 0; left: 0;"></iframe>
  </p>
 
-Now that schools are closed due to the COVID-19 lockdown, like many other parents, we are homeschooling our children, and coding is part of the subject we teach them at home. But beyond coding, we encourage our kids to present their learnings and aspirations back to us. I believe these are soft skills that will immensely help them in any career of their choice.
+Now that schools are closed due to the COVID-19 lock-down, like many other parents, we are homeschooling our children, and coding is part of the subject we teach them at home. But beyond coding, we encourage our kids to present their learnings and aspirations back to us. I believe these are soft skills that will immensely help them in any career of their choice.
 
 These are some of the tips to get your kids excited about coding:
 
 <b> Know their limits, and respect it </b>
-
-Introducing children to coding will open up a whole world of possibilities for them later in life, not to mention the enjoyment they'll get from having new tools and toys to play with today. But it's also essential to be conscious of the fact that coding isn't for everyone. Not every child likes to play football or dance, and not everyone will like to code either. Please don't force it. Show them the site or app, provide some support, and let them drive. If they don't show an immediate interest, they may yet come back to it later.  Know their boundaries and limits. 
+Introducing children to coding will open up a whole world of possibilities for them later in life, not to mention the enjoyment they'll get from having new tools and toys to play with today. But it's also essential to be conscious of the fact that coding isn't for everyone. Not every child likes to play football or dance, and not everyone will like to code either. Please don't force it. Show them the site or app, provide some support, and let them drive. If they don't show an immediate interest, they may yet come back to it later.  Know their boundaries and limits.
 
 <b> Let them drive </b>
-
-Coding is a skill that is learned with hands-on practice, so let the kids drive. Avoid the temptation of typing on the keyboard when working with them, even temporarily. If they have to click on a widget or a button, point to the screen with your finger instead of taking the mouse and clicking it yourself. Whenever there is code to be typed, have them type it. It may be faster if you did it yourself, but that defeats the purpose. 
+Coding is a skill that is learned with hands-on practice, so let the kids drive. Avoid the temptation of typing on the keyboard when working with them, even temporarily. If they have to click on a widget or a button, point to the screen with your finger instead of taking the mouse and clicking it yourself. Whenever there is code to be typed, have them type it. It may be faster if you did it yourself, but that defeats the purpose.
 
 <b> Capitalise on their passion </b>
-
 My eight year old loves cooking, so we tend to tailor our lesson activities and exercises on cooking, baking, restaurant themes. It's important that they enjoy the process. Relate the coding lessons to one or more areas of their interests. Similarly, my five-year-old is interested in space subjects - so we create animations and stories about the galaxy, rocket ships and similar themes.
 
 <b> Get the right tools </b>
-
-There are many sites and apps out there, find one that works best for you and your kid. I use <a href="https://scratch.mit.edu/" target="_blank"> Scratch </a> MIT's Scratch is a free programming tool designed for kids that runs in any modern Web browser. Its visual style was influenced by the Logo program, a staple of programming classes for children of the '80s and '90s.
+There are many sites and apps out there, find one that works best for you and your kid. I use <a href="https://scratch.mit.edu/" target="_blank"> Scratch </a>.  MIT's Scratch is a free programming tool designed for kids that runs in any modern Web browser. Its visual style was influenced by the <a href="https://en.wikipedia.org/wiki/Logo_(programming_language)" target="_blank">Logo </a> program, a staple of programming classes for children of the '80s and '90s.
 
 I encourage them to whiteboard, doddle, etc., too, so we purchased an LCD writing tablet for them. Something like <a href="https://www.amazon.co.uk/gp/product/B08FR3247M/ref=ppx_yo_dt_b_asin_title_o06_s00?ie=UTF8&psc=1" target="_blank" > this. </a> Oh, and it has to be in pink otherwise my girls won't use it :)  
 
 <b> Do your homework </b>
-
 Prepare the lesson in advance; if you're using scratch, login to scratch and try your hands on what you would like them to create. Do not turn up like a teacher who does not have a lesson plan.
 
 In summary, coding is a creative activity that any kid can engage in.  Kids are fast learners, unintimidated by lines of code, and their imaginations usually run wild, a real asset when it comes to finding creative solutions to problems.
