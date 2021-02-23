@@ -3,6 +3,7 @@ layout: page
 title: About 
 permalink: /about
 comments: false
+redirect_to: /blog/
 ---
 
 {% include hero.html %}
