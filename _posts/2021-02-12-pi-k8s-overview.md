@@ -2,6 +2,7 @@
 layout: post
 title:  "Raspberry Pi Kubernetes Cluster: Getting Started"
 author: israel
+redirect_to: /draft/pi
 categories: [ 'Cloud Native', 'Pi' ]
 tags: [containers, raspberry,  pi, cloud-native, kubernetes, IoT, edge ]
 image: https://user-images.githubusercontent.com/2548160/107711684-f0d55c00-6cbf-11eb-8985-59b1ecd9b064.jpg
