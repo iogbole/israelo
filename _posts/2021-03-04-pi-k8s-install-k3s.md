@@ -35,11 +35,11 @@ Ansible installation is simple. You can either install it via `pip`, like this:
 
 If you're on a Mac. Although the pip option is the recommended method.
 
-## Installing K3s on Raspberry Pi 
+## Installing K3s on Raspberry Pi
 
 Rancher has an Ansible playbook that builds a Kubernetes cluster with K3s. Let's set it up! 
 
-1. Download the Ansible playbook to your Ansible control node - https://github.com/k3s-io/k3s-ansible/archive/master.zip
+1. Download the Ansible playbook to your Ansible control node - <a href="https://github.com/k3s-io/k3s-ansible/archive/master.zip" target="_blank">https://github.com/k3s-io/k3s-ansible/archive/master.zip</a>
 2. Duplicate the `inventory/sample` directory to create an inventory for your RPis, that is : 
 
    `cp -r  inventory/sample inventory/pi`
@@ -68,8 +68,8 @@ Rancher has an Ansible playbook that builds a Kubernetes cluster with K3s. Let's
 
 4. Edit the `inventory/group_vars/all.yml` file and change the `ansible_user` to `pi`. You may move the `ansible_ssh_private_key_file` from hosts.ini into the group vars too if you prefer - assuming you're using the same key for all.
 
-5. Still in `inventory/group_vars/all.yml`, edit  `k3s_version` with the latest version:   To get the latest version: 
-    - Navigate to do  https://github.com/k3s-io/k3s/tags 
+5. Still in `inventory/group_vars/all.yml`, edit  `k3s_version` with the latest version:   To get the latest version:
+    - Navigate to:  <a href="https://github.com/k3s-io/k3s/tags">https://github.com/k3s-io/k3s/tags </a>
     - Click the latest release, then copy the last URL segment, for example: `v1.20.4%2Bk3s1` is the last URL segment of
         `https://github.com/k3s-io/k3s/releases/tag/v1.20.4%2Bk3s1`
 
