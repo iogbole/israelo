@@ -6,8 +6,7 @@ categories: [ 'Cloud Native', 'Pi' ]
 tags: [containers, raspberry,  pi, cloud-native, kubernetes, IoT, edge, k3s ]
 image: https://user-images.githubusercontent.com/2548160/110127567-b130fa00-7dbd-11eb-9caa-724d99640c9b.jpg
 date:   2021-03-05 15:01:35 +0300
-excerpt: ""
-permalink: /draft/prepi
+excerpt: "This tutorial will be a brief walk through the process of preparing your Raspberry Pi to run Kubernetes Cluster. This setup can be entirely headless..."
 
 ---
 
@@ -79,7 +78,7 @@ sudo systemctl enable ssh
 sudo systemctl start ssh
 ```
 
-If you're using a headless,  insert the SD card or USB/hard drive into your computer, then create a new empty file named `ssh`, without any extension, inside the boot directory. That's it!
+If you're using RPi over headless, insert the SD card or USB/hard drive into your computer, then create a new empty file named `ssh`, without any extension, inside the boot directory. That's it!
 
 ### Change the default password
 
@@ -129,6 +128,7 @@ From the computer where Ansible is installed (yes, we will use Ansible to manage
     Replace `192.168.0.60` with your RPi's IP address.
 
 3. Test it!
+
    `ssh -i ~/pi pi@192.168.0.60`
 
 ### DHCP - Mac Address Configuration
@@ -146,12 +146,12 @@ Since you will have multiple RPi nodes, it can quickly become challenging to kno
 I'd recommend you change the server hostnames by SSHing to the RPi and issue these commands: 
 
 ```sh
-# update the system 
+# Update the system 
 sudo apt update 
 sudo apt full-upgrade
 
 # Install vim 
-  sudo apt install vim
+sudo apt install vim
 
 # Change the host name 
  sudo vi /etc/hostname
@@ -165,3 +165,8 @@ Similarly, edit the `/etc/hosts` on your computer to follow suit, for example:
 192.168.0.61 master
 192.168.0.62 worker2
 ```
+
+That's it!
+
+
+<a href="https://www.israelo.io/blog/pi-k8s-overview/" target="_blank"> << Read the Previous blog post in this series</a>
