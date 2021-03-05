@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "Raspberry Pi Cluster: Installing K3s Kubernetes using Ansible"
+title:  "Raspberry Pi Cluster: Setting up K3s Kubernetes using Ansible"
 author: israel
 categories: [ 'Cloud Native', 'Pi' ]
 tags: [containers, raspberry,  pi, cloud-native, kubernetes, IoT, edge ]
-image: https://user-images.githubusercontent.com/2548160/110126280-2d2a4280-7dbc-11eb-890f-a8be2cba493d.jpg
+image: https://user-images.githubusercontent.com/2548160/110161490-54e1d080-7de5-11eb-8b73-676ce5b0a9c7.jpg
 date:   2021-03-05 15:01:35 +0300
 excerpt: "This tutorial will be a brief walk through the process of getting K3s Kubernetes up and running on Raspberry Pi - Using Ansible"
 permalink: /draft/pi3
@@ -29,17 +29,15 @@ Ansible is an open-source software provisioning, configuration management, and a
 
 Ansible installation is simple. You can either install it via `pip`, like this: 
 
-`python3 -m pip install` # Ref - https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip
- 
- or 
+`python3 -m pip install`<br>
+ or <br>
+`brew install ansible.` 
 
-`brew install ansible.`
-
-If you're on the Mac, although the pip option is the recommended method.
+If you're on a Mac. Although the pip option is the recommended method.
 
 ## Installing K3s on Raspberry Pi 
 
-Rancher has a fully functional Ansible playbook that builds a Kubernetes cluster with K3s. Let's set it up! 
+Rancher has an Ansible playbook that builds a Kubernetes cluster with K3s. Let's set it up! 
 
 1. Download the Ansible playbook to your Ansible control node - https://github.com/k3s-io/k3s-ansible/archive/master.zip
 2. Duplicate the `inventory/sample` directory to create an inventory for your RPis, that is : 
@@ -72,7 +70,8 @@ Rancher has a fully functional Ansible playbook that builds a Kubernetes cluster
 
 5. Still in `inventory/group_vars/all.yml`, edit  `k3s_version` with the latest version:   To get the latest version: 
     - Navigate to do  https://github.com/k3s-io/k3s/tags 
-    - Click on the latest release, then copy the last URL segment, for example: *v1.20.4%2Bk3s1* is the last URL segment of https://github.com/k3s-io/k3s/releases/tag/v1.20.4%2Bk3s1
+    - Click the latest release, then copy the last URL segment, for example: `v1.20.4%2Bk3s1` is the last URL segment of
+        `https://github.com/k3s-io/k3s/releases/tag/v1.20.4%2Bk3s1`
 
     In summary, your `inventory/group_vars/all.yml` should look like this: 
 
@@ -89,19 +88,13 @@ Rancher has a fully functional Ansible playbook that builds a Kubernetes cluster
 
 6. Run it! 
 
-   ```sh
-   ansible-playbook site.yml -i inventory/pi/hosts.ini
-
-   ```
+   `ansible-playbook site.yml -i inventory/pi/hosts.ini`
 
 ## Connect to the Cluster
 
 Once it's built, you need to get the kubectl configuration from the master to connect to the cluster: 
 
-```bash
-scp -i ~/pi pi@pimaster:~/.kube/config ~/.kube/pi-config
-
-```
+`scp -i ~/pi pi@pimaster:~/.kube/config ~/.kube/pi-config`
 
 * Note: The purpose of using `~/.kube/pi-config` is to preserve your previous configurations, if any*
 
@@ -111,18 +104,17 @@ Next, edit `bash_rc` or `bash_profile`  by adding this line:
 ```bash
 #K8S
 export KUBECONFIG=$KUBECONFIG:~/.kube/config:~/.kube/pi-config
-
 ```
 
 Then reload  `source ~/.bash_profile`
 
 ## Change context
 
-Next, rename the context from `default`, since you may have a default already. 
+Next, rename the context from `default`, since you may have a default context already.
 
 `kubectl --kubeconfig=~/.kube/pi-config config rename-context default pi`
 
-Alternatively, edit ~/.kube/pi-config and change the cluster and context names from `default` to `pi`
+Alternatively, edit `~/.kube/pi-config` and change the cluster and context names from `default` to `pi` respectively.
 
 Then switch context:
 
@@ -131,7 +123,6 @@ kubectl config get-contexts #list contexts
 kubectl config use-context pi  #switch contexts
 
 ```
-
 ## Well done! 
 
 ```sh 
@@ -143,7 +134,6 @@ pimaster      Ready    control-plane,master   24d   v1.20.2-rc1+k3s1
 piworker1     Ready    <none>                 24d   v1.20.2-rc1+k3s1
 
 ```
-
 ## Troubleshooting
 
 Running `kubectl` commands from pi master gave me this error.
@@ -152,12 +142,13 @@ Running `kubectl` commands from pi master gave me this error.
 pi@pimaster:~ $ kubectl get po
 WARN[2021-01-14T22:33:39.735790976Z] Unable to read /etc/rancher/k3s/k3s.yaml, please start server with --write-kubeconfig-mode to modify kube config permissions
 error: error loading config file "/etc/rancher/k3s/k3s.yaml": open /etc/rancher/k3s/k3s.yaml: permission denied
-
 ```
 
 The solution is to change `k3s.yaml`'s permission.
 
-```sh 
-pi@pimaster:~ $ sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+`$ sudo chmod 644 /etc/rancher/k3s/k3s.yaml`
 
-```
+## Refs 
+
+ - https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip
+ 
