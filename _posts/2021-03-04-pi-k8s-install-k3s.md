@@ -134,6 +134,14 @@ pimaster      Ready    control-plane,master   24d   v1.20.2-rc1+k3s1
 piworker1     Ready    <none>                 24d   v1.20.2-rc1+k3s1
 
 ```
+## Exposing your service
+
+To expose your Service to the world, you may consider using a combination of <a href="https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types" target="_blank">  NodePort </a>  <a href="https://opensource.com/article/20/7/homelab-metallb" target="_blank">  MetalB </a> and Port forwarding at your router.
+
+Or
+
+<a href="https://github.com/inlets/inlets-operator" target="_blank"> The Inlets operator  </a>
+
 ## Troubleshooting
 
 Running `kubectl` commands from pi master gave me this error.
