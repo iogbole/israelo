@@ -6,8 +6,8 @@ categories: [ 'Cloud Native', 'Pi' ]
 tags: [containers, raspberry,  pi, cloud-native, kubernetes, IoT, edge ]
 image: https://user-images.githubusercontent.com/2548160/110161490-54e1d080-7de5-11eb-8b73-676ce5b0a9c7.jpg
 date:   2021-03-05 15:01:35 +0300
-excerpt: "This tutorial will be a brief walk through the process of getting K3s Kubernetes up and running on Raspberry Pi - Using Ansible"
-permalink: /draft/pi3
+excerpt: "This tutorial will be a brief walk through the process of getting K3s Kubernetes up and running on Raspberry Pi - Using Ansible..."
+#permalink: /draft/pi3
 ---
 
 This tutorial will be a brief walk through the process of getting K3s up and running on Raspberry Pi.
