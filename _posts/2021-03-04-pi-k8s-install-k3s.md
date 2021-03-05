@@ -148,7 +148,9 @@ The solution is to change `k3s.yaml`'s permission.
 
 `$ sudo chmod 644 /etc/rancher/k3s/k3s.yaml`
 
-## Refs 
+## Refs
 
  - https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#from-pip
  
+
+<a href="https://www.israelo.io/blog/pi-k8s-prepare/" target="_blank"> << Prepare Raspberry Pi to run K3s Kubernetes Cluster </a> 

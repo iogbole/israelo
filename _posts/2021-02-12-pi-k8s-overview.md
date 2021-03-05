@@ -98,8 +98,12 @@ Amazon <a href="https://www.amazon.co.uk/gp/product/B07RMXNLF4/ref=ppx_yo_dt_b_a
 
 5. SD Card Reader. Amazon <a href="https://www.amazon.co.uk/gp/product/B07KVZJH2D/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1" target="_blank">link </a> 
 
-In the next blog post, I wil describe how to configure your the Raspberry Pi.
+In the next blog post, I wil describe how prepare your the Raspberry Pi
 
 Stay hungry!
 
 Please leave a comment below if you have any questions.
+
+<a href="https://www.israelo.io/blog/pi-k8s-prepare/" target="_blank"> >> Prepare Raspberry Pi to run K3s Kubernetes Cluster >> </a>  
+
+

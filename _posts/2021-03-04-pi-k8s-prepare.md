@@ -169,4 +169,5 @@ Similarly, edit the `/etc/hosts` on your computer to follow suit, for example:
 That's it!
 
 
-<a href="https://www.israelo.io/blog/pi-k8s-overview/" target="_blank"> << Read the Previous blog post in this series</a>
+<a href="https://www.israelo.io/blog/pi-k8s-overview/" target="_blank"> << Raspberry Pi Kubernetes Cluster: Getting Started </a>  || 
+<a href="https://www.israelo.io/blog/pi-k8s-install-k3s/" target="_blank">  Setting up K3s Kubernetes using Ansible >> </a>
