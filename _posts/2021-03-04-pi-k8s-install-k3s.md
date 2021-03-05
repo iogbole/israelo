@@ -136,13 +136,11 @@ piworker1     Ready    <none>                 24d   v1.20.2-rc1+k3s1
 ```
 ## Exposing your service
 
-To expose your Service to the world, you may consider using a combination of <a href="https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types" target="_blank">  NodePort </a>  <a href="https://opensource.com/article/20/7/homelab-metallb" target="_blank">  MetalB </a> and Port forwarding at your router.
+To expose your Service to the world, you may consider using a combination of <a href="https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types" target="_blank"> NodePort </a> or <a href="https://opensource.com/article/20/7/homelab-metallb" target="_blank"> MetalB </a> and Port forwarding configuration in your router.<br>
+Or <br>
+<a href="https://github.com/inlets/inlets-operator" target="_blank"> The Inlets operator </a>
 
-Or
-
-<a href="https://github.com/inlets/inlets-operator" target="_blank"> The Inlets operator  </a>
-
-## Troubleshooting
+# Troubleshooting
 
 Running `kubectl` commands from pi master gave me this error.
 
