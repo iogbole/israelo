@@ -14,26 +14,27 @@ This tutorial will be a brief walk through the process of getting K3s up and run
 
  <a href="https://k3s.io/"  target="_blank"> K3s (by RancherLab) </a> and <a href="https://microk8s.io/" target="_blank"> MicroK8s (by Canonical) </a> are the two most popular lightweight Kubernetes for IoT an Edge computing in the industry today. I have used both and I found K3s easier to setup with more advanced configurations for High Availability via an Infrastructure-as-Code automation.
 
-## What you'll learn
+### What you'll learn
 
 - Deploying K3s Kubernetes on Raspberry Pi using Ansible
+- Expose the Kubernetes Service to the public internet
 
-## What you'll need
+### What you'll need
 
 - Components: Please refer to the <a href="https://www.israelo.io/blog/pi-k8s-overview/" target="_blank"> first blog post </a> in this series
 - Prepared RPis : Please refer to the <a href="https://www.israelo.io/blog/pi-k8s-prepare/" target="_blank"> second blog post </a> in this series
 
-## Why Ansible? 
+## Why Ansible?
 
 Ansible is an open-source software provisioning, configuration management, and application-deployment tool enabling infrastructure as code. We will use Ansible to install K3s on the master and worker nodes. Ansible will enable you to reset the entire configuration should you need to, or add more nodes to the cluster.  
 
-Ansible installation is simple. You can either install it via `pip`, like this: 
+Ansible installation is simple. You can either install it via `pip`, like this:
 
 `python3 -m pip install`<br>
  or <br>
 `brew install ansible.` 
 
-If you're on a Mac. Although the pip option is the recommended method.
+If you're on the Mac. Although the pip option is the recommended method.
 
 ## Installing K3s on Raspberry Pi
 
@@ -139,6 +140,10 @@ piworker1     Ready    <none>                 24d   v1.20.2-rc1+k3s1
 To expose your Service to the world, you may consider using a combination of <a href="https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types" target="_blank"> NodePort </a> or <a href="https://opensource.com/article/20/7/homelab-metallb" target="_blank"> MetalB </a> and Port forwarding configuration in your router.<br>
 Or <br>
 <a href="https://github.com/inlets/inlets-operator" target="_blank"> The Inlets operator </a>
+
+### SSL
+
+You will need an SSL certificate if you intend to expose your Kubernetes service to the public. You may generate free SSL certificates using <a href ="https://letsencrypt.org" target="_blank">https://letsencrypt.org </a>
 
 # Troubleshooting
 
