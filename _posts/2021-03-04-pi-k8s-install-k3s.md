@@ -97,7 +97,7 @@ Once it's built, you need to get the kubectl configuration from the master to co
 
 `scp -i ~/pi pi@pimaster:~/.kube/config ~/.kube/pi-config`
 
-* Note: The purpose of using `~/.kube/pi-config` is to preserve your previous configurations, if any*
+<i> Note: The purpose of using `~/.kube/pi-config` is to preserve your previous configurations, if any </i>
 
 
 Next, edit `bash_rc` or `bash_profile`  by adding this line:
