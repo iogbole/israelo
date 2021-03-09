@@ -28,11 +28,9 @@ LinkedIn:
 <p class="aligncenter">
 <img alt ="award2" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/110439966-087de580-80b0-11eb-8aef-4af57fff85b5.jpeg"/> 
 
-
+<hr>
 
 <p class="aligncenter">
 <img alt ="award" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/110439971-0a47a900-80b0-11eb-8bfd-974bfc07eeb5.jpeg"/> 
-
-
 
 
