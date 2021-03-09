@@ -19,16 +19,15 @@ But then, on the 1st of Feb, 2021, I was recognised with a beautiful AppDynamics
 It means a lot to me, and I will cherish the trophy for a long time - something positive from 2020!
 
 <p class="aligncenter">
-<img alt ="pi" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/110439971-0a47a900-80b0-11eb-8bfd-974bfc07eeb5.jpeg"/> 
-
+<img alt ="award" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/110439971-0a47a900-80b0-11eb-8bfd-974bfc07eeb5.jpeg"/> 
 
 <hr>
 
 LinkedIn:
 
 <p class="aligncenter">
-<img alt ="pi" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/110440146-42e78280-80b0-11eb-978b-d4193896df0b.jpg"/> 
+<img alt ="linked" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/110440146-42e78280-80b0-11eb-978b-d4193896df0b.jpg"/> 
 <hr>
 
 <p class="aligncenter">
-<img alt ="pi" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/110439966-087de580-80b0-11eb-8aef-4af57fff85b5.jpeg"/> 
+<img alt ="award2" class="lazyimg" src="https://user-images.githubusercontent.com/2548160/110439966-087de580-80b0-11eb-8aef-4af57fff85b5.jpeg"/> 
