@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Raspberry Pi Kubernetes Cluster: Getting Started"
+title:  "Raspberry Pi Kubernetes Cluster: Getting Started - Part#1"
 author: israel
 redirect_from: /draft/pi
 categories: [ 'Cloud Native', 'Pi' ]

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Prepare Raspberry Pi to run K3s Kubernetes Cluster"
+title:  "Prepare Raspberry Pi to run K3s Kubernetes Cluster - Part#2"
 author: israel
 categories: [ 'Cloud Native', 'Pi' ]
 tags: [containers, raspberry,  pi, cloud-native, kubernetes, IoT, edge, k3s ]
