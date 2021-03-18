@@ -8,6 +8,7 @@ image: https://user-images.githubusercontent.com/2548160/110439956-061b8b80-80b0
 date:   2021-02-01 15:01:35 +0300
 excerpt: "Despite all the odds in 2020...this award means a lot to me, and I will cherish the trophy for a long time..."
 
+permalink: "/draft/award"
 ---
 
 I will keep this blog post short as it's meant only for journaling.
