@@ -31,7 +31,7 @@ Yonder place where the stars are shining so bright.
 
 Would you please catch a good spot for me, Mama? 
 
-Death seems to be kinder than life. Such an irony. 
+Death seems to be kinder than life. It's such an irony! 
 
 Rest on, Mama. Until we meet again, never to be separated again. 
 
