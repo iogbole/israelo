@@ -19,7 +19,8 @@ I know you're in a better place — free from cancer pain — no more morphine. 
 The things you've been through.<br>
 You've endured suffering and pain.<br>
 No matter what I feel, there's no way I'd want you to go through that again, Mama. <br>
-The heavens have decided, it was time to go yonder. <br>
+
+The heavens have decided, it was time to go yonder.
 Yonder place where the stars are shining so bright! 
 
 Mama, knowing that I can never get a hug from you again is the reason my pillows are soaking wet at dawn.
