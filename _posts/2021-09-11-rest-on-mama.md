@@ -38,6 +38,5 @@ Oh Lord, You've drilled a hole in my heart, and only You can mend it.
 
 Rest on, Mama. Until we meet again, never to be separated again. 
 
-Much love.<br>
-Your last-born<br>
-X<br>
+Much love,<br>
+Your last-born X<br>
