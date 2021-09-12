@@ -18,7 +18,9 @@ I know you're in a better place — free from cancer pain — no more morphine. 
 
 The things you've been through.<br>
 You've endured suffering and pain.<br>
-No matter what I feel, there's no way I'd want you to go through that again, Mama. <br>
+No matter what I feel, there's no way I'd want you to go through that again. <br>
+You can rest in peace now, Mama. <br>
+<strong>Death seems to be kinder than life. Quite an irony, eh? </strong>
 
 The heavens have decided, it was time to go yonder.<br>
 Yonder place where the stars are shining so bright! 
@@ -29,14 +31,13 @@ I collected your grave-sand and brought it all the way to the UK.<br>
 I clench your grave-sand so hard, hoping it might bring us closer. <br>
 <strong>But this dark brown grave-sand of yours only adds colours to my tears, Mama. </strong>
 
-I'd wrap your blanket on me, but it doesn't stop the cold, this chill on my spine; who can help me now? 
-
-Would you please catch a good spot for me, Mama? <br>
-<strong>Death seems to be kinder than life. Quite an irony, eh? </strong>
+I'd wrap your blanket on me, but it doesn't stop the cold, this chill that runs down my spine; who can help me now? <br>
 
 Oh Lord, You've drilled a hole in my heart, and only You can mend it.
 
-Rest on, Mama. Until we meet again, never to be separated again. 
+Rest on, Mama. <br>
+Please catch a good spot next to your mansion for me, Mama. <br>
+Until we meet again, never to be separated again. <br>
 
 Much love,<br>
 Your last-born X<br>
