@@ -20,7 +20,7 @@ The things you've been through.<br>
 You've endured suffering and pain.<br>
 No matter what I feel, there's no way I'd want you to go through that again. <br>
 You can rest in peace now, Mama. <br>
-<strong>Death seems to be kinder than life. Quite an irony, eh? </strong>
+<strong>Death seems to be kinder than life.</strong> Quite an irony, eh? 
 
 The heavens have decided, it was time to go yonder.<br>
 Yonder place where the stars are shining so bright! 
@@ -29,7 +29,7 @@ Mama, knowing that I can never get a hug from you again is the reason my pillows
 
 I collected your grave-sand and brought it all the way to the UK.<br> 
 I clench your grave-sand so hard, hoping it might bring us closer. <br>
-<strong>But this dark brown grave-sand of yours only adds colours to my tears, Mama. </strong>
+<strong>But this dark brown grave-sand of yours only adds colours to my tears</strong>, Mama. 
 
 I'd wrap your blanket on me, but it doesn't stop the cold, this chill that runs down my spine; who can help me now? <br>
 
