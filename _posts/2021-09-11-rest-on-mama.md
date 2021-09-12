@@ -32,7 +32,7 @@ I clench your grave sand so hard, hoping it might bring us closer. <br>
 I throw your blanket on me, but it doesn't stop the cold, this chill on my spine; who can help me now? 
 
 Would you please catch a good spot for me, Mama? <br>
-<strong>Death seems to be kinder than life. It's such an irony! </strong>
+<strong>Death seems to be kinder than life. Quite an irony, eh? </strong>
 
 Oh Lord, You've drilled a hole in my heart, and only You can mend it.
 
