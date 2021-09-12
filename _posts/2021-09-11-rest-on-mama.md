@@ -35,9 +35,9 @@ I'd wrap your blanket on me, but it doesn't stop the cold, this chill that runs 
 
 Oh Lord, You've drilled a hole in my heart, and only You can mend it.
 
-Rest on, Mama. <br>
-Please catch a good spot next to your mansion for me, Mama. <br>
 Until we meet again, never to be separated again. <br>
+Please catch a good spot next to your mansion for me. <br>
+Rest on, Mama. <br>
 
 Much love,<br>
 Your last-born X<br>
