@@ -29,7 +29,7 @@ I collected your grave-sand and brought it all the way to the UK.<br>
 I clench your grave-sand so hard, hoping it might bring us closer. <br>
 <strong>But this dark brown grave-sand of yours only adds colours to my tears, Mama. </strong>
 
-I throw your blanket on me, but it doesn't stop the cold, this chill on my spine; who can help me now? 
+I'd wrap your blanket on me, but it doesn't stop the cold, this chill on my spine; who can help me now? 
 
 Would you please catch a good spot for me, Mama? <br>
 <strong>Death seems to be kinder than life. Quite an irony, eh? </strong>
