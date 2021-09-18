@@ -25,11 +25,12 @@ You can rest in peace now, Mama. <br>
 The heavens have decided, it was time to go yonder.<br>
 Yonder place where the stars are shining so bright! 
 
-Mama, knowing that I can never get a hug from you again is the reason my pillows are soaking wet at dawn.
+Knowing that I can never get a hug from you again is the reason my pillows are soaking wet at dawn.
+Oh, how I miss you, Mama. 
 
 I collected your grave-sand and brought it all the way to the UK.<br> 
 I clench your grave-sand so hard, hoping it might bring us closer. <br>
-<strong>But this dark brown grave-sand of yours only adds colours to my tears</strong>, Mama. 
+<strong>But this dark brown grave-sand of yours only add colour to my tears</strong>, Mama. 
 
 I'd wrap your blanket on me, but it doesn't stop the cold, this chill that runs down my spine; who can help me now? <br>
 
