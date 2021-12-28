@@ -14,7 +14,7 @@ When organisations adopt the DevOps culture, they typically start by decomposing
 
 As (cloud-native) microservices architectures become the norm for most modern applications, effective debugging requires that the application is observable. In other words, the system's internal state can be deduced by observing its output. Consequently, the need for observability is becoming increasingly important as businesses strive to scale their DevOps strategies to keep up with the ever-increasing complexity of the software delivery process.
 
-Moreso, while observability is crucial in any DevOps-oriented organisation, it is often confused with monitoring. Although observability and monitoring are not the same, they are often used interchangeably by vendors and customers alike. 
+Moreso, while observability is crucial in any DevOps-oriented organisation, it is often confused with monitoring. Although observability and monitoring are not the same, they are often used interchangeably by vendors and users alike. 
 
 Additionally, observability and monitoring are not mutually exclusive. The purpose of this post is to demystify the differences and relationships between monitoring and observability.
 
@@ -27,9 +27,9 @@ Furthermore, monitoring provides insights into how an application, network, or i
 Monitoring, on its own, has a disadvantage in a complex microservices architecture since production failures are non-linear and difficult to predict owing to the distributed nature of microservices. Despite this disadvantage, monitoring remains essential for developing and operating modern distributed applications. If the monitored metrics and health rules are simple and focused on actionable data, they will provide the business with a solid picture of how healthy the system is--answering the "what is broken, why" question.
 
 To summarise, monitoring helps organisations to: 
-- Detect system issues: It alerts you to problems or displays them on dashboards. Improves Mean Time to Detection (MTTD)
-- Problem Resolution: Improve Mean Time to Repair (MTTR and aid Root Cause analysis (RCA) of problems. 
-- Continuous Improvement: Enhance capacity planning, financial planning, trending, performance engineering, reporting, software delivery process.
+- Detect system issues: It alerts users to problems or displays them on dashboards. It improves Mean Time to Detection (MTTD)
+- Problem Resolution: It improve Mean Time to Repair (MTTR) and aid Root Cause analysis (RCA) of problems. 
+- Continuous Improvement: Enhance capacity planning, financial planning, trend, performance engineering, software delivery process, etc.
 
 ## What is Observability? 
 While monitoring answers the "what is broken and why?" question, observability uncovers the unknown-unknows. Observability orgininated from a <b>control theory </b> (source <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-241j-dynamic-systems-and-control-spring-2011/readings/MIT6_241JS11_chap24.pdf" target="_blank">  MIT : Dynamic Systems and
