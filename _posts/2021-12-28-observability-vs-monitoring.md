@@ -1,12 +1,13 @@
 ---
 layout: post
-title:  "Observability vs Monitoring : A DevOps Perspective"
+title:  "Observability vs Monitoring: A DevOps Perspective"
 author: israel
+featured: true
 categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes ]
 image: https://user-images.githubusercontent.com/2548160/147579433-1c8ead27-8c3a-436c-adc0-3ac194fc7bfe.jpg
 date:   2021-12-28 15:01:35 +0300
-excerpt: "Although observability and monitoring are not the same, they are often used interchangeably by vendors and customers alike, which creates lots of confusion. Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing..."
+excerpt: "Although observability and monitoring are not the same, they are often used interchangeably by vendors and customers alike. Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing..."
 ---
 
 When organisations adopt the DevOps culture, they typically start by decomposing monolithic applications into microservices architectures to improve scalability, deployment cadence, fault isolation, etc. Traditional Application Performance Monitoring (APM) tools are typically designed to address predictable failures in monoliths, and as a result, they are incapable of monitoring modern distributed applications.
