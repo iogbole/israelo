@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Observability vs Monitoring - A DevOps perspective"
+title:  "Observability vs Monitoring : A DevOps Perspective"
 author: israel
 categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes ]
@@ -32,46 +32,43 @@ To summarise, monitoring helps organisations to:
 - Continuous Improvement: Enhance capacity planning, financial planning, trending, performance engineering, reporting, software delivery process.
 
 ## What is Observability? 
-While monitoring answers the "what is broken and why?" question, observability uncovers the unknown-unknows. 
-
-Observability orgininated from a control theory (source <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-241j-dynamic-systems-and-control-spring-2011/readings/MIT6_241JS11_chap24.pdf" target="_blank">  MIT : Dynamic Systems and
+While monitoring answers the "what is broken and why?" question, observability uncovers the unknown-unknows. Observability orgininated from a <b>control theory </b> (source <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-241j-dynamic-systems-and-control-spring-2011/readings/MIT6_241JS11_chap24.pdf" target="_blank">  MIT : Dynamic Systems and
 Control </a> ). 
 
-```
-The objective of the Control Theory is to develop a model or algorithm governing the application of system inputs to drive the system to a desired state, while minimising any delay, overshoot, or steady-state error and ensuring a level of control stability; often with the aim to achieve a degree of optimality.
-```
-> Source <a href="https://en.wikipedia.org/wiki/Control_theory" target="_blank"> Wikipedia: Control theory </a>
 
- Observability, therefore, is a measure of how well a system's internal state can be deduced from its external characteristics or outputs. In this context, the `internal state` refers to the unknown-unknows, or unpredictability/non-linearity of a failure in a distributed system, and the `outputs` refers to the Metrics, Events, Logs and Traces (aka MELT) data from the observable system. Thus, MELT data are the pillars of observability. 
+> The objective of the Control Theory is to develop a model or algorithm governing the application of system inputs to drive the system to a desired state, while minimising any delay, overshoot, or steady-state error and ensuring a level of control stability; often with the aim to achieve a degree of optimality.
+<i> Source <a href="https://en.wikipedia.org/wiki/Control_theory" target="_blank"> Wikipedia: Control theory </a> </i>
+
+Observability, therefore, is a measure of how well a system's internal state can be deduced from its external characteristics or outputs. In this context, the `internal state` refers to the unknown-unknows, or unpredictability/non-linearity of a failure in a distributed system, and the `outputs` refers to the Metrics, Events, Logs and Traces (aka MELT) data from the observable system. Thus, MELT data are the pillars of observability. 
 
 <p class="aligncenter">
 <img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/147602582-abbee2bb-f030-4f3f-95cd-23b9b5329b1e.jpg"/> 
 <br>
 </p>
-Source source <a href="https://peter.bourgon.org/blog/2017/02/21/metrics-tracing-and-logging.html"> metrics-tracing-and-logging</a>
+<i>Source <a href="https://peter.bourgon.org/blog/2017/02/21/metrics-tracing-and-logging.html"> metrics-tracing-and-logging</a> </i>
  
 Unlike monitoring, observability is a measure of a system's ability to diagnose what is going on inside rather than a tool used to measure the system's performance. In other words, when a system is observable, it allows for the measurement and inference of its internal state; this provides an additional context to allow you to get to the underlying cause of problems quicker. This characteristic is the primary reason why observability is more suitable for gaining insights into the internals of a complex microservices architecture.
 
-A good software observability solution must be able to answer the following questions: 
+A software observability solution must be able to answer the following questions: 
 
 - Which services did a request traverse, and where did performance bottlenecks occur?
 - How did the request's execution deviate from the intended system behaviour?
 - Why did the request fail?
-- How was the request processed by the (micro)service?
+- How was the request processed by the service?
 
 ## So, how are Observability and Monitoring different? 
 
 This section summarises the differences and relationships between Observability and Monitoring. 
 
-### Mutual Exclusivity 
+#### Mutual Exclusivity 
 Observability and monitoring are NOT mutually exclusive. Observability precedes monitoring; that is, you set up your monitoring after a system has been observed. In other words, observability is a superset of monitoring. A system can be observed in many ways. However, the most popular method for observing applications is via instrumentation, which injects agents into the application's byte code. The agent can either be vendor-specific or an opensource agent - such as the <a href="https://opentelemetry.io/docs/collector/getting-started/" target="_blank"> OpenTelemetry </a> agents. 
 
-### Purpose  
+#### Purpose  
 Observability and monitoring are complementary, with each fulfilling a different purpose. 
 
 Monitoring uses a sampling mechanism to collect data such as response time, requests, downtime, bottlenecks, and so on to track the overall health of a system. On the other hand, observability provides additional contextual information into a failure by tracing the requests through different microservices. 
 
-### Addressing the unknown-unknowns
+#### Addressing the unknown-unknowns
 Monitoring seeks to report known and predictable failures, while observability seeks to detect issues that users have not yet found. The underpinning principle of observability is to handle known failures and identify incoming issues before the users discover them.
 
 ## Conculusion  
