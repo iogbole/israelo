@@ -40,7 +40,7 @@ Control </a> ).
 
 <i> Source <a href="https://en.wikipedia.org/wiki/Control_theory" target="_blank"> Wikipedia: Control Theory </a> </i>
 
-Observability, therefore, is a measure of how well a system's internal state can be deduced from its external characteristics or outputs. In this context, the `internal state` refers to the unknown-unknows, or unpredictability/non-linearity of a failure in a distributed system, and the `outputs` refers to the Metrics, Events, Logs and Traces (aka MELT) data from the observable system. Thus, MELT data are the pillars of observability. 
+Observability, therefore, is a measure of how well a system's internal state can be deduced from its external characteristics or outputs. In this context, the `internal state` refers to the unknown-unknows, or unpredictability/non-linearity of a failure in a distributed system, and the `outputs` refers to the Metrics, Events, Logs and Traces (aka MELT) data from the observable system. Thus, <b> MELT data forms the pillars of observability </b>
 
 <p class="aligncenter">
 <img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/147602582-abbee2bb-f030-4f3f-95cd-23b9b5329b1e.jpg"/> 
