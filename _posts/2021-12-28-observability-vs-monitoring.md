@@ -6,13 +6,12 @@ categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes ]
 image: https://user-images.githubusercontent.com/2548160/147579433-1c8ead27-8c3a-436c-adc0-3ac194fc7bfe.jpg
 date:   2021-12-28 15:01:35 +0300
-permalink: /blog/ob.html
-
+excerpt: "Although observability and monitoring are not the same, they are often used interchangeably by vendors and customers alike, which creates lots of confusion. Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing..."
 ---
 
 When organisations adopt the DevOps culture, they typically start by decomposing monolithic applications into microservices architectures to improve scalability, deployment cadence, fault isolation, etc. Traditional Application Performance Monitoring (APM) tools are typically designed to address predictable failures in monoliths, and as a result, they are incapable of monitoring modern distributed applications.
 
-As (cloud-native) microservices architectures become the norm for most modern applications, effective debugging requires that the application (and its underlying infrastructure) be observable. In other words, the system's internal state can be deduced by observing its output. Consequently, the need for observability is becoming increasingly important as businesses strive to scale their DevOps strategies to keep up with the ever-increasing complexity of the software delivery process.
+As (cloud-native) microservices architectures become the norm for most modern applications, effective debugging requires that the application is observable. In other words, the system's internal state can be deduced by observing its output. Consequently, the need for observability is becoming increasingly important as businesses strive to scale their DevOps strategies to keep up with the ever-increasing complexity of the software delivery process.
 
 Moreso, while observability is crucial in any DevOps-oriented organisation, it is often confused with monitoring. Although observability and monitoring are not the same, they are often used interchangeably by vendors and customers alike. 
 
@@ -37,7 +36,8 @@ Control </a> ).
 
 
 > The objective of the Control Theory is to develop a model or algorithm governing the application of system inputs to drive the system to a desired state, while minimising any delay, overshoot, or steady-state error and ensuring a level of control stability; often with the aim to achieve a degree of optimality.
-<i> Source <a href="https://en.wikipedia.org/wiki/Control_theory" target="_blank"> Wikipedia: Control theory </a> </i>
+
+<i> Source <a href="https://en.wikipedia.org/wiki/Control_theory" target="_blank"> Wikipedia: Control Theory </a> </i>
 
 Observability, therefore, is a measure of how well a system's internal state can be deduced from its external characteristics or outputs. In this context, the `internal state` refers to the unknown-unknows, or unpredictability/non-linearity of a failure in a distributed system, and the `outputs` refers to the Metrics, Events, Logs and Traces (aka MELT) data from the observable system. Thus, MELT data are the pillars of observability. 
 
@@ -49,8 +49,7 @@ Observability, therefore, is a measure of how well a system's internal state can
  
 Unlike monitoring, observability is a measure of a system's ability to diagnose what is going on inside rather than a tool used to measure the system's performance. In other words, when a system is observable, it allows for the measurement and inference of its internal state; this provides an additional context to allow you to get to the underlying cause of problems quicker. This characteristic is the primary reason why observability is more suitable for gaining insights into the internals of a complex microservices architecture.
 
-A software observability solution must be able to answer the following questions: 
-
+To summarise, observability answer the following questions: 
 - Which services did a request traverse, and where did performance bottlenecks occur?
 - How did the request's execution deviate from the intended system behaviour?
 - Why did the request fail?
@@ -73,6 +72,6 @@ Monitoring seeks to report known and predictable failures, while observability s
 
 ## Conculusion  
 Although observability and monitoring are not the same, they are often used interchangeably by vendors and customers alike, which creates lots of confusion.
-Monitoring and observability have distinct objectives, and they are not the same thing. Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing.
+Monitoring and observability have distinct objectives, and they are not the same. Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing.
 
 Monitoring tracks the overall health of a system, and it is best suited to measure known and limited KPIs and failure modes. Observability, on the other hand, aims to provide highly granular insights into the behaviour of a system—the rich context makes it more suitable for cloud-native microservices architecture.
