@@ -12,24 +12,24 @@ excerpt: "Observability does not replace monitoring. They are NOT mutually exclu
 
 When organisations adopt the DevOps culture, they typically start by decomposing monolithic applications into microservices architectures to improve scalability, deployment cadence, fault isolation, etc. Traditional Application Performance Monitoring (APM) tools are typically designed to address predictable failures in monoliths, and as a result, they are incapable of monitoring modern distributed applications.
 
-As (cloud-native) microservices architectures become the norm for most modern applications, effective debugging requires that the application is observable. In other words, the system's internal state can be deduced by observing its output. Consequently, the need for observability is becoming increasingly important as businesses strive to scale their DevOps strategies to keep up with the ever-increasing complexity of the software delivery process.
+As cloud-native microservices architectures become the norm for most modern applications, effective tracing and debugging requires that the application is <b>observable</b>. Consequently, the need for observability is becoming increasingly important as businesses strive to scale their DevOps strategies to keep up with the ever-increasing complexity of the software delivery process.
 
-Moreso, while observability is crucial in any DevOps-oriented organisation, it is often confused with monitoring. Although observability and monitoring are not the same, they are often used interchangeably by vendors and users alike. 
+Observability is crucial in any DevOps-oriented organisation, it is, however, often confused with monitoring. Both terms are often used interchangeably by vendors and users alike, despite the fact that they are not the same. Also, Observability and monitoring are not mutually exclusive. 
 
-Additionally, observability and monitoring are not mutually exclusive. The purpose of this post is to demystify the differences and relationships between monitoring and observability.
+The purpose of this post is to demystify the differences and relationships between monitoring and observability.
 
 ## What is Monitoring? 
-A monitoring system must answer two fundamental questions - "what is broken, and why?" (source: <a href="https://sre.google/sre-book/" target="_blank"> Google SRE book </a>). A monitoring tool provides critical insights and information about an application's performance and usage trends - this includes information on memory issues, code bottlenecks, availability, server health, end-user experience, and much more. 
+A monitoring tool must answer two fundamental questions - "what is broken, and why?" (source: <a href="https://sre.google/sre-book/" target="_blank"> Google SRE book </a>). A monitoring tool provides critical insights and information about an application's performance and usage trends - this includes information on memory issues, code bottlenecks, availability, server health, end-user experience, and much more. 
 Refer to " <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank"> Chapter 6 - Monitoring Distributed Systems </a> of the <b> Google SRE book </b> for details. 
 
 Furthermore, monitoring provides insights into how an application, network, or infrastructure is performing. It is critical for building operations and business dashboards, creating health rules (using static thresholds or dynamic baselines), analysing usage and system performance trends, etc.
 
-Monitoring, on its own, has a disadvantage in a complex microservices architecture since production failures are non-linear and difficult to predict owing to the distributed nature of microservices. Despite this disadvantage, monitoring remains essential for developing and operating modern distributed applications. If the monitored metrics and health rules are simple and focused on actionable data, they will provide the business with a solid picture of how healthy the system is--answering the "what is broken, why" question.
+Monitoring, on its own, has a disadvantage in a complex microservices architecture since production failures are non-linear and difficult to predict owing to the distributed nature of microservices. Despite this disadvantage, monitoring remains essential for developing and operating modern distributed applications. If the monitored metrics and health rules are simple and focused on actionable data, they will provide the business with a good picture of how healthy the system is - by answering the "what is broken, and why" question.
 
 To summarise, monitoring helps organisations to: 
 - Detect system issues: It alerts users to problems or displays them on dashboards. It improves Mean Time to Detection (MTTD)
-- Problem Resolution: It improve Mean Time to Repair (MTTR) and aid Root Cause analysis (RCA) of problems. 
-- Continuous Improvement: Enhance capacity planning, financial planning, trend, performance engineering, software delivery process, etc.
+- Problem Resolution: It improves Mean Time to Repair (MTTR) and aid Root Cause analysis (RCA) of problems. 
+- Continuous Improvement: It enhances capacity planning, financial planning, trend analysis, etc.
 
 ## What is Observability? 
 While monitoring answers the "what is broken and why?" question, observability uncovers the unknown-unknows. Observability orgininated from a <b>control theory </b> (source <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-241j-dynamic-systems-and-control-spring-2011/readings/MIT6_241JS11_chap24.pdf" target="_blank">  MIT : Dynamic Systems and
