@@ -10,6 +10,16 @@ date:   2021-12-28 15:01:35 +0300
 excerpt: "Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing. Although observability and monitoring are not the same, they are often used interchangeably by vendors and customers alike."
 ---
 
+## BLUF 
+
+- Observability is based on exploring properties and patterns not defined in advance. It uncovers Uknown-unknowns. 
+- Observability uses the output of a system (i.e. MELT data) to determine the internal state of the observed system. It is not a new concept. 
+- Monitoring is based on gathering predefined sets of metrics or logs. It helps organisations to know what is broken and why it is broken. 
+- Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing.
+- Observability precedes monitoring - i.e. You start monitoring after a system is observed 
+- Observability is best suited for providing insights into complex-distributed-microservices architecture - because failures are non-linear and unpredictable. 
+
+
 When organisations adopt the DevOps culture, they typically start by decomposing monolithic applications into microservices architectures to improve scalability, deployment cadence, fault isolation, etc. Traditional Application Performance Monitoring (APM) tools are typically designed to address predictable failures in monoliths, and as a result, they are incapable of monitoring modern distributed applications.
 
 As cloud-native microservices architectures become the norm for most modern applications, effective tracing and debugging requires that the application is <b>observable</b>. Consequently, the need for observability is becoming increasingly important as businesses strive to scale their DevOps strategies to keep up with the ever-increasing complexity of the software delivery process.
