@@ -19,12 +19,12 @@ excerpt: "Observability does not replace monitoring. They are NOT mutually exclu
 - Observability precedes monitoring - i.e. You start monitoring after a system is observed 
 - Observability is best suited for providing insights into complex-distributed-microservices architecture - because failures are non-linear and unpredictable. 
 
-
-When organisations adopt the DevOps culture, they typically start by decomposing monolithic applications into microservices architectures to improve scalability, deployment cadence, fault isolation, etc. Traditional Application Performance Monitoring (APM) tools are typically designed to address predictable failures in monoliths, and as a result, they are incapable of monitoring modern distributed applications.
+-------
+When organisations adopt the DevOps culture, they typically start by decomposing monolithic applications into microservices architectures to improve scalability, deployment cadence, fault isolation, etc. Traditional Application Performance Monitoring (APM) tools are typically designed to address predictable failures in monoliths, and as a result, they are incapable of providing "true" end-to-end visibility in modern distributed applications.
 
 As cloud-native microservices architectures become the norm for most modern applications, effective tracing and debugging requires that the application is <b>observable</b>. Consequently, the need for observability is becoming increasingly important as businesses strive to scale their DevOps strategies to keep up with the ever-increasing complexity of the software delivery process.
 
-Observability is crucial in any DevOps-oriented organisation, it is, however, often confused with monitoring. Both terms are often used interchangeably by vendors and users alike, despite the fact that they are not the same. Also, Observability and monitoring are not mutually exclusive. 
+Observability is crucial in any DevOps-oriented organisation, it is, however, often confused with <b>monitoring</b>. Both terms are often used interchangeably by vendors and users alike, despite the fact that they are not the same. Also, Observability and monitoring are not mutually exclusive. 
 
 The purpose of this post is to demystify the differences and relationships between monitoring and observability.
 
@@ -66,9 +66,9 @@ To summarise, observability answer the following questions:
 - Why did the request fail?
 - How was the request processed by the service?
 
-## So, how are Observability and Monitoring different? 
+## How is Observability and Monitoring different? 
 
-This section summarises the differences and relationships between Observability and Monitoring. 
+This section summarises the differences and relationships between observability and monitoring. 
 
 #### Mutual Exclusivity 
 Observability and monitoring are NOT mutually exclusive. Observability precedes monitoring; that is, you set up your monitoring after a system has been observed. In other words, observability is a superset of monitoring. A system can be observed in many ways. However, the most popular method for observing applications is via instrumentation, which injects agents into the application's byte code. The agent can either be vendor-specific or an opensource agent - such as the <a href="https://opentelemetry.io/docs/collector/getting-started/" target="_blank"> OpenTelemetry </a> agents. 
@@ -81,7 +81,7 @@ Monitoring uses a sampling mechanism to collect data such as response time, requ
 #### Addressing the unknown-unknowns
 Monitoring seeks to report known and predictable failures, while observability seeks to detect issues that users have not yet found. The underpinning principle of observability is to handle known failures and identify incoming issues before the users discover them.
 
-## Conclustion  
+## Conclusions
 Although observability and monitoring are not the same, they are often used interchangeably by vendors and customers alike, which creates lots of confusion.
 Monitoring and observability have distinct objectives, and they are not the same. Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing.
 
@@ -89,5 +89,6 @@ Monitoring tracks the overall health of a system, and it is best suited to measu
 
 
 -------
-> **⚠ DISCLAIMER **  
+> ⚠ DISCLAIMER
+
 > Opinions expressed are solely my own and do not express the views or opinions of my employer.
