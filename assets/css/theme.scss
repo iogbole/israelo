@@ -22,7 +22,8 @@ body, input, button, select, optgroup, textarea {
 }
 body {
     line-height:1.7;
-    background: #f4f4f4;
+    //background: #f4f4f4;
+    background: #ffffff;
 }
 a {
     //color: darken($primary, 24%);
@@ -127,7 +128,8 @@ img, img:hover {
     height: 100%;
     border-right: solid rgba(0, 0, 0, 0.07) 1px;
     z-index: 1022;
-    background:#fff;
+    background:#f4f4f4;
+    //background:#fff;
 }
 .nav-icon {
     position: fixed;
