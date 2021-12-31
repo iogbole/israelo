@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Obsevability vs Monitoring: A DevOps perspective"
+title:  "Observability vs Monitoring: A DevOps perspective"
 author: israel
 featured: true
 categories: [ 'Cloud Native' ]
