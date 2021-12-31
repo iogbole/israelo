@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Observability vs Monitoring: A DevOps Perspective"
+title:  "Obsevability and Monitoring: A DevOps perspective"
 author: israel
 featured: true
 categories: [ 'Cloud Native' ]
@@ -10,17 +10,17 @@ date:   2021-12-28 15:01:35 +0300
 excerpt: "Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing. Although observability and monitoring are not the same, they are often used interchangeably by vendors and customers alike."
 ---
 
-## Bottom Line
-
-- Observability is based on exploring properties and patterns not defined in advance. It uncovers Uknown-unknowns. 
-- Observability uses the output of a system (i.e. MELT data) to determine the internal state of the observed system. It is not a new concept. 
+## Bottom Line 
 - Monitoring is based on gathering predefined sets of metrics or logs. It helps organisations to know what is broken and why it is broken. 
+- Monitoring extends observabiity. 
+- Observability is anchored on the discovery of uknown traits and patterns. It uncovers Uknown-unknowns. 
+- Observability uses the output of a system (i.e. MELT data) to determine the internal state of the observed system. It is not a new concept. 
 - Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing.
-- Observability precedes monitoring - i.e. You start monitoring after a system is observed 
-- Observability is best suited for providing insights into complex-distributed-microservices architecture - because failures are non-linear and unpredictable. 
+- Observability precedes monitoring. That is, you start monitoring after a system is observed. 
+- Observability is best suited for providing insights into complex, distributed microservices architecture due to the non-linearity and unpredictability of failures in modern applications. 
 
 -------
-When organisations adopt the DevOps culture, they typically start by decomposing monolithic applications into microservices architectures to improve scalability, deployment cadence, fault isolation, etc. Traditional Application Performance Monitoring (APM) tools are typically designed to address predictable failures in monoliths, and as a result, they are incapable of providing "true" end-to-end visibility in modern distributed applications.
+When organisations adopt a DevOps culture, they typically start by decomposing monolithic applications into microservices architectures to improve scalability, deployment cadence, fault isolation, etc. Traditional Application Performance Monitoring (APM) tools are typically designed to address known metrics (e.g Avg. response time) in predefined entities, and as a result, they are incapable of providing "true" end-to-end visibility in modern distributed applications.
 
 As cloud-native microservices architectures become the norm for most modern applications, effective tracing and debugging requires that the application is <b>observable</b>. Consequently, the need for observability is becoming increasingly important as businesses strive to scale their DevOps strategies to keep up with the ever-increasing complexity of the software delivery process.
 
@@ -34,7 +34,7 @@ Refer to " <a href="https://sre.google/sre-book/monitoring-distributed-systems/"
 
 Furthermore, monitoring provides insights into how an application, network, or infrastructure is performing. It is critical for building operations and business dashboards, creating health rules (using static thresholds or dynamic baselines), analysing usage and system performance trends, etc.
 
-Monitoring, on its own, has a disadvantage in a complex microservices architecture since production failures are non-linear and difficult to predict owing to the distributed nature of microservices. Despite this disadvantage, monitoring remains essential for developing and operating modern distributed applications. If the monitored metrics and health rules are simple and focused on actionable data, they will provide the business with a good picture of how healthy the system is - by answering the "what is broken, and why" question.
+Monitoring, on its own, has a disadvantage in a complex microservices architecture since production failures are non-linear and difficult to predict owing to the distributed nature of microservices. The ephemeral nature of microservices further complicates issues for traditional monitoring techniques. Despite this disadvantage, monitoring remains essential for operations, DevOps and SRE. If the monitored metrics and health rules are simple and focused on actionable data, they will provide the business with a good picture of how healthy the system is - by answering the "what is broken, and why" question.
 
 To summarise, monitoring helps organisations to: 
 - Detect system issues: It alerts users to problems or displays them on dashboards. It improves Mean Time to Detection (MTTD)
@@ -50,7 +50,7 @@ Control </a> ).
 
 <i> Source <a href="https://en.wikipedia.org/wiki/Control_theory" target="_blank"> Wikipedia: Control Theory </a> </i>
 
-Observability, therefore, is a measure of how well a system's internal state can be deduced from its external characteristics or outputs. In this context, the `internal state` refers to the unknown-unknows, or unpredictability/non-linearity of a failure in a distributed system, and the `outputs` refers to the Metrics, Events, Logs and Traces (aka MELT) data from the observable system. Thus, <b> MELT data forms the pillars of observability </b>
+Observability, therefore, is a measure of how well a system's internal state can be deduced from its external external characteristics or outputs. In this context, the `internal state` refers to the unknown-unknows, or unpredictability/non-linearity of a failure in a distributed system, and the `outputs` refers to the Metrics, Events, Logs and Traces (aka MELT) data from the observable system. Thus, <b> MELT data forms the pillars of observability </b>
 
 <p class="aligncenter">
 <img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/147602582-abbee2bb-f030-4f3f-95cd-23b9b5329b1e.jpg"/> 
@@ -58,7 +58,7 @@ Observability, therefore, is a measure of how well a system's internal state can
 </p>
 <i>Source <a href="https://peter.bourgon.org/blog/2017/02/21/metrics-tracing-and-logging.html"> metrics-tracing-and-logging</a> </i>
  
-Unlike monitoring, observability is a measure of a system's ability to diagnose what is going on inside rather than a tool used to measure the system's performance. In other words, when a system is observable, it allows for the measurement and inference of its internal state; this provides an additional context to allow you to get to the underlying cause of problems quicker. This characteristic is the primary reason why observability is more suitable for gaining insights into the internals of a complex microservices architecture.
+Unlike monitoring, observability is a measure of a system's ability to diagnose what is going on inside rather than a tool used to measure the system's performance. In other words, when a system is observable, it allows for the measurement and inference of its internal state; this provides an additional context to allow you to get to the underlying cause of problems quicker. The additional/enriched context provided by observability makes it more suitable for acquiring insights into the internals of microservices architecture.
 
 To summarise, observability answer the following questions: 
 - Which services did a request traverse, and where did performance bottlenecks occur?
@@ -66,10 +66,10 @@ To summarise, observability answer the following questions:
 - Why did the request fail?
 - How was the request processed by the service?
 
-## How is Observability and Monitoring different? 
+## How are Observability and Monitoring different?
 
-This section summarises the differences and relationships between observability and monitoring. 
-
+Observability and monitoring have symbiotic relationship. One may argue that monitoring extends observability. This section explores common differences between observability and monitoring. 
+ 
 #### Mutual Exclusivity 
 Observability and monitoring are NOT mutually exclusive. Observability precedes monitoring; that is, you set up your monitoring after a system has been observed. In other words, observability is a superset of monitoring. A system can be observed in many ways. However, the most popular method for observing applications is via instrumentation, which injects agents into the application's byte code. The agent can either be vendor-specific or an opensource agent - such as the <a href="https://opentelemetry.io/docs/collector/getting-started/" target="_blank"> OpenTelemetry </a> agents. 
 
