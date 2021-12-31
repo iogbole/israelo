@@ -81,7 +81,7 @@ Monitoring uses a sampling mechanism to collect data such as response time, requ
 #### Addressing the unknown-unknowns
 Monitoring seeks to report known and predictable failures, while observability seeks to detect issues that users have not yet found. The underpinning principle of observability is to handle known failures and identify incoming issues before the users discover them.
 
-## Conclusions
+## Conclusion
 Although observability and monitoring are not the same, they are often used interchangeably by vendors and customers alike, which creates lots of confusion.
 Monitoring and observability have distinct objectives, and they are not the same. Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing.
 
