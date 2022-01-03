@@ -83,9 +83,9 @@ Monitoring seeks to report known and predictable failures, while observability s
 
 ## Conclusion
 Although observability and monitoring are not the same, they are often used interchangeably by vendors and customers alike, which creates lots of confusion.
-Monitoring and observability have distinct objectives, and they are not the same. Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing.
+Monitoring and observability have distinct objectives. Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing.
 
-Monitoring tracks the overall health of a system, and it is best suited to measure known and limited KPIs and failure modes. Observability, on the other hand, aims to provide highly granular insights into the behaviour of a system—the rich context makes it more suitable for cloud-native microservices architecture.
+Monitoring tracks the overall health of a system, and it is best suited to measure known and limited KPIs and failure modes. Observability, on the other hand, aims to provide highly granular insights into the behaviour of a system. The rich context that observability provides make it more suitable for cloud-native microservices architecture.
 
 
 -------
