@@ -28,19 +28,39 @@ It helps in product strategy and roadmap planning. The five forces are:
 - Market Rivalry
 
 
-Ref: <a href="https://hbr.org/1979/03/how-competitive-forces-shape-strategy" target="_blank"> How Competitive Forces Shape Strategy by Michael E. Porter  </a>
+Further Reading: <a href="https://hbr.org/1979/03/how-competitive-forces-shape-strategy" target="_blank"> How Competitive Forces Shape Strategy by Michael E. Porter  </a>
 
 ## The AARM Method
 
 The AARM metrics is an analytical framework that defines the metrics for a product/feature. It's an acronumy for : 
 
 - <b>A</b>cquisition — where/what channels do users come from? This is an important consideration during an opportunity scoping exercise. This is also an important metric to track for Product Led Growth strategy.  For instance, entice consumers with a free tier and subsequently convert them to freemium or premium users.
-- <b>A</b>>ctivation — What percentange of users used the product after signing up? Did they install an agent? Did users activate their cloud connection, or left it in an incomplete state? 
+- <b>A</b>ctivation — What percentange of users used the product after signing up? Did they install an agent? Did users activate their cloud connection, or left it in an incomplete state? 
 - <b>R</b>etention - Increasing the frequency with which customers utilise the product/feature. What's the percentage of repeat customers? 
 - <b>M</b>onetization - Can you monetise this feature? Why whould anyone pay for this product or feature? Why won't they use an open-source solution instead? 
 
 
-Ref: <a href="https://www.lewis-lin.com/blog/2017/11/3/what-is-the-aarm-method" target="_blank"> AARM Metrics </a>
+Further Reading: <a href="https://www.lewis-lin.com/blog/2017/11/3/what-is-the-aarm-method" target="_blank"> AARM Metrics </a>
+
+## Prioritisation
+When you've decided on a list of features or requests to work on, but aren't sure which one to choose or test first, the following prioritisation frameworks may help:
+
+- RICE Score - `(Reach * Impact * Confidence )/Effort`. RICE doesn't take risk into consideration, be cautious of this. 
+- MoSCoW  - Must-Have, Should-Have, Could-Have, Won’t-Have
+- Kano Model - Delighters, Performance features and Basic features
+
+Further Reading: <a href="https://productschool.com/blog/product-management-2/prioritization-techniques-product-managers/" target="_blank"> Prioritization Techniques All Product Managers Should Know </a>
+
+## OKRs
+OKRs stand for objectives and key results, a goal-setting methodology that can help you set and track measurable goals. 
+
+I will `[objective]` as measured by `[key result]`.
+
+The `Objective` is the goal you want to achieve—increase brand awareness, create the lowest carbon footprint in your industry, that sort of thing.
+
+The `Key Result` is the metric by which you’ll measure your progress towards your objective—drive one million web visitors, ensure one-quarter of your product’s material is compostable, etc. 
+
+Further Reading: <a href="https://www.atlassian.com/team-playbook/plays/okrs" target="_blank"> OKRs </a>
 
 
 ## 5C Analysis
@@ -48,7 +68,7 @@ Ref: <a href="https://www.lewis-lin.com/blog/2017/11/3/what-is-the-aarm-method" 
 5C Analysis is a marketing framework to analyze the environment in which a company operates. It can provide insight into the key drivers of success, competitive pricing strategy, as well as the risk exposure to various macro environmental factors. The 5Cs are: 
 
 - <b>C</b>ompany  - What is the company's sustainable advantage? 
-- <b>Collaborators - This referes to the ecosystem or community that you can build around your product. The Kubernetes ecosystem is a typical example. 
+- <b>C</b>ollaborators - This referes to the ecosystem or community that you can build around your product. The Kubernetes ecosystem is a typical example. 
 - <b>C</b>ustomers  - What's the Total Available Market (TAM), The Serviceable Available Market (SAM) and The Serviceable Obtainable Market (SOM) sub-segment of the market? 
 - <b>C</b>ompetitors - This is where Porter's five forces come in handy  
 - <b>C</b>ontext - The PESTLE analysis of the product or company. 
@@ -58,8 +78,14 @@ Ref: <a href="https://www.lewis-lin.com/blog/2017/11/3/what-is-the-aarm-method" 
 </p>
   
 
-Ref: <a href="https://corporatefinanceinstitute.com/resources/knowledge/strategy/5c-analysis-marketing/" target="_blank"> 5C Analysis </a>
+Further Reading: <a href="https://corporatefinanceinstitute.com/resources/knowledge/strategy/5c-analysis-marketing/" target="_blank"> 5C Analysis </a>
 
+## RFM 
+The RFM model helps you to segment customer data based on user  behaviour. This requires a good amount of historical data.  
+
+- <b>R</b>ecency - How recent, last 1 day, 1 week, etc? 
+- <b>F</b>requency - How often? 
+- <b>M</b>onetary - How much did they spend, how much could they have spent if not for the broken checkout issue? 
 
 
 -------
