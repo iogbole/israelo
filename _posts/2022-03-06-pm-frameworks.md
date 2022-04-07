@@ -88,6 +88,8 @@ The RFM model helps you to segment customer data based on user  behaviour. This 
 - <b>F</b>requency - How often? 
 - <b>M</b>onetary - How much did they spend, how much could they have spent if not for the broken checkout issue? 
 
+Further Reading: <a href="https://link.springer.com/chapter/10.1007/978-0-387-72579-6_12" target="_blank"> RFM Analysis </a>
+
 
 -------
 >  **⚠ DISCLAIMER**
