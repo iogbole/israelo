@@ -3,6 +3,7 @@ layout: post
 title: "Product Management Frameworks"
 author: israel
 featured: false
+toc: true
 categories: [ 'Personal', 'Cloud Native' ]
 tags: [mba, mentor, product ]
 image: https://user-images.githubusercontent.com/2548160/161992841-90c5fc97-2c8d-4268-b4f3-781c73c4ea9a.jpg
