@@ -14,7 +14,7 @@ date:  2022-02-06 15:01:35 +0300
 My library of reference frameworks is expanding as I progress in my career as a Cloud Observability Product Manager and in my MBA studies. The objective of this post to document the frameworks that I have personally found useful to help me transition into the Product Management career path. 
 
 
-## Porter 5 Forces
+## Porter's 5 Forces
 
 _This one is straright out of business school_.  
 Porter's Five Forces is a simple yet effective framework for identifying the primary sources of competition in your industry or sector.
