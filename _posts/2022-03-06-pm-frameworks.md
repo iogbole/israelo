@@ -11,12 +11,13 @@ date:  2022-02-06 15:01:35 +0300
 #excerpt: "eBPF is what JavaScript is to HTML. It is a mechanism for Linux applications to execute code in Linux kernel space..."
 
 ---
-My library of reference frameworks is expanding as I progress in my career as a Cloud Observability Product Manager and in my MBA studies. The objective of this post to document the frameworks that I have personally found useful to help me transition into the Product Management career path. 
+
+My library of reference frameworks is expanding as I progress in my career as a Cloud Observability Product Manager and my MBA studies. The objective of this post is to document the frameworks that I have found helpful in my Product Management career path. 
 
 
 ## Porter's 5 Forces
 
-_This one is straright out of business school_.  
+_This one is straight out of business school_.  
 Porter's Five Forces is a simple yet effective framework for identifying the primary sources of competition in your industry or sector.
 I use this framework to tactically analyse the market, particularly the competition. When you get a good grasp of the forces affecting your product, you'll be able to adjust your strategy, boost your margin, and stay ahead of the competition.
 
@@ -33,12 +34,12 @@ Further Reading: <a href="https://hbr.org/1979/03/how-competitive-forces-shape-s
 
 ## The AARM Method
 
-The AARM metrics is an analytical framework that defines the metrics for a product/feature. It's an acronumy for : 
+The AARM metrics is an analytical framework that defines the metrics for a product/feature. It's an acronym for : 
 
-- <b>A</b>cquisition — where/what channels do users come from? This is an important consideration during an opportunity scoping exercise. This is also an important metric to track for Product Led Growth strategy.  For instance, entice consumers with a free tier and subsequently convert them to freemium or premium users.
-- <b>A</b>ctivation — What percentange of users used the product after signing up? Did they install an agent? Did users activate their cloud connection, or left it in an incomplete state? 
+- <b>A</b>cquisition — where/what channels do users come from? This is an important consideration during an opportunity scoping exercise. This is also an important metric to track for Product Led Growth strategy. For instance, entice consumers with a free tier and subsequently convert them to freemium or premium users.
+- <b>A</b>ctivation — What percentage of users used the product after signing up? Did they install an agent? Did users activate their cloud connection or leave it in an incomplete state? 
 - <b>R</b>etention - Increasing the frequency with which customers utilise the product/feature. What's the percentage of repeat customers? 
-- <b>M</b>onetization - Can you monetise this feature? Why whould anyone pay for this product or feature? Why won't they use an open-source solution instead? 
+- <b>M</b>onetization - Can you monetise this feature? Why would anyone pay for this product or feature? Why won't they use an open-source solution instead? 
 
 
 Further Reading: <a href="https://www.lewis-lin.com/blog/2017/11/3/what-is-the-aarm-method" target="_blank"> AARM Metrics </a>
@@ -57,16 +58,15 @@ OKRs stand for objectives and key results, a goal-setting methodology that can h
 
 I will `[objective]` as measured by `[key result]`.
 
-The `Objective` is the goal you want to achieve—increase brand awareness, create the lowest carbon footprint in your industry, that sort of thing.
+The `Objective` is the goal you want to achieve—increase brand awareness and create the lowest carbon footprint in your industry.
 
 The `Key Result` is the metric by which you’ll measure your progress towards your objective—drive one million web visitors, ensure one-quarter of your product’s material is compostable, etc. 
 
 Further Reading: <a href="https://www.atlassian.com/team-playbook/plays/okrs" target="_blank"> OKRs </a>
 
-
 ## 5C Analysis
 
-5C Analysis is a marketing framework to analyze the environment in which a company operates. It can provide insight into the key drivers of success, competitive pricing strategy, as well as the risk exposure to various macro environmental factors. The 5Cs are: 
+5C Analysis is a marketing framework to analyze the environment in which a company operates. It can provide insight into the key drivers of success, competitive pricing strategy, and risk exposure to various macro-environmental factors. The 5Cs are: 
 
 - <b>C</b>ompany  - What is the company's sustainable advantage? 
 - <b>C</b>ollaborators - This referes to the ecosystem or community that you can build around your product. The Kubernetes ecosystem is a typical example. 
@@ -82,7 +82,7 @@ Further Reading: <a href="https://www.atlassian.com/team-playbook/plays/okrs" ta
 Further Reading: <a href="https://corporatefinanceinstitute.com/resources/knowledge/strategy/5c-analysis-marketing/" target="_blank"> 5C Analysis </a>
 
 ## RFM 
-The RFM model helps you to segment customer data based on user  behaviour. This requires a good amount of historical data.  
+The RFM model helps you segment customer data based on user behaviour. This requires a good amount of historical data.  
 
 - <b>R</b>ecency - How recent, last 1 day, 1 week, etc? 
 - <b>F</b>requency - How often? 
