@@ -22,7 +22,7 @@ excerpt: "Observability does not replace monitoring. They are NOT mutually exclu
 -------
 When organisations adopt a DevOps culture, they typically start by decomposing monolithic applications into microservices architectures to improve scalability, deployment cadence, fault isolation, etc. Traditional Application Performance Monitoring (APM) tools are typically designed to address known metrics (e.g Avg. response time) in predefined entities, and as a result, they are incapable of providing "true" end-to-end visibility in modern distributed applications.
 
-As cloud-native microservices architectures become the norm for most modern applications, effective tracing and debugging requires that the application is <b>observable</b>. Consequently, the need for observability is becoming increasingly important as businesses strive to scale their DevOps strategies to keep up with the ever-increasing complexity of the software delivery process.
+As cloud-native microservices architectures become the norm for most modern applications, effective tracing and debugging require that the application is <b>observable</b>. Consequently, the need for observability is becoming increasingly important as businesses strive to scale their DevOps strategies to keep up with the ever-increasing complexity of the software delivery process.
 
 Observability is crucial in any DevOps-oriented organisation, it is, however, often confused with <b>monitoring</b>. Both terms are often used interchangeably by vendors and users alike, despite the fact that they are not the same. Also, Observability and monitoring are not mutually exclusive. 
 
@@ -38,7 +38,7 @@ Monitoring, on its own, has a disadvantage in a complex microservices architectu
 
 To summarise, monitoring helps organisations to: 
 - Detect system issues: It alerts users to problems or displays them on dashboards. It improves Mean Time to Detection (MTTD)
-- Problem Resolution: It improves Mean Time to Repair (MTTR) and aid Root Cause analysis (RCA) of problems. 
+- Problem Resolution: It improves Mean Time to Repair (MTTR) and aids Root Cause analysis (RCA) of problems. 
 - Continuous Improvement: It enhances capacity planning, financial planning, trend analysis, etc.
 
 ## What is Observability? 
@@ -46,11 +46,11 @@ While monitoring answers the "what is broken and why?" question, observability u
 Control </a> ). 
 
 
-> The objective of the Control Theory is to develop a model or algorithm governing the application of system inputs to drive the system to a desired state, while minimising any delay, overshoot, or steady-state error and ensuring a level of control stability; often with the aim to achieve a degree of optimality.
+> The objective of the Control Theory is to develop a model or algorithm governing the application of system inputs to drive the system to the desired state, while minimising any delay, overshoot, or steady-state error and ensuring a level of control stability; often with the aim to achieve a degree of optimality.
 
 <i> Source <a href="https://en.wikipedia.org/wiki/Control_theory" target="_blank"> Wikipedia: Control Theory </a> </i>
 
-Observability, therefore, is a measure of how well a system's internal state can be deduced from its external external characteristics or outputs. In this context, the `internal state` refers to the unknown-unknows, or unpredictability/non-linearity of a failure in a distributed system, and the `outputs` refers to the Metrics, Events, Logs and Traces (aka MELT) data from the observable system. Thus, <b> MELT data forms the pillars of observability </b>
+Observability, therefore, is a measure of how well a system's internal state can be deduced from its external characteristics or outputs. In this context, the `internal state` refers to the unknown-unknows, or unpredictability/non-linearity of a failure in a distributed system, and the `outputs` refers to the Metrics, Events, Logs and Traces (aka MELT) data from the observable system. Thus, <b> MELT data forms the pillars of observability </b>
 
 <p class="aligncenter">
 <img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/147602582-abbee2bb-f030-4f3f-95cd-23b9b5329b1e.jpg"/> 
