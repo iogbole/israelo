@@ -12,8 +12,8 @@ excerpt: "Observability does not replace monitoring. They are NOT mutually exclu
 
 ## Bottom Line 
 - Monitoring is based on gathering predefined sets of metrics or logs. It helps organisations to know what is broken and why it is broken. 
-- Monitoring extends observabiity. 
-- Observability is anchored on the discovery of uknown traits and patterns. It uncovers Uknown-unknowns. 
+- Monitoring extends observability. 
+- Observability is anchored on the discovery of unknown traits and patterns. It uncovers unknown-unknowns. 
 - Observability uses the output of a system (i.e. MELT data) to determine the internal state of the observed system. It is not a new concept. 
 - Observability does not replace monitoring. They are NOT mutually exclusive; rather, they are mutually reinforcing.
 - Observability precedes monitoring. That is, you start monitoring after a system is observed. 
