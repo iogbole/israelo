@@ -20,7 +20,7 @@ hero:
   name: Israel Ogbole
   image: https://user-images.githubusercontent.com/2548160/103445496-98488300-4c6c-11eb-9d7e-7c02104a908e.png
   say-hello: Hello, I’m <strong>Israel Ogbole</strong>
-  bio: I work as a cloud-native observability Product Manager.  My background stems from Software architecture and engineering, therefore I will use this space to share personal thoughts and experiences with OSS, Raspberry Pi, Cloud Native technologies, and life in general. <br> Also, I will journal Naomi's programming journey here.  Naomi is my eight-year-old daughter who loves coding.  
+  bio: I will use this space to share personal thoughts and experiences with Open Source Software, Raspberry Pi, Cloud-native technologies, and life in general. <br> Also, I will journal Naomi's programming journey here. Naomi is my nine-year-old daughter who loves coding.  
   twitter: https://twitter.com/israel_ogbole # Add your Twitter handle
   #facebook: https://facebook.com/ # Add your Facebook handle
   #instagram: https://instagram.com/ # Add your Instagram handle
@@ -38,7 +38,7 @@ authors:
     email: israel@israelo.io
     web: https://www.linkedin.com/in/israelo/
     twitter: https://twitter.com/israel_ogbole
-    description: "Father of a #kidwhocode, Product Manager, Architect, Engineer, MBA candidate, and now an occasional Blogger "
+    description: "Father of a #kidwhocode, Engineering Product Manager, Architect, Engineer, MBA candidate, and now an occasional Blogger "
 
 # Plugins
 plugins:
