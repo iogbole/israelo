@@ -11,15 +11,15 @@ image: assets/images/sso.jpg
 date:   2020-12-12 06:01:35 +0300
 excerpt: "Have you ever wondered how SSO work under the hood? I was battered by various complex SSO/LDAP integration issues, I decided to make it personal..."
 ---
-Single Sign-On (SSO) is here to stay, and SSO's importance cannot be overemphasised; but have you ever wondered how SSO work under the hood? After been battered by various complex SSO/LDAP integration issues, I decided to unravel the mystery behind the working principle of this authentication method.
+Single Sign-On (SSO) is here to stay, and SSO's importance cannot be overemphasised; but have you ever wondered how SSO work under the hood? After being battered by various complex SSO/LDAP integration issues, I decided to unravel the mystery behind the working principle of this authentication method.
 
-> *"One ring to rule them all, one ring to find them, One ring to bring them all, and in the darkness bind them" - Lord of the Rings*
+> *"One ring to rule them all, One ring to find them, One ring to bring them all, and in the darkness bind them" - Lord of the Rings*
 
 ## What is SSO authentication?
 
 The Lord of the rings' analogy of "one ~~credential~~ ring to rule them" works magic every time I have had to explain what SSO is to my customers; one password for everything.
 
-SSO is an authentication method that enables users to securely login to one or multiple applications by using just one set of credentials. This single credential is, in most cases,  stored and managed from a central repository called LDAP. When done correctly, users should only have to login once to access various applications and services across different domains.
+SSO is an authentication method that enables users to securely log in to one or multiple applications by using just one set of credentials. This single credential is, in most cases,  stored and managed from a central repository called LDAP. When done correctly, users should only have to log in once to access various applications and services across different domains.
 
 There are various types of SSO authentication, such as Kerberos, Smart-card, IWA, SAML, etc.  This blog post focuses on SAML 2.0, which has three main components, as shown in the diagram below:
 
@@ -27,17 +27,17 @@ There are various types of SSO authentication, such as Kerberos, Smart-card, IWA
 
 I have worked on the Service Provider side of the SSO coin for nearly all of my career; thus, I have seen my fair share of SSO integration complexities and issues.
 
-If you have felt this pain like me, you will agree that culprit for most SSO integration issues is the Identity Provider &ndash; it's the black-box that a few people know how it works and how to troubleshoot. So, I gave myself an unusual challenge to delve into the IdP black-box, to understand how it works and explain the concept to my colleagues. Doing this will also mean that we have an SSO lab that can be used for internal testing and PoCs.  
+If you have felt this pain like me, you will agree that the culprit for most SSO integration issues is the Identity Provider &ndash; it's the black box that a few people know how it works and how to troubleshoot. So, I gave myself an unusual challenge to delve into the IdP black box - to understand how it works and explain the concept to my colleagues. Doing this will also mean that we have an SSO lab that can be used for internal testing and PoCs.  
 
 I decided to use [Shibboleth IdP](https://www.shibboleth.net/) for three main reasons :
 
-- It is an open source solution.
+- It is an open-source solution.
 - It is widely used, especially in the Education sector.
-- It comes without any bells and whistles - meaning I can tinker with the configurations as much as like.
+- It comes without any bells and whistles - meaning I can tinker with the configurations as much as I like.
 
 ## Setting up Shibboleth and OpenLDAP like a BOSS
 
-This post consists mainly of my notes from this rather unusual challenge. It may also serve as a hands-on tutorial to install and configure OpenSAML, OpenLDAP and integrate it with an application's Single Sign-On (SSO) authentication mechanism.
+This post consists mainly of my notes from this rather unusual challenge. It may also serve as a hands-on tutorial to install and configure OpenSAML, and OpenLDAP and integrate it with an application's Single Sign-On (SSO) authentication mechanism.
 
 The diagram below depicts the end goal of this setup guide:
  
@@ -82,7 +82,7 @@ You will be asked a series of questions about how you&#39;d like to configure th
 - Omit OpenLDAP server configuration? No
 - DNS domain name?
   - This will create the base structure of your directory path. Read the message to understand how it works.
-  - There are no set rules for how to configure this, use that whatever makes sense for your use case
+  - There are no set rules for how to configure this, use whatever makes sense for your use case
 - Organization name?
   - theCompany
 - Administrator password?
@@ -102,7 +102,7 @@ Test your LDAP server on port 389
 
 Alternatively, download and [setup phpLDAPAdmin](https://support.eapps.com/index.php?/Knowledgebase/Article/View/437/55/user-guide---openldap-and-phpldapadmin#installing-openldap-and-phpldapadmin), but this may require a few iterations to complete the setup.
 
-For consistency with this guide, create an Organisation unit called uk, that way, we will refer to our Base DN as `ou=uk,dc=app,dc=com` going forward.
+For consistency with this guide, create an Organisation unit called UK, that way, we will refer to our Base DN as `ou=uk,dc=app,dc=com` going forward.
 
 Create a user, or use this shell script to create LDAP users in bulk - [https://github.com/iogbole/bulk-add-ldap-users](https://github.com/iogbole/bulk-add-ldap-users)
 
@@ -124,7 +124,7 @@ to set the JAVA_HOME environment variable.
 
 ### Install Shibboleth
 
-You have probably heard of OKTA, OneLogin, ADFS, PingId etc, but perhaps, not so much about Shibboleth. Shibboleth performs exact functions (and even more IMHO) as the popular Identity Providers; it is an open source SAML Identity Provider and it has out of the box support for LDAP, Kerberos, JAAS, X.509, SPNEGO. It also supports multifactor authentication with DUO, google,OpenID etc.
+You have probably heard of OKTA, OneLogin, ADFS, PingId etc, but perhaps, not so much about Shibboleth. Shibboleth performs exact functions (and even more IMHO) as the popular Identity Providers; it is an open-source SAML Identity Provider and it has out-of-the-box support for LDAP, Kerberos, JAAS, X.509, SPNEGO. It also supports multifactor authentication with DUO, google, OpenID etc.
 
 Modify your `/etc/hosts`:
 
@@ -144,7 +144,7 @@ wget https://shibboleth.net/downloads/identity-provider/3.3.1/shibboleth-identit
 unzip shibboleth-identity-provider-3.3.1.zip
 ```
 
-Next, change to your desired user (I am using root), then change directory to the shibboleth directory.
+Next, change to your desired user (I am using root), then change the directory to the shibboleth directory.
 
 ```c
 sudo su -
@@ -189,7 +189,7 @@ Shib&#39;s configuration needs a lot of patience, it&#39;s like peeling an onion
 
 Let&#39;s get started!
 
-Change directory to the conf folder and let&#39;s start with the `attrribute-resolver-full.xml` file.
+Change the directory to the conf folder and let&#39;s start with the `attrribute-resolver-full.xml` file.
 
 ##### 1. attribute-resolver-full.xml
 
@@ -292,7 +292,7 @@ Ref : [https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-idp
 
 ##### 6. controller.xml
 
-This is where it got a bit challenging, unlike most applications I have worked with in the past, The Service Provider I used to test this out, AppD, does not provide or generate it&#39;s own SAML metadata. This limitation makes it slightly difficult to integrate the Controller with non-cloud based IdPs like ADFS, PingFed, especially Shibboleth. I was able to generate a working Controller metadata after a few iterations, and it can be re-used by changing the controller&#39;s URL. Download it from  [https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-controller-xml](https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-controller-xml), modify it i.e change the controller URL and copy it to _/opt/shibboleth-idp/metadata_
+This is where it got a bit challenging, unlike most applications I have worked with in the past, The Service Provider I used to test this out, AppD, does not provide or generate it&#39;s own SAML metadata. This limitation makes it slightly difficult to integrate the Controller with non-cloud-based IdPs like ADFS, PingFed, and especially Shibboleth. I was able to generate a working Controller metadata after a few iterations, and it can be re-used by changing the controller&#39;s URL. Download it from  [https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-controller-xml](https://gist.github.com/iogbole/944996b728af4464c21ecdb7625351a1#file-controller-xml), modify it i.e change the controller URL and copy it to _/opt/shibboleth-idp/metadata_
 
 ##### 7. metadata-providers.xml
 
@@ -400,13 +400,13 @@ _Note: Unpacking the WAR file is not part of the default settings, I added it to
 4. Use IDP_HOME/log/idp-process.log and catalina.out logs to debug any issues until the 2 test cases pass.
 
 ### SP Integration
-Note: I used an onpremise version of AppDynamics an SP to test this out. The steps should however be similar with any other SAML 2.0 SP integration. I would probably use NextCloudPi to test it out later too. 
+Note: I used an on-premise version of AppDynamics as a Service Provider to test this out. The steps should however be similar to any other SAML 2.0 SP integration. I would probably use NextCloudPi to test it out later too. 
 
 Copy the IdP signing certificate (without any whitespace) by executing :
 
 `sudo cat /opt/shibboleth-idp/credentials/idp-signing.crt`
 
-Next, login to the Service Provide (in my case, the AppDynamics controller) and follow the instructions as shown below:
+Next, log in to the Service Provider (in my case, the AppDynamics controller) and follow the instructions as shown below:
 
 ![appdcontroller](https://user-images.githubusercontent.com/2548160/44152163-b30fe102-a09c-11e8-8d93-21dda2e1b2e5.png)
 
@@ -418,14 +418,14 @@ Next, login to the Service Provide (in my case, the AppDynamics controller) and 
 
 #### TEST CASE #2
 
-Attempt to log in to your Service Provider. I used the following steps whilst testing from a browser with AppDynamics controller. 
+Attempt to log in to your Service Provider. I used the following steps whilst testing from a browser with an AppDynamics controller. 
 
 1. AppDynamics Controller successfully redirects to IdP login page
 2. IdP successfully authenticates the user against your LDAP server
 3. IdP successfully redirects back the controller
 4. AppDynamics controller is able to decode SAML response.
 
-See the attached video for a successful validation of the above test cases.
+See the attached video for successful validation of the above test cases.
 
 ![2017-05-26_12-00-57 1](https://user-images.githubusercontent.com/2548160/44155067-2ff75c0c-a0a4-11e8-9926-4adff74d265a.gif)
 
@@ -447,3 +447,5 @@ See the attached video for a successful validation of the above test cases.
 4. How to use ADFS to restrict access to a relying party trust  - https://blogs.technet.microsoft.com/israelo/2015/03/27/restricting-access-to-yammer-using-adfs-claims-transformation-rule/ 
 
 5. How to Install OpenLDAP - https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-a-basic-ldap-server-on-an-ubuntu-12-04-vps 
+
+
