@@ -10,7 +10,7 @@ excerpt: "Coding is a creative activity that any kid can engage in, and teaching
 
 ---
 
-Time moves quickly, but the evolution of technology advances at an even more rapid pace. 20 years ago, self-driving cars were merely a dream; today, they're being tested and created by the leading car manufacturers worldwide. These technology advancements have one thing in common: they start as a single line of code. Coding could someday very well become an integral part of early education as reading, writing, and maths.  
+Time moves quickly, but the evolution of technology advances at an even more rapid pace. 20 years ago, self-driving cars were merely a dream; today, they're being tested and created by the leading car manufacturers worldwide. These technological advancements have one thing in common: they start as a single line of code. Coding could someday very well become an integral part of early education as reading, writing, and maths.
 
 Coding is a creative activity that any kid can engage in, and teaching kids how to code should be top of mind for parents and guardians - even those who cannot code. The benefits of learning to code are enormous: building simple animations and games helps kids refine their design, logic, and problem-solving abilities, and also allows them to express ideas and creativity in unique ways.
 
@@ -29,15 +29,15 @@ Introducing children to coding will open up a whole world of possibilities for t
 Coding is a skill that is learned with hands-on practice, so let the kids drive. Avoid the temptation of typing on the keyboard when working with them, even temporarily. If they have to click on a widget or a button, point to the screen with your finger instead of taking the mouse and clicking it yourself. Whenever there is code to be typed, have them type it. It may be faster if you did it yourself, but that defeats the purpose.
 
 <b> Capitalise on their passion </b><br>
-My eight year old loves cooking, so we tend to tailor our lesson activities and exercises on cooking, baking, restaurant themes. It's important that they enjoy the process. Relate the coding lessons to one or more areas of their interests. Similarly, my five-year-old is interested in space subjects - so we create animations and stories about the galaxy, rocket ships and similar themes.
+My eight-year-old loves cooking, so we tend to tailor our lesson activities and exercises to cooking, baking, and restaurant themes. It's important that they enjoy the process. Relate the coding lessons to one or more areas of their interests. Similarly, my five-year-old is interested in space subjects - so we create animations and stories about the galaxy, rocket ships and similar themes.
 
 <b> Get the right tools </b><br>
-There are many sites and apps out there, find one that works best for you and your kid. I use <a href="https://scratch.mit.edu/" target="_blank"> Scratch </a>.  MIT's Scratch is a free programming tool designed for kids that runs in any modern Web browser. Its visual style was influenced by the <a href="https://en.wikipedia.org/wiki/Logo_(programming_language)" target="_blank">Logo </a> program, a staple of programming classes for children of the '80s and '90s.
+There are many sites and apps out there, find one that works best for you and your kid. I use <a href="https://scratch.mit.edu/" target="_blank"> Scratch </a>.   MIT's Scratch is a free programming tool designed for kids that runs in any modern Web browser. Its visual style was influenced by the <a href="https://en.wikipedia.org/wiki/Logo_(programming_language)" target="_blank">Logo </a> program, a staple of programming classes for children of the '80s and '90s.
 
 I encourage them to whiteboard, doddle, etc., too, so we purchased an LCD writing tablet for them. Something like <a href="https://www.amazon.co.uk/gp/product/B08FR3247M/ref=ppx_yo_dt_b_asin_title_o06_s00?ie=UTF8&psc=1" target="_blank" > this. </a> Oh, and it has to be in pink otherwise my girls won't use it :)  
 
 <b> Do your homework </b><br>
-Prepare the lesson in advance; if you're using scratch, login to scratch and try your hands on what you would like them to create. Do not turn up like a teacher who does not have a lesson plan.
+Prepare the lesson in advance; if you're using scratch, log in to scratch and try your hands on what you would like them to create. Do not turn up like a teacher who does not have a lesson plan.
 
 In summary, coding is a creative activity that any kid can engage in.  Kids are fast learners, unintimidated by lines of code, and their imaginations usually run wild, a real asset when it comes to finding creative solutions to problems.
 
