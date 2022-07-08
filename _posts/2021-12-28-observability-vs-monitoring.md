@@ -2,7 +2,7 @@
 layout: post
 title:  "Observability vs Monitoring: A DevOps perspective"
 author: israel
-featured: true
+featured: false
 categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes ]
 image: https://user-images.githubusercontent.com/2548160/147579433-1c8ead27-8c3a-436c-adc0-3ac194fc7bfe.jpg
