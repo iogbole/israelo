@@ -231,11 +231,24 @@ img, img:hover {
 
 
 // blog grid
+/**
+
 .blog-grid-container {
-    width: auto;
+    width: auto; // changed from auto
     margin: 50px auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr; //gives 3 rows, changing to 1. 
+    grid-template-rows: 1fr;
+    grid-gap: 30px;
+}
+
+**/
+
+.blog-grid-container {
+    width: 60%; 
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     grid-gap: 30px;
 }
