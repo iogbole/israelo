@@ -44,10 +44,20 @@ image:
     {% for post in paginator.posts %}
         {% include postbox.html %}
     {% endfor %}
-    "next_page": {% if paginator.next_page %}"{{ paginator.next_page_path | xml_escape }}"{% else %}null{% endif %}
 </div>
 
 </section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.4.1/jquery.jscroll.min.js"></script>
+
+<script type="text/javascript">
+// content selector is used to extract the additional items 
+$('.content').jscroll({
+    contentSelector: ".content",
+    nextSelector: '.next'
+});
+</script>
+
 
 <!-- Pagination
 ================================================== -->
