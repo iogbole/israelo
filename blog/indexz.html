@@ -40,11 +40,16 @@ image:
 
     </div>
 
-<div class="blog-grid-container" id="card-wrapper">
-    {% for post in paginator.posts %}
-        {% include postbox.html %}
-    {% endfor %}
-</div>
+    <div class="container">
+        <div class="row">
+        {% include article-content.html %}
+            {% for post in paginator.posts %}
+            <h1>here2 </h1>
+                {% include article-content.html %}
+            {% endfor %}
+        {% endif %}
+        </div>
+    </div>
 
 </section>
 
