@@ -15,9 +15,10 @@ layout: default
 
 <div class="container">
 	<div class="row">
-		here
+	
 	{% if site.posts.size > 0 %}
 		{% for post in paginator.posts %}
+		here
 			{% include article-content.html %}
 		{% endfor %}
 	{% endif %}
