@@ -4,7 +4,7 @@ title:  "Setting up Shibboleth like a BOSS: Tales of my journey into the SSO Dar
 author: israel
 categories: [ 'Identity Management', 'Cloud Native'  ]
 tags: [sso, ldap, identity, adfs, shibboleth ]
-image: assets/images/sso.jpg
+image: https://user-images.githubusercontent.com/2548160/178162960-63208a2b-8812-4fae-8920-8d98b09ad890.jpg
 #date:   2021-07-05 06:01:35 +0300
 #permalink: /blog/setup-shib-sso-like-a-boss.html
 #toc: true
