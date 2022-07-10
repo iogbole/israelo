@@ -27,6 +27,11 @@ hero:
   linkedin: https://www.linkedin.com/in/israelo
   github:  https://github.com/iogbole
 
+# Tags
+tag_page_dir:         tag
+tag_page_layout:      tag_page
+tag_permalink_style:  pretty
+
 
 # Authors
 authors:
