@@ -42,10 +42,8 @@ image:
 
     <div class="container">
         <div class="row">
-        {% include article-content.html %}
             {% for post in paginator.posts %}
-            <h1>here2 </h1>
-                {% include article-content.html %}
+                {% include postbox2.html %}
             {% endfor %}
         {% endif %}
         </div>
