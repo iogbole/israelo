@@ -21,12 +21,18 @@ html, html[data-theme="light"] {
 	--link-color: rgb(0, 112, 201);
   --main-background-color: hsl(0, 0%, 100%);
   --main-text-color: hsl(0, 0%, 20%);
+  --hero-color: #f5f5f5;
+  --main-text-color: hsl(0, 0%, 20%);
+  
 }
 
 html[data-theme="dark"] {
   --link-color: rgb( 100, 210, 255);
   --main-background-color: hsl(0, 0%, 20%);
   --main-text-color: hsl(0, 0%, 85%); 
+  --hero-color: #1B1717;
+  --main-text-color: hsl(0, 0%, 85%); 
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,12 +40,17 @@ html[data-theme="dark"] {
       --link-color: rgb( 100, 210, 255);
     	--main-background-color: hsl(0, 0%, 20%);
     	--main-text-color: hsl(0, 0%, 85%); 
+        --hero-color: #1B1717;
+        --main-text-color: hsl(0, 0%, 85%); 
+
     }
 
     html[data-theme="light"] {
 		  --link-color: rgb(0, 112, 201);
     	--main-background-color: hsl(0, 0%, 100%);
   	 --main-text-color: hsl(0, 0%, 20%);
+       --hero-color: #f5f5f5;
+       --main-text-color: hsl(0, 0%, 20%);
   } 
 }
 
@@ -54,6 +65,7 @@ body {
 
     background-color: var(--main-background-color);
 	color: var(--main-text-color);
+    color: var(--main-text-color);
 }
 a {
     //color: darken($primary, 24%);
