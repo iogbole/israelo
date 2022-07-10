@@ -31,7 +31,8 @@
     margin-left: -10%;
     z-index: 1;
     border-radius: 3px;
-    background: rgba(255, 255, 255, 0.98);
+   // background: rgba(255, 255, 255, 0.98);
+    background: var(--main-background-color);
     box-shadow: 0 1px 4px rgba(0,0,0,0.15);
 
     .article__tag {
@@ -116,7 +117,7 @@
   @media only screen and (max-width: $mobile) {
     .article__content {
 
-      .article__title {
+      .article__title {s
         font-size: 27px;
       }
     }
