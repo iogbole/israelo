@@ -40,13 +40,11 @@ image:
 
     </div>
 
-    <div class="container">
-        <div class="row">
-            {% for post in paginator.posts %}
-                {% include postbox2.html %}
-            {% endfor %}
-        </div>
-    </div>
+<div class="blog-grid-container" id="card-wrapper">
+    {% for post in paginator.posts %}
+        {% include postbox.html %}
+    {% endfor %}
+</div>
 
 </section>
 
@@ -59,3 +57,11 @@ image:
 </span>
 </div>
 
+
+<script type="text/javascript">
+// content selector is used to extract the additional items 
+$('.content').jscroll({
+    contentSelector: ".content",
+    nextSelector: '.next'
+});
+</script>
