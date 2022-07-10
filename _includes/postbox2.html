@@ -19,6 +19,7 @@
           {% assign without-image = 'article-without-image' %}
         {% endif %}
 
+       <!-- 
         <div class="article__content {{ without-image }}">
           <div class="article-tags">
           {% if post.tags.size >= 1 %}
@@ -30,7 +31,7 @@
           {% else %}
           {% endif %}
           </div>
-      
+      -->
           <h2 class="article__title">
             <a href="{{ post.url | prepend: site.baseurl }}">{{post.title}}</a>
           </h2>
