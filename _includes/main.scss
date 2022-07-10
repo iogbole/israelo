@@ -37,9 +37,9 @@
 <<<<<<<<<<<<<<<<<<<<<<<<<<<< */
 
 
-//@import '0-settings/variables';
-//@import '0-settings/mixins';
-//@import '0-settings/helpers';
+@import '0-settings/variables';
+@import '0-settings/mixins';
+@import '0-settings/helpers';
 
 
 /* >>>>>>>>>>>>>> :: 1-Tools and Libs <<<<<<<<<<<<<<< */
@@ -60,7 +60,7 @@
 @import '1-tools/grid';
 
 // 1.6 Zoom
-@import '1-tools/zoom';
+//@import '1-tools/zoom';
 
 
 /* >>>>>>>>>>>>>> :: 2-Base Styles <<<<<<<<<<<<<<< */
