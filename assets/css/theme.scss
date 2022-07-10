@@ -19,7 +19,7 @@ $enable-rounded: false;
 
 html, html[data-theme="light"] {
 	--link-color: rgb(0, 112, 201);
-  --main-background-color: hsl(0, 0%, 90%);
+  --main-background-color: hsl(0, 0%, 100%);
   --main-text-color: hsl(0, 0%, 20%);
 }
 
@@ -38,7 +38,7 @@ html[data-theme="dark"] {
 
     html[data-theme="light"] {
 		  --link-color: rgb(0, 112, 201);
-    	--main-background-color: hsl(0, 0%, 90%);
+    	--main-background-color: hsl(0, 0%, 100%);
   	 --main-text-color: hsl(0, 0%, 20%);
   } 
 }
@@ -57,7 +57,8 @@ body {
 }
 a {
     //color: darken($primary, 24%);
-    color: #193088
+    //color: #193088
+    color: var(--link-color);
 }
 img {
     max-width:100%;
