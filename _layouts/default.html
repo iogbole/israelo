@@ -18,6 +18,8 @@
 
 <script src="{{ site.baseurl }}/assets/js/jquery.min.js"></script>
 
+<script src="{{ site.baseurl }}/assets/js/mode-switcher.js"></script>
+
 <style>
     {% capture include_to_scssify %}
       {% include main.scss %}
@@ -85,6 +87,8 @@ ga('send', 'pageview');
         <img src="{{ site.baseurl }}/{{ site.logo }}" alt="{{ site.name }}">
     </a>  
    
+    <!-- dark-mode-->
+    <a href="{{page.url}}" id="theme-toggle" onclick="modeSwitcher()" style="cursor: pointer;"></a>
 
     <!-- Site Tag
     ================================================== -->
