@@ -1,17 +1,17 @@
 ---
 layout: post
-title:  "My kids know Cloud Computing, Seriously!"
+title:  "My girls know Cloud Computing, seriously!"
 author: israel
-featured: true
+featured: false
 categories: [ 'Personal' ]
 tags: [coding, kids, STEM]
 image: https://user-images.githubusercontent.com/2548160/179279760-faecb9b2-58a4-43f0-b1bf-c61ab0bbe5ea.png
-date:   2021-02-18 15:01:35 +0300
+date:   2022-07-14 15:01:35 +0300
 excerpt: ""
 
 ---
 
-I am a proud #GirlDad. We try as much as possible to expose our girls to activities they love, such as cooking, ballet, gymnastic, etc., hoping they will eventually find what they would love to do with their lives when they are adults. 
+I am a proud #GirlDad. We try as much as possible to expose our girls to activities they love -  such as cooking, ballet, gymnastic, etc., hoping they will eventually find what they would love to do with their life when they are adults.
 
 However, I am slightly biased - I teach them coding and computing - with the hope they fall in love with IT. 
 
