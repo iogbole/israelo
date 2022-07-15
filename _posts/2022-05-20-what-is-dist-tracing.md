@@ -21,7 +21,7 @@ Modern software architectures based on microservices and serverless provide bene
 Distributed tracing provides end-to-end visibility and reveals service dependencies – showing how the services respond to each other to fulfil a request. 
 
 <p class="aligncenter">
-<img class="lazyimg" alt="Otel configuration" src="https://user-images.githubusercontent.com/2548160/179271993-7a154f58-2df2-4490-9423-736e2f46c9de.png"/> 
+<img class="lazyimg" alt="Otel configuration" src="https://user-images.githubusercontent.com/2548160/179273428-613bfcb8-d88b-4249-bda8-54a4640bc4eb.jpg"/> 
 <br>
 </p>
 
