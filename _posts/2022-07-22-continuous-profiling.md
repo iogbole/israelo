@@ -21,7 +21,7 @@ My research was underpinned by the following questions:
 1. What is Continuous Profiling and why should I care?
 2. How does Continuous Profiling apply to large-scale distributed, ephemeral, compute instances? 
 3. Can one truly profile "continuously" in production? Is the overhead worth the trouble?
-4. Are the recent advancements in eBPF making a difference? See my my post on [eBPF in Plain English](https://www.israelo.io/blog/ebpf/)
+4. Are the recent advancements in eBPF making a difference? See my post on [eBPF in Plain English](https://www.israelo.io/blog/ebpf/)
 5. What does Gartner think of Continuous Profiling?
 6. What are observability vendors doing about this?
 
