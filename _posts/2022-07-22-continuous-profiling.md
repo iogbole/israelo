@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Why Continuous Profiling is a must have in your observability strategy"
+title:  "Why Continuous Profiling is a must have in your Observability Strategy"
 author: israel
 featured: false
 categories: [ 'Cloud Native' ]
@@ -36,9 +36,9 @@ Profiling is measuring what part of your application is consuming a particular r
 
 Continuous **distributed** profiling is the next disruptor of observability. When combined with recent advances in eBPF (particularly in the Linux user space), Continuous distributed profiling (with emphasis on **distributed**) will truly enable DevOps and SRE engineers to probe their applications (i.e. user space events) and infrastructure (hardware, network performance, security) without knowing the questions to ask in advance. It is the bedrock for “truly” discovering unknown unknowns in a distributed microservices architecture, but only a few observability vendors are doing it well. In fact, none of the big observability players has harnessed the power of eBPF in Continuous **distributed** profiling. As a matter of fact, only a few have continuous profiling features, let alone on eBPF.
 
-**Why?**
+## Why? 
 
-Because (IMHO), most of the big observability players do profiling by instrumentation, which is synonymous with a driver who frequently takes his/her eyes off the road. Profiling by instrumentation is built on the principle of taking system snapshots based on certain pre-configured events—this is analogous to a security guard on duty who only wakes up from his sleep when someone knocks at his gate. Dangerous. This is why organisations need an observability solution that continuously profiles their workloads. 
+Because most of the big observability players do profiling by instrumentation, which is synonymous with a driver who frequently takes his/her eyes off the road. Profiling by instrumentation is built on the principle of taking system snapshots based on certain pre-define events or frequency, this is analogous to a security guard on duty who only wakes up from his sleep when someone knocks at his gate. Dangerous. This is why organisations need an observability solution that continuously profiles their workloads. 
 
 Furthermore, I have lost track of how many times I've had to set up instrumentation agents to decrease snapshot collection owing to overhead concerns.  It is always a difficult decision because the customer would like to get the profiled call graphs during a performance issue, but you cannot have the agent collect snapshots aggressively during this time because it exacerbates the performance issue. 
 
@@ -89,3 +89,9 @@ In summary, Continuous Distributed Profiling is the future of observability beca
 I just realised that this is no longer a BLUF. I broke my own rule, but I didn’t want to stop my flow. Since the summary of research turned into a full-blown blog, I would have to write a part 2 post on this subject — to specifically answer the six cardinal questions above.
 
 Watch this space! 
+
+
+-------
+>  **⚠ DISCLAIMER**
+
+> Opinions expressed are solely my own and do not express the views or opinions of my employer.
