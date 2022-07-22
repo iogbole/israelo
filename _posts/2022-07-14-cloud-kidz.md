@@ -25,9 +25,8 @@ Interestingly, there perspectives are slighlty different on each subject. Let's 
 
 ** Rochelle **  
 
- <p style="position: relative; padding: 30px 0px 57% 0px; height: 0; overflow: hidden;">
  <iframe src="https://www.youtube.com/embed/M0Uo9UvE3PA" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowfullscreen></iframe>
- </p>
+ 
 
 ** Naomi ** 
 
