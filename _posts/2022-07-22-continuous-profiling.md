@@ -17,7 +17,6 @@ Over the last 6 months, I have been passively researching Continuous Profiling (
 My research was underpinned by the following questions: 
 
 
-
 1. What is Continuous Profiling and why should I care?
 2. How does Continuous Profiling apply to large-scale distributed, ephemeral, compute instances? 
 3. Can one truly profile "continuously" in production? Is the overhead worth the trouble?
@@ -48,7 +47,7 @@ The meta-point is that organisations must shift from the dominant instrumentatio
 
 Furthermore, agent bytecode instrumentation does not only introduce performance overhead; it often requires app or container restarts. The multi-agent (app, infra, etc) nature of this approach also makes it cumbersome to install, configure, and upgrade agents at scale. Only Continuous Profiling on eBPF can alleviate the agent overhead concerns; it also provides continuous visibility and profiling call graphs at no extra performance overhead cost, and it eliminates the need for a separate app, infra, and sometimes security agents. eBPF provides holistic visibility into the kernel and user space. It completely eradicates the need to instrument the application, which literally means allowing someone else’s app (called agents) to attach itself to your organisation’s critical application by completely **re-transforming** your application’s bytecode. 
 
-Did you know that agents can also go as far as re-defining your application classes?   _Say what? Say what…? _ Yes, using the [Java Instrumentation API](https://docs.oracle.com/en/java/javase/11/docs/api/java.instrument/java/lang/instrument/Instrumentation.html) for example, the API contains the following commonly used methods: 
+Did you know that agents can also go as far as re-defining your application classes? _Say what? Say what…?_ Yes, using the [Java Instrumentation API](https://docs.oracle.com/en/java/javase/11/docs/api/java.instrument/java/lang/instrument/Instrumentation.html) for example, the API contains the following commonly used methods: 
 
 
 
@@ -60,7 +59,7 @@ Did you know that agents can also go as far as re-defining your application clas
 
 Now you see why I fell in love with eBPF because it eliminates the need for bytecode instrumentation? Given the option, I would rather not ingest any other black-box agents into my application. 
 
-Finally, most instrumentation profiling agents in the market today are designed to instrument only well-known libraries, function calls, and protocols such as HTTP (S), JDBC, ADO.Net, and message bus, among others. This is why I have spent hours (sometimes days)  working with customers to apply** custom instrumentation **to their applications—which literally means instructing the agent to instrument a less-known protocol, background task, or some other legacy library.  
+Finally, most instrumentation profiling agents in the market today are designed to instrument only well-known libraries, function calls, and protocols such as HTTP (S), JDBC, ADO.Net, and message bus, among others. This is why I have spent hours (sometimes days)  working with customers to apply **custom instrumentation** to their applications—which literally means instructing the agent to instrument a less-known protocol, background task, or some other legacy library.  
 
 My point is, if typical app agents are pre-wired to instrument certain parts of the applications, then how can they claim to discover all unknown unknowns across the full stack? This is why I would make instrumentation an opportunity cost.
 
@@ -73,8 +72,7 @@ In summary, Continuous Distributed Profiling is the future of observability beca
 ## But there are a few drawbacks: 
 
 
-
-* BPF is only currently supported on Linux 4.4. Although Microsoft is actively working on adding [eBPF support to Windows](https://github.com/microsoft/ebpf-for-windows) - including eBPF support for HyperVisor-enforced Code Integrity (HVCI). 
+* eBPF is only currently supported on Linux 4.4. Although Microsoft is actively working on adding [eBPF support to Windows](https://github.com/microsoft/ebpf-for-windows) - including eBPF support for HyperVisor-enforced Code Integrity (HVCI). 
 * eBPF does not play nice with serverless technologies since customers do not have access to deploy eBPF probes to these servers. The eBPF eco-system is asking for it. There’s an [open request for AWS to support eBPF on Fargate](https://github.com/aws/containers-roadmap/issues/1027). 
 * eBPF is hard to begin with. As a result, there are not a lot of Product Managers in the industry today who can fully articulate the benefits of eBPF, especially as it relates to Continuous Profiling in observability.  
 * Finding Developers and Architects that have a good grasp of C, Go and a strong understanding of the inner workings of the Linux kernel can be a challenge.
