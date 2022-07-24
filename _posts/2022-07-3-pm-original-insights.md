@@ -12,12 +12,7 @@ excerpt: "Measure yourself with the frequency and quality of original insights t
 ---
 
 _These are wise words from Jetu Patel, EVP & GM, Security and Collaboration at Cisco._
-
-_I admire him a lot!_
-
-_He posted it to LinkedIn, and I believe every PM needs to know and consciously avoid these obsessions. _
-
-_I copied his post here as a reference note for me.._
+_I admire him a lot!_. _He posted it to LinkedIn, and I believe every PM needs to know and consciously avoid these obsessions._ _I copied his post here as a reference note for me.._
 
 -------
 
