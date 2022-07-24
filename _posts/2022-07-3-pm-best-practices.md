@@ -5,7 +5,7 @@ author: israel
 featured: false
 categories: [ 'Personal', 'Cloud Native', 'Product' ]
 tags:  mentor, product ]
-image: https://user-images.githubusercontent.com/2548160/180477198-8ca044a4-a4f3-44fb-b881-7717286d579b.png
+image: https://user-images.githubusercontent.com/2548160/180667264-e656bcf1-013b-4f30-b233-6f7cf893bf99.jpg
 date:   2022-07-18 15:01:35 +0300
 excerpt: "Measure yourself with the frequency and quality of original insights that you and your team come up with that make your value unique..."
 
