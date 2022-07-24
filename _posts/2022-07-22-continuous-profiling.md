@@ -50,7 +50,6 @@ Furthermore, agent bytecode instrumentation does not only introduce performance 
 Did you know that agents can also go as far as re-defining your application classes? _Say what? Say what…?_ Yes, using the [Java Instrumentation API](https://docs.oracle.com/en/java/javase/11/docs/api/java.instrument/java/lang/instrument/Instrumentation.html) for example, the API contains the following commonly used methods: 
 
 
-
 * _retransformClasses_ – facilitates the instrumentation of already loaded classes by adding byte-code
 * _redefineClasses_ – redefine the supplied set of classes using the supplied class files, meaning that the class will be fully replaced, not modified as with _retransformClasses_
 * _addTransformer—adds_ a transformer to the instrumentation engine
@@ -59,9 +58,9 @@ Did you know that agents can also go as far as re-defining your application clas
 
 Now you see why I fell in love with eBPF because it eliminates the need for bytecode instrumentation? Given the option, I would rather not ingest any other black-box agents into my application. 
 
-Finally, most instrumentation profiling agents in the market today are designed to instrument only well-known libraries, function calls, and protocols such as HTTP (S), JDBC, ADO.Net, and message bus, among others. This is why I have spent hours (sometimes days)  working with customers to apply **custom instrumentation** to their applications—which literally means instructing the agent to instrument a less-known protocol, background task, or some other legacy library.  
+Finally, most instrumentation profiling agents in the market today are designed to instrument only well-known libraries, function calls, and protocols such as HTTP(S), JDBC, ADO.Net, and message bus, among others. This is why I have spent hours (sometimes days) working with customers to apply **custom instrumentation** to their applications—which literally means instructing the agent to instrument a less-known protocol, background task, or some other legacy library.  
 
-My point is, if typical app agents are pre-wired to instrument certain parts of the applications, then how can they claim to discover all unknown unknowns across the full stack? This is why I would make instrumentation an opportunity cost.
+My point is, if typical app agents are pre-wired to instrument certain parts of the applications, then how can they claim to discover all unknown unknowns across the full stack? This is why I would make instrumentation an opportunity cost in favour of eBPF. eBPF is event-driven,and it allows developers to package the user space application logic to be executed in the Linux kernel space as bytecode.
 
 
 ## Summary 
