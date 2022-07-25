@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Why Continuous Profiling is a must have in your Observability Strategy"
-author: israel
+title:  "Why Continuous Profiling is a 'must have' in your Observability Strategy"
+author: israel 
 featured: false
 categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, profiling, ebpf ]

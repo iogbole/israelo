@@ -2,7 +2,7 @@
 layout: post
 title:  "My girls know Cloud Computing, seriously!"
 author: israel
-featured: false
+featured: true
 categories: [ 'Personal' ]
 tags: [coding, kids, STEM]
 image: https://user-images.githubusercontent.com/2548160/179279760-faecb9b2-58a4-43f0-b1bf-c61ab0bbe5ea.png
