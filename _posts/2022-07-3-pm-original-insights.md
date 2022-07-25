@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Why Product Leaders must focus on Orginial Insigts"
+title:  "Product Leaders must focus on Orginial Insigts - Jetu"
 author: israel
 featured: false
 categories: [ 'Personal', 'Cloud Native', 'Product' ]
