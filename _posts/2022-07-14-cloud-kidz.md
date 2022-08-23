@@ -37,3 +37,13 @@ Interestingly, there perspectives are slighlty different on each subject. Let's 
  <iframe src="https://www.youtube.com/embed/zPwZnZlhcm8?start=11" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display: block; margin: 0px auto; position: absolute; top: 0; left: 0;"></iframe>
  </p>
 
+**Naomi loves to cook and to code** 
+
+This was recorded when she was 8 years old. 
+
+ <p style="position: relative; padding: 30px 0px 57% 0px; height: 0; overflow: hidden;">
+ <iframe src="https://www.youtube.com/embed/UCgDUlSpPLo" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display: block; margin: 0px auto; position: absolute; top: 0; left: 0;"></iframe>
+ </p>
+
+
+Read <a href="https://www.israelo.io/blog/kids-who-code/" target="_blank"> this blog post </a> to learn more on why and how to get your kids excited about coding. 
