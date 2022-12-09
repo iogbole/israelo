@@ -40,6 +40,7 @@ As I begin this new journey, I am filled with excitement and anticipation. I am 
 In closing, I want to express my heartfelt thanks to everyone at AppDynamics who helped me along the way. I will always cherish the memories and lessons that I gained during my time there. And to my new friends and colleagues at Elastic, I can't wait to see what the future holds for us. Here's to the next chapter!
 
 
+-------
 >  **⚠ DISCLAIMER**
 > Opinions expressed are solely my own and do not express the views or opinions of my employer.
 
