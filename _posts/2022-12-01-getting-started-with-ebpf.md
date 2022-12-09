@@ -11,6 +11,7 @@ excerpt: "bpftrace to flamegraph in 3 simple commmands.."
 
 ---
 
+<p></p>
 
 ## Why eBPF? ##
 
@@ -134,7 +135,8 @@ Next, load up the traceflamegraph.svg in your browser and analyse
 </p>
 
 
-## PPPROF ##
+## PPROF ##
+
 Most profiling tools uses the <a href="https://github.com/google/pprof" target="_blank">pprof</a> format it is a convenient and efficient way to store and share profiling data, and is widely used in the world of software engineering.
 
 There are several other reasons to use the pprof format for profiling:
@@ -147,10 +149,11 @@ There are several other reasons to use the pprof format for profiling:
 
 4. pprof is a text-based format, which makes it easy to read and manipulate using simple command-line tools. This can be useful for quickly extracting and analyzing specific pieces of information from a profile.
 
-So instead of the folded file format above, you may consider converting your profiling data into pprof format instead.
+So instead of the folded file format example above, you may consider converting your profiling data into pprof format instead.
 
 
 ## Summary ##
+
 In summary, eBPF tracing can be a powerful and versatile tool for Linux users. With a little bit of setup and the right eBPF programs, you can monitor and analyze your system in ways that were previously impossible. 
 
 
