@@ -5,7 +5,7 @@ author: israel
 featured: false
 categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes, ebpf ]
-image: https://user-images.githubusercontent.com/2548160/161966571-0e2f2d03-9cc3-499e-b45d-04813ff9d91e.jpeg
+image: https://user-images.githubusercontent.com/2548160/206737581-b8dc2991-0f2f-4cab-8fd7-763a02622e2b.png
 date:  2022-12-09 15:01:35 +0300
 excerpt: "bpftrace to flamegraph in 3 simple commmands.."
 
@@ -16,6 +16,10 @@ excerpt: "bpftrace to flamegraph in 3 simple commmands.."
 eBPF (extended Berkeley Packet Filter) is a powerful and versatile tool for observability and monitoring in Linux systems. It allows for the creation of custom programs that can be attached to various points in the kernel, allowing for detailed and efficient monitoring and analysis of system behavior.
 
 eBPF provides a number of benefits over traditional observability tools. One of the biggest advantages is its ability to operate at the kernel level, allowing for deep visibility into the inner workings of the system. This can provide valuable insights into performance and behavior that would otherwise be difficult or impossible to obtain.
+
+<p class="aligncenter">
+[Related Article: <a href="https://www.israelo.io/blog/ebpf/" target="_blank"> eBPF in plain English </a> ]
+</p>
 
 Another key benefit of eBPF is its flexibility. eBPF programs can be attached to a wide range of kernel functions and events, allowing for a high degree of customization and tailoring to specific needs. This makes eBPF an ideal tool for a wide range of applications, from simple performance monitoring to complex debugging and troubleshooting.
 
@@ -37,15 +41,18 @@ If you're using a multipass VM, you will need to install <a href=" https://wiki.
 
 3. Install bpftrace command-line utility and the bcc collection tools. 
    
-
+     ```sh
      sudo apt-get install bpfcc-tools linux-headers-$(uname -r)
 
-    ```bash
+     ```
+
 
 4. We need to visualise the trace with flamegraphs, so you'd need to clone this repo: 
 
-```
+```sh
+
 git clone https://github.com/brendangregg/FlameGraph.git
+
 ```
 
 Let's get started! 
@@ -67,7 +74,7 @@ Let the above command run for while (min of 2 minutes is recommended), then stop
 
 Let's view the stack trace 
 
-```
+```sh
 less trace.data
 
 Attaching 1 probe...
@@ -93,6 +100,7 @@ Attaching 1 probe...
     squashfs_read_data+212
 
 ```
+
 The output are stack traces which consist of process details, and a single number - this represents the number of times this stack trace was sampled. 
 
 ### Analyse CPU stack trace using flamegraphs ### 
@@ -103,7 +111,7 @@ A flamegraph is a visualisation tool used to profile the performance of a progra
 
 We will use Brendan's flamegraph tool that was downloaded in step 4 above to convert the bpftrace file to a flamegraph. 
 
-```
+```sh
 cd FlameGraph
 
 ./stackcollapse-bpftrace.pl trace.data > trace.folded
