@@ -20,9 +20,13 @@ I joined AppDynamics in 2017 from Microsoft. Little did I know at the time, the 
 During my time at AppDynamics, I was fortunate enough to work on some truly groundbreaking projects. I was lucky enough to pioneer the work on auto-instrumenting <a href="https://www.appdynamics.com/blog/product/kubernetes-windows-container-monitoring/" target="_blank"> Windows container workloads on Kubernetes </a>,and I saw first-hand the impact it had on our customers and the sweet $3.5M in ARR for that fiscal year. I also the chance to co-create the widely adopted <a hre="https://github.com/CiscoDevNet/ConfigMyApp" target="_blank"> AppDynamics  ConfigMyApp </a> tool - a Monitoring as code tool that let customers perform CRUD operations on dashboard, health rules, business transaction configurations, etc. as code -from their CI/CD pipeline. Wow, the joy of seeing my code run in production was epic. It didn't stop there, I led the intiative to create the first <a href="https://github.com/CiscoDevNet/appdynamics-ansible" target="_blank"> AppDynamics Ansible Collection </a> that manages all agent installation and <b>configurations as code</b>.
 
 <p><p>
-<i> Pro Tip: Right-Click the GIF and "Open in new Tab" or view on <a href="https://terminalizer.com/view/405023a64449">terminalizer</a> </i>
+<i> Pro Tip: view on <a href="https://terminalizer.com/view/405023a64449">terminalizer</a> </i>
 
-![DEMO](https://github.com/Appdynamics/appdynamics-ansible/blob/master/docs/ansible.gif?raw=true)
+
+<p class="aligncenter">
+<img class="lazyimg" src="https://github.com/Appdynamics/appdynamics-ansible/blob/master/docs/ansible.gif"/>
+</p>
+
 <p><p>
 
 Then I changed roles from a hands-on Solutions Architect to an Engineering Product Manager. 
