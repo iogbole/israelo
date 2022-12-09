@@ -17,7 +17,7 @@ I joined AppDynamics in 2017 from Microsoft. Little did I know at the time, the 
 
 During my time at AppDynamics, I was fortunate enough to work on some truly groundbreaking projects. I was lucky enough to pioneer the work on auto-instrumenting <a href="https://www.appdynamics.com/blog/product/kubernetes-windows-container-monitoring/" target="_blank"> Windows container workloads on Kubernetes </a>,and I saw first-hand the impact it had on our customers and the sweet $3.5M in ARR for that fiscal year. I also the chance to co-create the widely adopted <a hre="https://github.com/CiscoDevNet/ConfigMyApp" target="_blank"> AppDynamics  ConfigMyApp </a> tool - a Monitoring as code tool that let customers perform CRUD operations on dashboard, health rules, business transaction configurations, etc. as code -from their CI/CD pipeline. Wow, the joy of seeing my code run in production was epic. It didn't stop there, I led the intiative to create the first <a href="https://github.com/CiscoDevNet/appdynamics-ansible" target="_blank"> AppDynamics Ansible Collection </a> that manages all agent installation and <b>configurations as code</b>.
 
-<p><p>
+
 <i> Pro Tip: view on <a href="https://terminalizer.com/view/405023a64449">terminalizer</a> </i>
 <p class="aligncenter">
 <img class="lazyimg" src="https://github.com/iogbole/blog.israelo/blob/dev/blog/ansible.gif?raw=true"/>
@@ -36,6 +36,7 @@ I will be working on integrating prodfiler.com - a whole-system, continuous prof
 As I begin this new journey, I am filled with excitement and anticipation. I am looking forward to working with the talented team at Elastic and contributing to the development of their cutting-edge technology. I am also eager to learn from my new colleagues and continue to grow as a software engineer.
 
 In closing, I want to express my heartfelt thanks to everyone at AppDynamics who helped me along the way. I will always cherish the memories and lessons that I gained during my time there. And to my new friends and colleagues at Elastic, I can't wait to see what the future holds for us. Here's to the next chapter!
+
 
 -------
 >  **⚠ DISCLAIMER**
