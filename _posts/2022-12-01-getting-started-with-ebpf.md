@@ -127,7 +127,8 @@ Next, load up the traceflamegraph.svg in your browser and analyse
 <br>
 </p>
 
-### PPPROF ### 
+
+## PPPROF ##
 Most profiling tools uses the <a href="https://github.com/google/pprof" target="_blank">pprof</a> format it is a convenient and efficient way to store and share profiling data, and is widely used in the world of software engineering.
 
 There are several other reasons to use the pprof format for profiling:
