@@ -25,8 +25,6 @@ During my time at AppDynamics, I was fortunate enough to work on some truly grou
 <img class="lazyimg" src="https://github.com/Appdynamics/appdynamics-ansible/blob/master/docs/ansible.gif"/>
 </p>
 
-<p><p>
-
 Then I changed roles from a hands-on Solutions Architect to an Engineering Product Manager. 
 
 As a Product Manager, I brought my years of experience and customer empathy as a Solutions Architect to the table as I helped build AppDynamics Cloud from scratch. I used my expertise to understand the needs of our customers and build a product that met those needs and exceeded their expectations. I was the Product Manager for Cloud Monitoring (AWS, Azure & GCP integration and correlation with K8s services), I also Product Managed Tagging and filtering, I blogged about it <a href="https://www.appdynamics.com/blog/cloud/getting-started-with-tags-in-appdynamics-cloud/" target="_blank">here</a> when it GA'ed. I'm proud of the work that I did to help take AppDynamics Cloud from zero to one.
