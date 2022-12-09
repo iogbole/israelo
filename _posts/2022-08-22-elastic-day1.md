@@ -22,7 +22,7 @@ During my time at AppDynamics, I was fortunate enough to work on some truly grou
 <p><p>
 <i> Pro Tip: view on <a href="https://terminalizer.com/view/405023a64449">terminalizer</a> </i>
 <p class="aligncenter">
-<img class="lazyimg" src="https://github.com/Appdynamics/appdynamics-ansible/blob/master/docs/ansible.gif"/>
+<img class="lazyimg" src="https://github.com/iogbole/blog.israelo/blob/dev/blog/ansible.gif?raw=true"/>
 </p>
 
 Then I changed roles from a hands-on Solutions Architect to an Engineering Product Manager. 
@@ -40,10 +40,6 @@ As I begin this new journey, I am filled with excitement and anticipation. I am 
 In closing, I want to express my heartfelt thanks to everyone at AppDynamics who helped me along the way. I will always cherish the memories and lessons that I gained during my time there. And to my new friends and colleagues at Elastic, I can't wait to see what the future holds for us. Here's to the next chapter!
 
 
-Here's to the end of one journey and the beginning of another. I'm excited for whatever comes next.
-
-
--------
 >  **⚠ DISCLAIMER**
 > Opinions expressed are solely my own and do not express the views or opinions of my employer.
 
