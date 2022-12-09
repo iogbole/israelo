@@ -69,7 +69,7 @@ sudo bpftrace -e 'profile:hz:99 { @[kstack] = count(); }' > trace.data
 
 ```
 
-The above command will sample all running processes 99 times per seconds. The on-CPU profile samples answer two fundemental questions: 
+The above command will sample all running processes 99 times per second. The on-CPU profile samples answer two fundemental questions: 
 
 1. Where are you - This essentially interupts the CPU cores at 99Hz and collects the CPU's answer for the "where are you" question. 
 2. How did you get here - The historical information on how the CPU got to where it is super important to formulate the stack traces.
