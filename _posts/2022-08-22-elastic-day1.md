@@ -21,8 +21,6 @@ During my time at AppDynamics, I was fortunate enough to work on some truly grou
 
 <p><p>
 <i> Pro Tip: view on <a href="https://terminalizer.com/view/405023a64449">terminalizer</a> </i>
-
-
 <p class="aligncenter">
 <img class="lazyimg" src="https://github.com/Appdynamics/appdynamics-ansible/blob/master/docs/ansible.gif"/>
 </p>
