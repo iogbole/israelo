@@ -4,7 +4,7 @@ title: "How to get started with CPU Profiling using eBPF"
 author: israel
 featured: false
 categories: [ 'Cloud Native' ]
-tags: [containers, devops, cloud-native, kubernetes, ebpf ]
+tags: [containers, devops, cloud-native, kubernetes, ebpf, cpu, profiling, flamegraph ]
 image: https://user-images.githubusercontent.com/2548160/206739101-e6a6a80f-8628-4d9f-80f6-de17473e52b4.png
 date:  2022-12-09 15:01:35 +0300
 excerpt: "bpftrace to flamegraph in 3 simple commmands.."
@@ -23,15 +23,15 @@ eBPF provides a number of benefits over traditional observability tools. One of 
 [Related Article: <a href="https://www.israelo.io/blog/ebpf/" target="_blank"> eBPF in plain English </a> ]
 </p>
 
-Another key benefit of eBPF is its flexibility. eBPF programs can be attached to a wide range of kernel functions and events, allowing for a high degree of customization and tailoring to specific needs. This makes eBPF an ideal tool for a wide range of applications, from simple performance monitoring to complex debugging and troubleshooting.
+Another key benefit of eBPF is its flexibility. eBPF programs can be attached to a wide range of kernel functions and events, allowing for a high degree of customisation and tailoring to specific needs. This makes eBPF an ideal tool for a wide range of applications, from simple performance monitoring to complex debugging and troubleshooting.
 
 eBPF also has the advantage of being relatively lightweight and efficient. The programs are compiled into a specialized bytecode format that can be easily executed by the kernel, reducing overhead and enabling real-time monitoring and analysis. This makes eBPF a valuable tool for monitoring and optimizing systems with high performance requirements.
 
 Despite these benefits, eBPF does have some limitations and challenges. One of the biggest challenges is the learning curve required to effectively use eBPF. The tool is powerful but can be complex, and requires a good understanding of kernel internals and system behavior. Additionally, eBPF programs can be difficult to debug and troubleshoot, especially for those new to the tool.
 
-The objective of this post is to give new starters a gentle hands-on introduction to eBPF. These are steps that I wished I had when I got started. 
+The objective of this blog is to give new starters a gentle hands-on introduction to eBPF tracing. These are steps that I wished I had when I got started. 
 
-If you're new to eBPF tracing, here are some steps to get started:
+If you're new to eBPF tracing, here are some steps to get started with eBPF tracing. 
 
 ## System Setup ##
 
