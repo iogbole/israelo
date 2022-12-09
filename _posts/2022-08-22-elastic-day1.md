@@ -6,8 +6,8 @@ featured: false
 categories: [ 'Personal' ]
 tags: ['personal' ]
 image: https://user-images.githubusercontent.com/2548160/206791960-f4eb30a8-8edf-4018-9806-eddd10ed2cbd.png
-date:  2022-12-09 15:01:35 +0300
-excerpt: "End of my 5 years stinct at AppDynamics, and the begining of my journey at Elastic "
+date:  2022-08-21 15:01:35 +0300
+excerpt: "Here's to the end of one journey at AppD and the beginning of another at Elastic!"
 
 ---
 
@@ -40,7 +40,7 @@ As I begin this new journey, I am filled with excitement and anticipation. I am 
 In closing, I want to express my heartfelt thanks to everyone at AppDynamics who helped me along the way. I will always cherish the memories and lessons that I gained during my time there. And to my new friends and colleagues at Elastic, I can't wait to see what the future holds for us. Here's to the next chapter!
 
 
-Here's to the end of one journey and the beginning of another. I'm ready for whatever comes next.
+Here's to the end of one journey and the beginning of another. I'm excited for whatever comes next.
 
 
 -------
