@@ -35,7 +35,7 @@ If you're new to eBPF tracing, here are some steps to get started:
 ## System Setup ##
 
 1. First, you will need a Linux OS. In my case, I used an Ubuntu <a href="https://multipass.run/" target="_blank">Multipass</a> VM on M1 MacOs. 
-If you're using a multipass VM, you will need to install <a href="https://wiki.ubuntu.com/Debug%20Symbol%20Packages" target="_blank" >debug symbol packages</a> first. Alternatively, you may use this <a href="https://github.com/iovisor/bpftrace/blob/master/Vagrantfile" target="_blank">Vagrant file </a> spin up a VM with all the bcc tools you need. 
+If you're using a multipass VM, you will need to install <a href="https://wiki.ubuntu.com/Debug%20Symbol%20Packages" target="_blank" >debug symbol packages</a> first. Alternatively, you may use this <a href="https://github.com/iovisor/bpftrace/blob/master/Vagrantfile" target="_blank">Vagrant file </a> to spin up a VM with all the bcc tools you need. 
 
 2. Make sure your Linux kernel is up-to-date. eBPF was introduced in Linux kernel 3.15, so you'll need at least version 4.1 to use the eBPF tracing commands in this post. You can check your kernel version by running the `uname -r ` command. 
 
