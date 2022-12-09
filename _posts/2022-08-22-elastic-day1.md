@@ -6,7 +6,7 @@ featured: false
 categories: [ 'Personal' ]
 tags: ['personal' ]
 image: https://user-images.githubusercontent.com/2548160/206791960-f4eb30a8-8edf-4018-9806-eddd10ed2cbd.png
-date:  2022-08-21 15:01:35 +0300
+date:  2022-08-22 15:01:35 +0300
 excerpt: "Here's to the end of one journey at AppD and the beginning of another at Elastic!"
 
 ---
