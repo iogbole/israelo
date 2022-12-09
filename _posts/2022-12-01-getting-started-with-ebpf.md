@@ -5,11 +5,12 @@ author: israel
 featured: false
 categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes, ebpf ]
-image: https://user-images.githubusercontent.com/2548160/206737581-b8dc2991-0f2f-4cab-8fd7-763a02622e2b.png
+image: https://user-images.githubusercontent.com/2548160/206739101-e6a6a80f-8628-4d9f-80f6-de17473e52b4.png
 date:  2022-12-09 15:01:35 +0300
 excerpt: "bpftrace to flamegraph in 3 simple commmands.."
 
 ---
+
 
 ## Why eBPF? ##
 
@@ -34,7 +35,7 @@ If you're new to eBPF tracing, here are some steps to get started:
 ## System Setup ##
 
 1. First, you will need a Linux OS. In my case, I used an Ubuntu <a href="https://multipass.run/" target="_blank">Multipass</a> VM on M1 MacOs. 
-If you're using a multipass VM, you will need to install <a href=" https://wiki.ubuntu.com/Debug%20Symbol%20Packages"target="_blank" >debug symbol packages</a> first. Alternatively, you may use this <a href="https://github.com/iovisor/bpftrace/blob/master/Vagrantfile" target="_blank">Vagrant file </a> spin up a VM with all the bcc tools you need. 
+If you're using a multipass VM, you will need to install <a href="https://wiki.ubuntu.com/Debug%20Symbol%20Packages" target="_blank" >debug symbol packages</a> first. Alternatively, you may use this <a href="https://github.com/iovisor/bpftrace/blob/master/Vagrantfile" target="_blank">Vagrant file </a> spin up a VM with all the bcc tools you need. 
 
 2. Make sure your Linux kernel is up-to-date. eBPF was introduced in Linux kernel 3.15, so you'll need at least version 4.1 to use the eBPF tracing commands in this post. You can check your kernel version by running the `uname -r ` command. 
 
@@ -61,7 +62,11 @@ Let's get started!
 
 Let's start by profiling all processes that are comsuming your CPU budget.  
 
-` sudo bpftrace -e 'profile:hz:99 { @[kstack] = count(); }' > trace.data ` 
+```sh
+
+sudo bpftrace -e 'profile:hz:99 { @[kstack] = count(); }' > trace.data 
+
+```
 
 The above command will sample all running processes 99 times per seconds. The on-CPU profile samples answer two fundemental questions: 
 
@@ -112,6 +117,7 @@ A flamegraph is a visualisation tool used to profile the performance of a progra
 We will use Brendan's flamegraph tool that was downloaded in step 4 above to convert the bpftrace file to a flamegraph. 
 
 ```sh
+
 cd FlameGraph
 
 ./stackcollapse-bpftrace.pl trace.data > trace.folded
@@ -162,7 +168,6 @@ Give it a try and see what insights you can uncover!
 
 -------
 >  **⚠ DISCLAIMER**
-
 > Opinions expressed are solely my own and do not express the views or opinions of my employer.
 
 
