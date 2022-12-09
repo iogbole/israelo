@@ -10,9 +10,7 @@ date:  2022-08-21 15:01:35 +0300
 excerpt: "Here's to the end of one journey at AppD and the beginning of another at Elastic!"
 
 ---
-
-<p></p>
-
+<br>
 As I sit here reflecting on the past five years, I can't help but feel a mix of emotions. On the one hand, I am filled with gratitude for the opportunities and experiences that I had at AppDynamics. On the other hand, I am excited for the new challenges and adventures that await me at Elastic.
 
 I joined AppDynamics in 2017 from Microsoft. Little did I know at the time, the company would become a second home to me, and the people I worked with would become like family.
@@ -38,7 +36,6 @@ I will be working on integrating prodfiler.com - a whole-system, continuous prof
 As I begin this new journey, I am filled with excitement and anticipation. I am looking forward to working with the talented team at Elastic and contributing to the development of their cutting-edge technology. I am also eager to learn from my new colleagues and continue to grow as a software engineer.
 
 In closing, I want to express my heartfelt thanks to everyone at AppDynamics who helped me along the way. I will always cherish the memories and lessons that I gained during my time there. And to my new friends and colleagues at Elastic, I can't wait to see what the future holds for us. Here's to the next chapter!
-
 
 -------
 >  **⚠ DISCLAIMER**
