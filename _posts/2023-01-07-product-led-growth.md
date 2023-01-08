@@ -3,7 +3,7 @@ layout: post
 title: "Product-Led Growth - Key takeaways"
 author: israel
 featured: false
-categories: [ 'Reading', 'Book', 'Personal' ]
+categories: [ 'Reading', 'Book' ]
 tags: [product-led,plg, personal ]
 image: https://user-images.githubusercontent.com/2548160/211223739-b35e28de-5365-49da-bab1-6d5992981b6d.png
 date:  2023-01-07 15:01:35 +0300
@@ -15,9 +15,9 @@ excerpt: " Learn how to create a product that sells itself. A must read for Prod
 
 ## Product-Led Growth: How to Build a Product That Sells Itself ##
 
-I read the book over the Christmas holidays, and here's a summary of my key takeaways. Wes made the book available for free here - https://productled.com/book, but please encourage him by <a href="https://www.amazon.com/Product-Led-Growth-Build-Product-Itself-ebook/dp/B07P6288ZF"> buying </a> a copy.  
+I read the book over the Christmas holidays, and here's a summary of my key takeaways. Wes made the book available for free at <a href=" https://productled.com/book">productled.com</a>, but please encourage him by <a href="https://www.amazon.com/Product-Led-Growth-Build-Product-Itself-ebook/dp/B07P6288ZF"> buying </a> a copy.  
 
-let's dig in. 
+Let's dig in. 
 
 `Product-Led Growth: How to Build a Product That Sells Itself`  is a comprehensive guide to building and growing a successful product-led business. 
  
