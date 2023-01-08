@@ -19,11 +19,11 @@ I read the book over the Christmas holidays, and here's a summary of my key take
 
 let's dig in. 
 
-`Product-Led Growth: How to Build a Product That Sells Itself` is a comprehensive guide to building and growing a successful product-led business. 
+`Product-Led Growth: How to Build a Product That Sells Itself`  is a comprehensive guide to building and growing a successful product-led business. 
  
 Authored by Wes Bush, the book covers a range of topics related to product-led growth, including choosing the right growth model, designing an effective onboarding experience, building a community around your product, using data to drive product development, and learning from the successes of other companies. Through a combination of practical advice, case studies, and tools such as the MOAT framework and the Bowling Alley framework, the book provides a wealth of information and insights for anyone looking to drive growth through their product.
 
-## Summary by Chapter ##
+## Key takeaways ##
 
 - Product-led growth is becoming increasingly important in today's business landscape due to the shift towards digital experiences and the increasing importance of customer experience.
 - There are various approaches that companies can take to drive product-led growth, including free trials, freemium models, and demos. It's important to choose the right approach for your business and optimize it for maximum effectiveness.
