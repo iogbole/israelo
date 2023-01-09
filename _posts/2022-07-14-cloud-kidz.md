@@ -11,13 +11,16 @@ excerpt: "Watch my kids as they demystify the concepts of cloud computing, cyber
 
 ---
 
-I am a proud #GirlDad. We try to expose our girls to activities they enjoy, such as cooking, ballet, gymnastics, and so on, in the hopes that they will eventually discover what they want to do with their lives when they are adults.
+I am a proud #GirlDad. We try to expose our girls to activities they enjoy, such as cooking, ballet, gymnastics, and so on, in the hope that they will eventually discover what they want to do with their lives when they are adults.
 
 However, I am slightly biased - I teach them coding and computing - with the hope they fall in love with IT. I described my approach in the <a href="https://www.israelo.io/blog/kids-who-code/" target="_blank">Tips To Get Your Kids Excited About Coding</a> blog post. Check it out! 
 
-It's incredible how fast they understand the concepts. I'd typically have them present what they have learnt to me. This time, I took the pleasure of recording their presentations. 
+Watch as my beautiful 9 and 6 year-olds 'demystify' (LoL) the concepts of:
 
-Watch as my beautiful 9 and 6 year-olds "demystify" (LoL) the concepts of: 
+It's incredible how fast they understand the concepts. I usually have them present what they have learned to me. This time, I took the pleasure of recording their presentations.
+
+Watch as my beautiful 9 and 6 year-olds 'demystify' (LoL) the concepts of:
+
 
 1. The Internet
 2. Cloud Computing
