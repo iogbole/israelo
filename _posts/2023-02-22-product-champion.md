@@ -19,7 +19,7 @@ As a product manager, one of the most important roles you have is to champion yo
 
 Here are some key reasons why product managers must champion their product:
 
-### You must understand your product.
+#### You must understand your product.
 
 As the product manager, you are the one who knows your product inside and out, and this means understanding every detail about its features, design, and functionality. You understand how it works, what its strengths and weaknesses are, and what makes it unique in the market. This knowledge puts you in the best position to champion your product and communicate its value to others. 
 
@@ -34,7 +34,7 @@ Do all you can to understand your product, and craft your product story!
 </p>
 
 
-### You can help shape the product's direction.
+#### You can help shape the product's direction.
 
 As the product manager, you have significant influence over the direction of your product. By championing your product, you can help steer it in the right direction and ensure that it meets the needs of your customers. You can also help prioritise features and improvements based on customer feedback and market trends.
 
@@ -44,26 +44,30 @@ As the saying goes, "A complaining customer is a customer that cares." If a cust
 
 Customer feedback is invaluable for improving your product. It can help you identify areas where your product falls short and provide insights into what customers want and need. By using customer feedback to make improvements, you can create a product that better meets the needs of your customers.
 
-### You can rally support for your product.
+#### You can rally support for your product.
 
 When you are launching a new product or making improvements to an existing one, you need to get buy-in from a variety of stakeholders. This could include executives, developers, designers, and sales teams. By championing your product, you can rally support from these stakeholders and get everyone working together to make the product a success.
 
+## How can you effectively champion your product?
+
 <b> So, how can you effectively champion your product? Here are some tips:</b>
 
-1. Know your audience.
+### Know your audience.
 When you're championing your product, you need to tailor your message to your audience. This means understanding what's important to them and how your product can help them achieve their goals.
 
-2. Be passionate.
+### Be passionate.
 If you're not passionate about your product, it will be difficult to get others excited about it. Make sure you genuinely believe in your product and its potential to make a difference.
 
-3. Collaborate with others.
+### Collaborate with others.
 Championing your product is not a one-person job. You need to work collaboratively with others, including designers, developers, and sales teams, to ensure that everyone is aligned and working toward the same goals.
 
-4. Be adaptable.
-As a product manager, you need to be adaptable and able to pivot when necessary. If something isn't working, be willing to try something else. Keep an open mind and be willing to listen to feedback from others.
+### Be adaptable.
+To be a successful product manager, adaptability and agility are essential traits. You should be willing to pivot when necessary and try new approaches if something isn't working. It's important to have an open mind and listen to feedback from others, but it's equally important to make informed decisions that consider tradeoffs rather than taking unnecessary shortcuts. Cutting corners can lead to the accumulation of technical debt, which can ultimately slow down velocity and create problems in the long run. Therefore, prioritize building a solid foundation for your product and always weigh the tradeoffs before making a decision.
 
-5. Use data to support your claims.
+### Use data to support your claims.
 When you're trying to convince others of the value of your product, it's important to back up your claims with data. Use customer feedback, market research, and other data points to support your arguments.
+
+## Conclusion?
 
 In conclusion, product managers must champion their product to be successful. By understanding the product, rallying support, shaping the product's direction, tailoring your message, being passionate, using data, collaborating with others, and being adaptable, you can effectively champion your product and ensure its success. Remember, a complaining customer is a customer that cares, so be sure to get diverse opinions, not just good, nice feedback. Use customer feedback to make improvements, and you'll create a product that your customers will love.
 
