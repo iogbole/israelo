@@ -5,7 +5,7 @@ author: israel
 featured: false
 categories: [ 'Reading', 'Book' , 'Cloud Native'  ]
 tags: [product-led,containers, devops, cloud-native, kubernetes, ebpf, cpu, profiling, flamegraph ]
-image: https://user-images.githubusercontent.com/2548160/220735224-b59ad4e7-a27c-4b89-8fe7-5d71ed0db8bd.png
+image: https://user-images.githubusercontent.com/2548160/220749559-b16a0aac-9624-42b3-ab61-0c87a7cc326c.jpg
 date:  2023-02-22 15:01:35 +0300
 excerpt: "Whether you are launching a new product or improving an existing one, your success as a product manager depends on your ability to effectively champion your product"
 
@@ -30,7 +30,7 @@ In addition to testing the product, some product managers, including me,  take i
 Do all you can to understand your product, and craft your product story!
 
 <p class="aligncenter">
-<img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/220735579-606df767-2574-4fe4-a8a1-7f1db61bdbd3.png" alt="AMS" />
+<img class="post-image" src="https://user-images.githubusercontent.com/2548160/220751210-56466586-75ea-4068-bcb6-cba376294331.jpg" alt="AMS"  />
 </p>
 
 
@@ -40,7 +40,7 @@ As the product manager, you have significant influence over the direction of you
 
 One key way to champion your product is to gather and use customer feedback. User research is essential in product development, and customer feedback is a critical component of user research. You must get diverse opinions, not just good, nice feedback. It's easy to get caught up in the positive feedback and miss the negative comments. However, it's important to pay attention to negative feedback and use it to make improvements.
 
-As the saying goes, "A complaining customer is a customer that cares." If a customer takes the time to provide negative feedback, it means they care enough about your product to want it to be better. Negative feedback can be hard to hear, but it's essential to listen to it and take it on board.
+<b>A complaining customer is a customer that cares</b>. If a customer takes the time to provide negative feedback, it means they care enough about your product to want it to be better. Negative feedback can be hard to hear, but it's essential to listen to it and take it on board.
 
 Customer feedback is invaluable for improving your product. It can help you identify areas where your product falls short and provide insights into what customers want and need. By using customer feedback to make improvements, you can create a product that better meets the needs of your customers.
 
@@ -53,7 +53,7 @@ When you are launching a new product or making improvements to an existing one, 
 So, how can you effectively champion your product? Here are some tips:
 
 <p class="aligncenter">
-<img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/220746268-fe4e4d77-8fb5-4937-9bdf-c6c199e163d0.png" alt="AMS" />
+<img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/220751269-b8d67780-b9f5-467c-ac18-53b1ed1838ab.jpg" alt="AMS" width ="2592" height=" 1252" />
 </p>
 
 ### Know your audience.
@@ -71,7 +71,12 @@ To be a successful product manager, adaptability and agility are essential trait
 ### Use data to support your claims.
 When you're trying to convince others of the value of your product, it's important to back up your claims with data. Use customer feedback, market research, and other data points to support your arguments.
 
-## Conclusion?
+<p class="aligncenter">
+<img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/220751333-dcc3218f-8133-4872-a787-967ee902052f.jpg" alt="AMS" />
+</p>
+
+
+## Conclusion
 
 In conclusion, product managers must champion their product to be successful. By understanding the product, rallying support, shaping the product's direction, tailoring your message, being passionate, using data, collaborating with others, and being adaptable, you can effectively champion your product and ensure its success. Remember, a complaining customer is a customer that cares, so be sure to get diverse opinions, not just good, nice feedback. Use customer feedback to make improvements, and you'll create a product that your customers will love.
 
