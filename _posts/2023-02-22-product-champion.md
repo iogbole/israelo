@@ -4,7 +4,7 @@ title: "Why Product Managers Must Champion their Products"
 author: israel
 featured: false
 categories: [ 'Reading', 'Book' , 'Cloud Native'  ]
-tags: [product-led,plg, containers, devops, cloud-native, kubernetes, ebpf, cpu, profiling, flamegraph ]
+tags: [product-led,containers, devops, cloud-native, kubernetes, ebpf, cpu, profiling, flamegraph ]
 image: https://user-images.githubusercontent.com/2548160/220735224-b59ad4e7-a27c-4b89-8fe7-5d71ed0db8bd.png
 date:  2023-02-22 15:01:35 +0300
 excerpt: "Whether you are launching a new product or improving an existing one, your success as a product manager depends on your ability to effectively champion your product"
@@ -66,6 +66,7 @@ As a product manager, you need to be adaptable and able to pivot when necessary.
 When you're trying to convince others of the value of your product, it's important to back up your claims with data. Use customer feedback, market research, and other data points to support your arguments.
 
 In conclusion, product managers must champion their product to be successful. By understanding the product, rallying support, shaping the product's direction, tailoring your message, being passionate, using data, collaborating with others, and being adaptable, you can effectively champion your product and ensure its success. Remember, a complaining customer is a customer that cares, so be sure to get diverse opinions, not just good, nice feedback. Use customer feedback to make improvements, and you'll create a product that your customers will love.
+
 
 -------
 >  **⚠ DISCLAIMER**
