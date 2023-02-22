@@ -50,7 +50,7 @@ When you are launching a new product or making improvements to an existing one, 
 
 ## How can you effectively champion your product?
 
-<b> So, how can you effectively champion your product? Here are some tips:</b>
+So, how can you effectively champion your product? Here are some tips:
 
 ### Know your audience.
 When you're championing your product, you need to tailor your message to your audience. This means understanding what's important to them and how your product can help them achieve their goals.
