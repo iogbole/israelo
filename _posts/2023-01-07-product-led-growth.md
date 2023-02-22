@@ -4,7 +4,7 @@ title: "Product-Led Growth - Key takeaways"
 author: israel
 featured: false
 categories: [ 'Reading', 'Book' ]
-tags: [product-led,plg, personal ]
+tags: [product-led,plg, personal,  ]
 image: https://user-images.githubusercontent.com/2548160/211223739-b35e28de-5365-49da-bab1-6d5992981b6d.png
 date:  2023-01-07 15:01:35 +0300
 excerpt: " Learn how to create a product that sells itself. A must read for Product Managers. "
