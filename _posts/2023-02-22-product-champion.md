@@ -30,7 +30,7 @@ In addition to testing the product, some product managers, including me,  take i
 Do all you can to understand your product, and craft your product story!
 
 <p class="aligncenter">
-<img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/220735579-606df767-2574-4fe4-a8a1-7f1db61bdbd3.png" alt="AMS" width="560" height="600"/>
+<img class="lazyimg" src="https://user-images.githubusercontent.com/2548160/220735579-606df767-2574-4fe4-a8a1-7f1db61bdbd3.png" alt="AMS" />
 </p>
 
 
