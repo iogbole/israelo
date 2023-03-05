@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Get passionate for your product"
+title: " The Importance of Passion in Product Management: A Non-Textbook Lesson"
 author: israel
 featured: false
 categories: [ 'Reading', 'Book', 'Cloud Native', 'Product Management' ]
@@ -12,6 +12,8 @@ excerpt: "A valuable lesson that I've learned in my career as a product manager 
 ---
 
 <p></p>
+
+# Passion breaks inertia!
 
 As a product manager, you're responsible for overseeing the development and success of your product. It's a challenging role that requires a broad range of skills and expertise. While there are many lessons that you'll learn in the course of your career, one of the most valuable non-textbook lessons is the importance of having a strong passion for your product.
 
