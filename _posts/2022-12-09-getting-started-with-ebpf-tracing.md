@@ -61,7 +61,7 @@ Let's get started!
 
 ## CPU Profiling ##
 
-Let's start by profiling all processes that are comsuming your CPU budget.  
+Let's start by profiling all processes that are consuming your CPU budget.  
 
 ```sh
 
@@ -69,9 +69,9 @@ sudo bpftrace -e 'profile:hz:99 { @[kstack] = count(); }' > trace.data
 
 ```
 
-The above command will sample all running processes 99 times per second. The on-CPU profile samples answer two fundemental questions: 
+The above command will sample all running processes 99 times per second. The on-CPU profile samples answer two fundamental questions: 
 
-1. Where are you - This essentially interupts the CPU cores at 99Hz and collects the CPU's answer for the "where are you" question. 
+1. Where are you - This essentially interrupts the CPU cores at 99Hz and collects the CPU's answer for the "where are you" question. 
 2. How did you get here - The historical information on how the CPU got to where it is super important to formulate the stack traces.
 
 Also, the `kstack` returns the kernel stack trace. This is used as a key for the map, so that it can be frequency counted. There is also `ustack` for the user-level stack trace should you wish to use that instead. 
@@ -107,11 +107,11 @@ Attaching 1 probe...
 
 ```
 
-The output are stack traces which consist of process details, and a single number - this represents the number of times this stack trace was sampled. 
+The output is a stack traces which consist of process details, and a single number - this represents the number of times this stack trace was sampled. 
 
 ### Analyse CPU stack trace using flamegraphs ### 
 
-Next, lets visualise the stack traces in flamegrapsh so we can easily analyse the result of our CPU profile.   
+Next, let's visualise the stack traces in flamegrapsh so we can easily analyse the result of our CPU profile.   
 
 A flamegraph is a visualisation tool used to profile the performance of a program. It shows a graphical representation of the call stack, with the width of each frame representing the amount of time the program spends in that particular function or method. Flamegraphs are commonly used to identify performance bottlenecks and hot spots in a program, as well as to optimise the program's performance. They can be generated using a variety of tools, including performance profilers and tracing tools.
 
