@@ -3,10 +3,10 @@ layout: post
 title: "Get passionate for your product"
 author: israel
 featured: false
-categories: [ 'Reading', 'Book' , 'Cloud Native', 'Product Management'  ]
-tags: [product-led, product ]
+categories: [ 'Reading', 'Book', 'Cloud Native', 'Product Management' ]
+tags: [product-led, containers, devops, product]
 image: https://user-images.githubusercontent.com/2548160/222982699-122c6a3a-67be-4164-bdac-c9ab125d17b4.jpg
-date:  2023-04-05 15:01:35 +0300
+date:  2023-03-05 15:01:35 +0300
 excerpt: "A valuable lesson that I've learned in my career as a product manager is the importance of having a strong passion for your product. Here's why."
 
 ---
