@@ -4,7 +4,7 @@ title: "Why Product Managers Must Champion their Products"
 author: israel
 featured: false
 categories: [ 'Reading', 'Book' , 'Cloud Native', Product Management' ]
-tags: [product-led,containers, devops, product]
+tags: [product-led, containers, devops, product]
 image: https://user-images.githubusercontent.com/2548160/220749559-b16a0aac-9624-42b3-ab61-0c87a7cc326c.jpg
 date:  2023-02-22 15:01:35 +0300
 excerpt: "Whether you are launching a new product or improving an existing one, your success as a product manager depends on your ability to effectively champion your product"
