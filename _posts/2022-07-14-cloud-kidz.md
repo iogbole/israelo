@@ -7,7 +7,7 @@ categories: [ 'Personal' ]
 tags: [coding, kids, STEM]
 image: https://user-images.githubusercontent.com/2548160/179279760-faecb9b2-58a4-43f0-b1bf-c61ab0bbe5ea.png
 date:   2022-07-14 15:01:35 +0300
-excerpt: "Watch my kids as they demystify the concepts of cloud computing, cyber security, cyber bullying, etc. I am a proud #GirlDad..."
+excerpt: "Watch my kids as they demystify the concepts of cloud computing, cyber security, cyberbullying, etc. I am a proud #GirlDad..."
 
 ---
 
@@ -15,11 +15,9 @@ I am a proud #GirlDad. We try to expose our girls to activities they enjoy, such
 
 However, I am slightly biased - I teach them coding and computing - with the hope they fall in love with IT. I described my approach in the <a href="https://www.israelo.io/blog/kids-who-code/" target="_blank">Tips To Get Your Kids Excited About Coding</a> blog post. Check it out! 
 
-Watch as my beautiful 9 and 6 year-olds 'demystify' (LoL) the concepts of:
-
 It's incredible how fast they understand the concepts. I usually have them present what they have learned to me. This time, I took the pleasure of recording their presentations.
 
-Watch as my beautiful 9 and 6 year-olds 'demystify' (LoL) the concepts of:
+Watch as my beautiful 9 and 6 year olds 'demystify' (LoL) the concepts of:
 
 
 1. The Internet
@@ -27,7 +25,7 @@ Watch as my beautiful 9 and 6 year-olds 'demystify' (LoL) the concepts of:
 3. Cyber Security and 
 4. Cyber Bullying. 
 
-Interestingly, there perspectives are slighlty different on each subject. Let's watch! 
+Interestingly, their perspectives are slightly different on each subject. Let's watch! 
 
 **Rochelle**  
 
