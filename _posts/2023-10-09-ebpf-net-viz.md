@@ -10,6 +10,7 @@ date:   2023-10-09 15:01:35 +0300
 #toc: true
 ---
 
+
 As a Technical Product Manager, I do more than just manage products—I deeply engage with the technology that underpins them. In my case, this technology is eBPF (Extended Berkeley Packet Filter). Having recently completed my MBA, I picked up Liz Rice's ["Learning eBPF"](https://isovalent.com/books/learning-ebpf/) book. The book was so enlightening that I couldn't resist rolling up my sleeves to get hands-on with this revolutionary technology.
 
 But why eBPF and, more specifically, why focus on monitoring TCP retransmissions? Well, a past nasty experience involving troubleshooting intermittent connectivity issues for an APM agent in production for a customer left me realising the need for better tools; Wireshark has its limitations. Had eBPF been in my toolkit back then, that daunting issue would have been far easier to diagnose and resolve.
