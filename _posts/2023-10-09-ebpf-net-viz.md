@@ -173,19 +173,14 @@ struct tcp_retransmit_skb_ctx {
 Understanding the data structures associated with tracepoints is a key aspect when you're diving into eBPF programs for monitoring or debugging. While I focused on the `tcp_retransmit_skb` tracepoint in this blog, you may wish to explore other tracepoints. Here's how you can discover the necessary data structures for those:
 
 1. **Locate Tracepoint Definitions**: Typically, tracepoints are defined within the Linux Kernel source code. The definitions can usually be found under `/sys/kernel/debug/tracing/events/` directory on a Linux system with the tracing subsystem enabled. Navigate through the folders to find the tracepoint of interest.
+   
 2. **Reading Format Files**: Within each tracepoint directory, you'll find a `format` file that describes the event structure. This will provide you with the types and names of the fields that are available for that particular tracepoint.
 
-    ```
-
+    ```bash
     cat /sys/kernel/debug/tracing/events/tcp/tcp_retransmit_skb/format
-
     ```
 
     This will display the format for the `tcp_retransmit_skb` tracepoint as an example.
-
-3. **BPF Headers**: Some commonly used structures for tracepoints might already be defined in BPF-related headers (`vmlinux.h`, `bpf_helpers.h`, etc.). This saves you from needing to redefine these structures in your BPF code.
-
-5. **Community Resources**: Sites like [eBPF.io](https://ebpf.io/) or specific GitHub repositories often have documentation or sample code that can provide additional insights into tracepoints and their associated data structures.
 
 By familiarising yourself with the format files and possibly the kernel source code, you can create or adapt eBPF programs to tap into a wide range of system events, not just TCP retransmissions.
 
