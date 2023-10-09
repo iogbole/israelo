@@ -6,8 +6,6 @@ categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes, ebpf ]
 image: https://user-images.githubusercontent.com/2548160/273732796-16810c09-bf82-4bcb-a2ac-ca3ab04bfbb1.png
 date:   2023-10-09 15:01:35 +0300
-#permalink: /blog/kubeval.html
-#toc: true
 ---
 
 
@@ -41,7 +39,6 @@ on your machine and see how it messes up your network performance and introduces
 
 
 ## Why eBPF? 
-
 Extended Berkeley Packet Filter (eBPF) is a revolutionary technology, available since Linux 4.x versions. Imagine eBPF as a lightweight, sandboxed virtual machine that resides within the Linux kernel, offering secure and verified access to kernel memory.
 
 In technical terms, eBPF allows the kernel to execute BPF bytecode. The code is often written in a restricted subset of the C language, which is then compiled into BPF bytecode using a compiler like Clang. This bytecode undergoes stringent verification processes to ensure it neither intentionally nor inadvertently jeopardises the integrity of the Linux kernel. Additionally, eBPF programmes are guaranteed to execute within a finite number of instructions, making them suitable for performance-sensitive tasks such as packet filtering and network monitoring.
@@ -53,11 +50,9 @@ The flexibility, safety, and power that eBPF provides make it an invaluable tool
 For those looking to delve deeper into eBPF, I recommend checking out the resources in the reference section, starting with [What is eBPF](https://ebpf.io/what-is-ebpf/)?
 
 ## Preparation and Environment Setup
-
 Before we embark on our journey through code and monitoring, it's important to have your development environment properly configured. While this blog isn't an exhaustive tutorial, I'll outline the key prerequisites for your convenience.
 
 ### **Using Lima on macOS**
-
 If you're a macOS user like me, Lima is an excellent way to emulate a Linux environment. It's simple to set up and meshes seamlessly with your existing workflow. To kick things off with Lima, follow these steps:
 
 1. Install Lima and launch it with your configuration file:
@@ -108,7 +103,7 @@ With your environment now primed, you're all set to delve into the fascinating w
 
 
 <p align="center">
-<img width="600" alt="the solution" src="https://user-images.githubusercontent.com/2548160/273732796-16810c09-bf82-4bcb-a2ac-ca3ab04bfbb1.png">
+<img width="1510" alt="the solution" src="https://user-images.githubusercontent.com/2548160/273732796-16810c09-bf82-4bcb-a2ac-ca3ab04bfbb1.png">
 </p>
 
 ### Overview of Components
