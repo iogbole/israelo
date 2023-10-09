@@ -1,12 +1,11 @@
-
 ---
 layout: post
-title:  "Monitoring TCP Retransmissions with eBPF, Go, and Prometheus: A Beginners guide to eBPF"
+title:  "Monitoring TCP Retransmissions with eBPF, Go, and Prometheus: A Beginners Guide to eBPF"
 author: israel
 categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes, ebpf ]
-image: https://github.com/iogbole/ebpf-network-viz/assets/2548160/915d403e-61ac-4399-9f11-d4891b32fbd4
-date:   2021-01-05 15:01:35 +0300
+image: https://user-images.githubusercontent.com/2548160/273732796-16810c09-bf82-4bcb-a2ac-ca3ab04bfbb1.png
+date:   2023-10-09 15:01:35 +0300
 #permalink: /blog/kubeval.html
 #toc: true
 ---
@@ -22,7 +21,7 @@ This blog is intended to chronicle my hands-on exploration of eBPF and Go, and i
 Imagine working on a high-speed, low-latency product and encountering intermittent slowdowns in data transmission. This situation can be tricky to diagnose, it is often intermittent and could bring your product to its knees. When I faced this issue, I took it upon myself to delve deep and understand what was happening under the hood. Wireshark led me to the root cause: excessive TCP retransmissions due to firewall policy.
 
 <p align="center">
-<img width="400" alt="tcp retransmission" src="https://github.com/iogbole/ebpf-network-viz/assets/2548160/7eb67240-2514-4a4a-9140-c5c8ac603a66">
+<img width="500" alt="tcp retransmission" src="https://github-production-user-asset-6210df.s3.amazonaws.com/2548160/273732239-ec8dd025-ea85-4e7f-9ef3-0063ff75f1e0.png">
 </p>
 
 TCP retransmissions aren't inherently bad; they're a fundamental part of how TCP/IP networks function. However, when they occur frequently, they can signify network issues that lead to poor application performance. A high number of retransmissions can cause:
@@ -106,9 +105,14 @@ With your environment now primed, you're all set to delve into the fascinating w
 
 ## The Solution
 
+
+<p align="center">
+<img width="600" alt="the solution" src="https://user-images.githubusercontent.com/2548160/273732796-16810c09-bf82-4bcb-a2ac-ca3ab04bfbb1.png">
+</p>
+
 ### Overview of Components
 
-The code can be broadly broken down into the following components, summarised the digram below. 
+The code can be broadly broken down into the following components, summarised in the diagram below. 
 
 1. **eBPF Code Hooks to Tracepoints**: The eBPF code uses the `tracepoint/tcp/tcp_retransmit_skb` to monitor TCP retransmissions. This allows the code to act whenever a TCP packet is retransmitted.
 
@@ -123,11 +127,6 @@ The code can be broadly broken down into the following components, summarised th
 6. **Exposed to HTTP**: The Go application exposes the metrics over HTTP on port 2112.
 
 7. **Prometheus Scrapes Metrics**: Finally, Prometheus is configured to scrape these exposed metrics for monitoring or alerting purposes.
-
-
-<p align="center">
-<img width="600" alt="the solution" src="https://github.com/iogbole/ebpf-network-viz/assets/2548160/915d403e-61ac-4399-9f11-d4891b32fbd4">
-</p>
 
 
 ### Anatomy of the eBPF C Code
@@ -178,7 +177,6 @@ struct tcp_retransmit_skb_ctx {
 Understanding the data structures associated with tracepoints is a key aspect when you're diving into eBPF programs for monitoring or debugging. While I focused on the `tcp_retransmit_skb` tracepoint in this blog, you may wish to explore other tracepoints. Here's how you can discover the necessary data structures for those:
 
 1. **Locate Tracepoint Definitions**: Typically, tracepoints are defined within the Linux Kernel source code. The definitions can usually be found under `/sys/kernel/debug/tracing/events/` directory on a Linux system with the tracing subsystem enabled. Navigate through the folders to find the tracepoint of interest.
-
 2. **Reading Format Files**: Within each tracepoint directory, you'll find a `format` file that describes the event structure. This will provide you with the types and names of the fields that are available for that particular tracepoint.
 
     ```
@@ -417,7 +415,7 @@ sudo go run retrans.go
 This is also a good time to confirm that the Go HTTP server is up and running: 
 
 <p align="center">
-<img width="1510" alt="go http server" src="https://github.com/iogbole/ebpf-network-viz/assets/2548160/35436e9e-a451-4f27-9126-5e0ecba08651">
+<img width="1510" alt="go http server" src="https://user-images.githubusercontent.com/2548160/273732043-9f3ba1d3-1059-4bba-8ac5-715ecf73e817.png">
 </p>
 
 
@@ -487,7 +485,7 @@ Since Lima also does automatic port forwarding, you should be able to access Pro
 Check and ensure that the job_name is registered. 
 
 <p align="center">
-<img width="1510" alt="prom_config" src="https://github.com/iogbole/ebpf-network-viz/assets/2548160/85c38250-b023-4b83-839d-2cd989a87d87">
+<img width="1510" alt="prom_config" src="https://user-images.githubusercontent.com/2548160/273732084-60e7b5fa-d165-4740-ac64-10acc8636c62.png">
 </p>
 
 ## Create TCP Chaos: Testing It All Out
@@ -560,7 +558,7 @@ So grab a cup of coffee, sit back, and enjoy the fruit of your labour!
 
 
 <p align="center">
-<img width="1510"  src="https://github.com/iogbole/ebpf-network-viz/assets/2548160/a3e79887-90d7-426d-a7e0-3054144e9738">
+<img width="1510"  src="https://user-images.githubusercontent.com/2548160/273732219-e4b7bcf0-5d4a-456a-8197-543ecbcea061.png">
 </p>
 
 
