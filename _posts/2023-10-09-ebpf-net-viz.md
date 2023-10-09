@@ -484,7 +484,7 @@ Check and ensure that the job_name is registered.
 To put the eBPF program and Prometheus monitoring into action, you can introduce artificial network issues such as TCP retransmissions. The `tc` (traffic control) command in Linux allows you to simulate network issues for testing purposes. The `create_tcp_chaos.sh` shell script below automates this process, first creating the chaos and then removing it after the test.
 
 
-### The `create_tcp_chaos.sh` Shell Script
+### The create_tcp_chaos.sh Shell Script
 
 Here's the script that automates the traffic control chaos:
 
