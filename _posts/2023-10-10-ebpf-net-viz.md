@@ -8,19 +8,18 @@ image: https://user-images.githubusercontent.com/2548160/273995063-05a4e761-6e4b
 date:   2023-10-10 09:01:35 +0300
 ---
 
+As a Product Manager, I strongly believe it's essential to understand the technology that underpins the products I manage. This knowledge not only allows me to keep pace with the evolving industry trends but also enriches my interactions with both customers and my engineering counterparts.
 
-As a Technical Product Manager, I do more than just manage products—I deeply engage with the technology that underpins them. In my case, this technology is eBPF (Extended Berkeley Packet Filter). Having recently completed my MBA, I picked up Liz Rice's ["Learning eBPF"](https://isovalent.com/books/learning-ebpf/) book. The book was so enlightening that I couldn't resist rolling up my sleeves to get hands-on with this revolutionary technology.
+Recently, I've been working on a product that uses Extended Berkeley Packet Filter (eBPF)––a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. Intrigued to learn more, I got a copy of Liz Rice's book, ["Learning eBPF"](https://isovalent.com/books/learning-ebpf/). The book is so enlightening that I couldn't resist rolling up my sleeves to get a little hands-on with this revolutionary technology.
 
-But why eBPF and, more specifically, why focus on monitoring TCP retransmissions? Well, a nasty experience involving troubleshooting intermittent connectivity issues for an APM agent in production for a customer left me realising the need for better tools; Wireshark has its limitations. Had eBPF been in my toolkit back then, that daunting issue would have been far easier to diagnose and resolve.
+Further, a specific focus for me has been the use of eBPF for monitoring TCP retransmissions, which can occur when a TCP segment goes unacknowledged by its receiver within a designated time frame. Various factors, such as network congestion, packet loss, or hardware failures, can trigger this. My interest in TCP retransmissions stems from a challenging experience troubleshooting intermittent connectivity issues for a customer's APM agent in a production environment in my previous role. Had eBPF been in my toolkit back then, that painful issue would have been far easier to diagnose and resolve.
 
-This blog is intended to chronicle my hands-on exploration of eBPF and Go, and is aimed at anyone interested in learning eBPF. We'll explore the basics of how to monitor network events using eBPF, Go, and Prometheus.
+This blog is intended to chronicle exploration of eBPF and Go, and is aimed at anyone interested in learning eBPF. We'll explore the basics of how to monitor network events using eBPF, Go, and Prometheus.
+
+Let's begin by defining the problem. 
 
 ## The Ghost in the Network: TCP Retransmissions
-Imagine working on a high-speed, low-latency product and encountering intermittent slowdowns in data transmission. This situation can be tricky to diagnose, it is often intermittent and could bring your product to its knees. When I faced this issue, I took it upon myself to delve deep and understand what was happening under the hood. Wireshark led me to the root cause: excessive TCP retransmissions due to firewall policy.
-
-<p align="center">
-<img width="600" alt="tcp retransmission" src="https://github-production-user-asset-6210df.s3.amazonaws.com/2548160/273732239-ec8dd025-ea85-4e7f-9ef3-0063ff75f1e0.png">
-</p>
+Imagine working on a high-speed, low-latency product and encountering intermittent slowdowns in data transmission. This situation can be tricky to diagnose, it is often intermittent and could bring your product to its knees. When I faced this issue, I took it upon myself to delve deep and understand what was happening under the hood. Wireshark led me to the root cause: excessive TCP retransmissions due to a faulty firewall policy.
 
 TCP retransmissions aren't inherently bad; they're a fundamental part of how TCP/IP networks function. However, when they occur frequently, they can signify network issues that lead to poor application performance. A high number of retransmissions can cause:
 
@@ -29,27 +28,31 @@ TCP retransmissions aren't inherently bad; they're a fundamental part of how TCP
 * Bandwidth Inefficiency: Retransmissions consume bandwidth that could be better used by new data.
 * User Experience Degradation: All the above contribute to a laggy or suboptimal user experience.
 
-You can easily simulate TCP retransmission, try: 
+<p align="center">
+<img width="600" alt="tcp retransmission" src="https://github-production-user-asset-6210df.s3.amazonaws.com/2548160/273732239-ec8dd025-ea85-4e7f-9ef3-0063ff75f1e0.png">
+</p>
+
+One can easily trigger TCP retransmission, by executing: 
 
 ```bash
 sudo tc qdisc add dev eth0 root netem loss 10% delay 100ms
 ```
-on your machine and see how it messes up your network performance and introduces high-CPU usage. I was once crazy enough to use 50% in EC2 and it booted me out of SSH connection until I restarted the node.  Do not try this out at home ;) 
+and it will sure mess up your network performance and introduce high-CPU usage. I was once crazy enough to use 50% on an EC2 instance and it booted me out of SSH connection until I restarted the node via the console.  **Do not try this out at home ;)** 
 
 
 ## Why eBPF? 
-Extended Berkeley Packet Filter (eBPF) is a revolutionary technology, available since Linux 4.x versions. Imagine eBPF as a lightweight, sandboxed virtual machine that resides within the Linux kernel, offering secure and verified access to kernel memory.
+eBPF is a revolutionary technology, available since Linux 4.x versions. Imagine eBPF as a lightweight, sandboxed virtual machine that resides within the Linux kernel, offering secure and verified access to kernel memory. 
 
-In technical terms, eBPF allows the kernel to execute BPF bytecode. The code is often written in a restricted subset of the C language, which is then compiled into BPF bytecode using a compiler like Clang/LLVM. This bytecode undergoes stringent verification processes to ensure it neither intentionally nor inadvertently jeopardises the integrity of the Linux kernel. Additionally, eBPF programs are guaranteed to execute within a finite number of instructions, making them suitable for performance-sensitive observability and network security use cases. 
+eBPF code is often written in a restricted subset of the C language, which is then compiled into eBPF bytecode using a compiler like Clang/LLVM. This bytecode undergoes stringent verification processes to ensure it neither intentionally nor inadvertently jeopardises the integrity of the Linux kernel. Additionally, eBPF programs are guaranteed to execute within a finite number of instructions, making them suitable for performance-sensitive use-cases like observability and network security. 
 
-Functionally, eBPF allows you to run this restricted C code in response to various events, such as timers, network events, or function calls within both the kernel and user-space programs. These pieces of code are often referred to as 'probes'—`kprobes` for kernel function calls, `uprobes` for user-space function calls, and `tracepoints` for pre-defined hooks in the Linux kernel. In the context of this blog post, we'll be focusing on tracepoints, specifically leveraging the <code><em>tcp_retransmit_skb</em></code>  tracepoint for monitoring TCP retransmissions. Tracepoints offer a stable API for kernel observability, which is especially useful for production environments.
+Functionally, eBPF allows you to run this restricted C code in response to various events, such as timers, network events, or function calls within both the kernel and user-space programs. These pieces of code are often referred to as 'probes'—`kprobes` for kernel function calls, `uprobes` for user-space function calls, and `tracepoints` for pre-defined hooks in the Linux kernel.
 
-The flexibility, safety, and power that eBPF provides make it an invaluable technology for monitoring TCP retransmissions, a subject we will explore in here.
+In the context of this blog post, we'll be focusing on `tracepoints`, specifically leveraging the <code><em>tcp_retransmit_skb</em></code>  tracepoint for monitoring TCP retransmissions. 
 
-If you are completely new to eBPF, I recommend checking out the resources in the reference section, starting with [What is eBPF](https://ebpf.io/what-is-ebpf/)?
+If you are completely new to eBPF, I recommend checking out the resources in the reference section below, starting with [What is eBPF](https://ebpf.io/what-is-ebpf/)?
 
 ## Preparation and Environment Setup
-Before we begin, it's important to have your development environment properly configured. While this blog isn't an exhaustive tutorial, I'll outline the key prerequisites breifly. 
+Before we begin, it's important to have your development environment properly configured. While this blog isn't an exhaustive tutorial, I'll outline the key prerequisites briefly. 
 
 ### **Using Lima on MacOS**
 If you're a MacOS user like me, Lima is an excellent way to emulate a Linux environment. It's simple to set up and meshes seamlessly with your existing workflow. To kick things off with Lima, follow these steps:
@@ -77,7 +80,6 @@ If you're a MacOS user like me, Lima is an excellent way to emulate a Linux envi
 ### **Manual Setup on Linux**
 
 If you’re opting for a manual setup on Linux, refer to the script section in the [ebpf-vm.yaml](https://github.com/iogbole/ebpf-network-viz/blob/main/ebpf-vm.yaml#L18) file.
-
 
 With your environment now primed, you’re all set to delve into the fascinating world of eBPF!
 
