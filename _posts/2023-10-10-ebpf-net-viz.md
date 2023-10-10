@@ -8,13 +8,13 @@ image: https://user-images.githubusercontent.com/2548160/273995063-05a4e761-6e4b
 date:   2023-10-10 09:01:35 +0300
 ---
 
-As a Product Manager, I strongly believe it's essential to understand the technology that underpins the products I manage. This knowledge not only allows me to keep pace with the evolving industry trends but also enriches my interactions with both customers and my engineering counterparts.
+As a Product Manager in tech, I strongly believe it is essential to understand the technology that underpins the products I manage. This knowledge not only allows me to keep pace with the evolving industry trends but also enriches my interactions with both customers and my engineering counterparts.
 
 Recently, I've been working on a product that uses Extended Berkeley Packet Filter (eBPF)––a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. Intrigued to learn more, I got a copy of Liz Rice's book, ["Learning eBPF"](https://isovalent.com/books/learning-ebpf/). The book is so enlightening that I couldn't resist rolling up my sleeves to get hands-on with this revolutionary technology, albeit a little.
 
-Further, a specific focus for me has been the use of eBPF for monitoring TCP retransmissions, which can occur when a TCP segment goes unacknowledged by its receiver within a designated time frame. Various factors, such as network congestion, packet loss, or hardware failures, can trigger this. My interest in TCP retransmissions stems from a challenging experience troubleshooting intermittent connectivity issues for a customer's APM agent in a production environment in my previous role. Had eBPF been in my toolkit back then, that painful issue would have been far easier to diagnose and resolve.
+Further, a specific focus for me has been the use of eBPF for monitoring TCP retransmissions, which can occur when a TCP segment goes unacknowledged by its receiver within a designated time frame. My interest in TCP retransmissions stems from a challenging experience troubleshooting intermittent connectivity issues with an APM agent in a customer's production environment, in my previous role. Had eBPF been in my toolkit back then, that painful issue would have been far easier to diagnose and resolve.
 
-This blog is intended to chronicle exploration of eBPF and Go, and is aimed at anyone interested in learning eBPF. We'll explore the basics of how to monitor network events using eBPF, Go, and Prometheus.
+This blog is intended to chronicle my exploration of eBPF and Go, and is aimed at anyone interested in learning eBPF. We'll explore the basics of how to monitor network events using eBPF, Go, and Prometheus.
 
 Let's begin by defining the problem. 
 
@@ -41,13 +41,19 @@ and it will sure mess up your network performance and introduce high-CPU usage. 
 
 
 ## Why eBPF? 
-eBPF is a revolutionary technology, available since Linux 4.x versions. Imagine eBPF as a lightweight, sandboxed virtual machine that resides within the Linux kernel, offering secure and verified access to kernel memory. 
+eBPF is a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. It is essentially a lightweight, sandboxed virtual machine that resides within the kernel, offering secure and verified access to kernel memory.
 
-eBPF code is often written in a restricted subset of the C language, which is then compiled into eBPF bytecode using a compiler like Clang/LLVM. This bytecode undergoes stringent verification processes to ensure it neither intentionally nor inadvertently jeopardises the integrity of the Linux kernel. Additionally, eBPF programs are guaranteed to execute within a finite number of instructions, making them suitable for performance-sensitive use-cases like observability and network security. 
+Moreso, eBPF code is typically written in a restricted subset of the C language and compiled into eBPF bytecode using a compiler like Clang/LLVM. This bytecode undergoes rigorous verification to ensure that it cannot intentionally or inadvertently jeopardize the integrity of the kernel. Additionally, eBPF programs are guaranteed to execute within a finite number of instructions, making them suitable for performance-sensitive use cases like observability and network security.
 
-Functionally, eBPF allows you to run this restricted C code in response to various events, such as timers, network events, or function calls within both the kernel and user-space programs. These pieces of code are often referred to as 'probes'—`kprobes` for kernel function calls, `uprobes` for user-space function calls, and `tracepoints` for pre-defined hooks in the Linux kernel.
+Here are some of the key benefits of using eBPF:
 
-In the context of this blog post, we'll be focusing on `tracepoints`, specifically leveraging the <code><em>tcp_retransmit_skb</em></code>  tracepoint for monitoring TCP retransmissions. 
+* Safety and security: eBPF programs are sandboxed and verified, which means that they cannot harm the kernel or the system as a whole.
+* Performance: eBPF programs are extremely efficient and can be used to implement complex functionality without impacting system performance.
+* Flexibility: eBPF can be used to implement a wide range of functionality, including network monitoring, security, performance tracing, and more.
+
+Functionally, eBPF allows you to run this restricted C code in response to various events, such as timers, network events, or function calls within both the kernel and user space. These event hooks are often referred to as 'probes'—`kprobes` for kernel function calls, `uprobes` for user-space function calls, and `tracepoints` for pre-defined hooks in the Linux kernel.
+
+In the context of this blog post, we'll be focusing on `tracepoints`, specifically leveraging the <code><em>tcp_retransmit_skb</em></code>  tracepoint for monitoring TCP retransmissions.  
 
 If you are completely new to eBPF, I recommend checking out the resources in the reference section below, starting with [What is eBPF](https://ebpf.io/what-is-ebpf/)?
 
