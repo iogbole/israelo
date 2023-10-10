@@ -23,10 +23,10 @@ Imagine working on a high-speed, low-latency product and encountering intermitte
 
 TCP retransmissions aren't inherently bad; they're a fundamental part of how TCP/IP networks function. However, when they occur frequently, they can signify network issues that lead to poor application performance. A high number of retransmissions can cause:
 
-* Increased Latency: Packets have to be sent again, which takes extra time.
-* Higher CPU Usage: Both sending and receiving systems have to do additional work to handle the retransmissions.
-* Bandwidth Inefficiency: Retransmissions consume bandwidth that could be better used by new data.
-* User Experience Degradation: All the above contribute to a laggy or suboptimal user experience.
+* **Increased Latency**: Packets have to be sent again, which takes extra time.
+* **Higher CPU Usage**: Both sending and receiving systems have to do additional work to handle the retransmissions.
+* **Bandwidth Inefficiency**: Retransmissions consume bandwidth that could be better used by new data.
+* **User Experience Degradation**: All the above contribute to a laggy or suboptimal user experience.
 
 <p align="center">
 <img width="600" alt="tcp retransmission" src="https://github-production-user-asset-6210df.s3.amazonaws.com/2548160/273732239-ec8dd025-ea85-4e7f-9ef3-0063ff75f1e0.png">
@@ -47,9 +47,9 @@ Moreso, eBPF code is typically written in a restricted subset of the C language 
 
 Here are some of the key benefits of using eBPF:
 
-* Safety and security: eBPF programs are sandboxed and verified, which means that they cannot harm the kernel or the system as a whole.
-* Performance: eBPF programs are extremely efficient and can be used to implement complex functionality without impacting system performance.
-* Flexibility: eBPF can be used to implement a wide range of functionality, including network monitoring, security, performance tracing, and more.
+* **Safety and security**: eBPF programs are sandboxed and verified, which means that they cannot harm the kernel or the system as a whole.
+* **Performance**: eBPF programs are extremely efficient and can be used to implement complex functionality without impacting system performance.
+* **Flexibility**: eBPF can be used to implement a wide range of functionality, including network monitoring, asset discovery, security, profiling, performance tracing, and more.
 
 Functionally, eBPF allows you to run this restricted C code in response to various events, such as timers, network events, or function calls within both the kernel and user space. These event hooks are often referred to as 'probes'—`kprobes` for kernel function calls, `uprobes` for user-space function calls, and `tracepoints` for pre-defined hooks in the Linux kernel.
 
