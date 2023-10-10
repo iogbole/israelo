@@ -33,7 +33,9 @@ TCP retransmissions aren't inherently bad; they're a fundamental part of how TCP
 
 You can easily simulate TCP retransmission, try: 
 
-`sudo tc qdisc add dev eth0 root netem loss 10% delay 100ms`
+```bash
+sudo tc qdisc add dev eth0 root netem loss 10% delay 100ms
+```
 
 on your machine and see how it messes up your network performance and introduces high-CPU usage. I was once crazy enough to use 50% in EC2  and it booted me out of SSH connection until I restarted the node.  Do not try this out at home ;) 
 
@@ -100,7 +102,6 @@ With your environment now primed, you're all set to delve into the fascinating w
 
 
 ## The Solution
-
 
 <p align="center">
 <img width="1510" alt="the solution" src="https://user-images.githubusercontent.com/2548160/273732796-16810c09-bf82-4bcb-a2ac-ca3ab04bfbb1.png">
