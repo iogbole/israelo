@@ -518,7 +518,7 @@ sudo tc qdisc del dev eth0 root
 
 1. **Setting Up Chaos**: The script introduces packet loss and latency to `eth0` using `tc`. Specifically, it adds 5% packet loss and 100 ms delay.
 
-2. **Testing**: It iterates through a list of websites (`example.com`, `google.com`, and `wikipedia.org`) and sends HTTP requests to them. This is done 20 times.
+2. **Testing**: It iterates through a list of websites and sends HTTP requests to them. This is done 20 times.
 
 3. **Cleaning Up**: The script removes the `tc` rules to revert `eth0` back to its normal state.
 
