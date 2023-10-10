@@ -20,7 +20,7 @@ This blog is intended to chronicle my hands-on exploration of eBPF and Go, and i
 Imagine working on a high-speed, low-latency product and encountering intermittent slowdowns in data transmission. This situation can be tricky to diagnose, it is often intermittent and could bring your product to its knees. When I faced this issue, I took it upon myself to delve deep and understand what was happening under the hood. Wireshark led me to the root cause: excessive TCP retransmissions due to firewall policy.
 
 <p align="center">
-<img width="500" alt="tcp retransmission" src="https://github-production-user-asset-6210df.s3.amazonaws.com/2548160/273732239-ec8dd025-ea85-4e7f-9ef3-0063ff75f1e0.png">
+<img width="600" alt="tcp retransmission" src="https://github-production-user-asset-6210df.s3.amazonaws.com/2548160/273732239-ec8dd025-ea85-4e7f-9ef3-0063ff75f1e0.png">
 </p>
 
 TCP retransmissions aren't inherently bad; they're a fundamental part of how TCP/IP networks function. However, when they occur frequently, they can signify network issues that lead to poor application performance. A high number of retransmissions can cause:
