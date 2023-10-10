@@ -417,10 +417,13 @@ img, img:hover {
     margin-right: auto;
 }
 .posttitle {
-    font-size:50px;
-    font-weight:700;
-    line-height:1.2;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-justify: inter-word;
 }
+
 .entry-featured-image {  
     width:940px;  
     max-width: 100%;
