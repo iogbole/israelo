@@ -495,13 +495,9 @@ sudo tc qdisc add dev eth0 root netem loss 5% delay 100ms
 for ((i = 1; i &lt;= loop_count; i++)); do
 
     for site in "${websites[@]}"; do
-
         echo "Sending request to $site (iteration $i)"
-
         curl -sS "$site" > /dev/null  # s for silent and S for showing errors if they occur.
-
         sleep 1  # Wait for a second.
-
         wget -O- "$site" > /dev/null  # O- redirects output to stdout, as we don't want to save the file.
 
     done
