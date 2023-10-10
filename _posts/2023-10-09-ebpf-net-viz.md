@@ -298,7 +298,7 @@ By leveraging a Perf Event Buffer, you gain a highly efficient, low-overhead mec
 
 The Ring Buffer is a more modern alternative to Perf Event buffers, suitable for newer Kernel version
 
-Exposing eBPF Data Through a Prometheus Endpoint
+### Exposing eBPF Data Through a Prometheus Endpoint
 
 To expose the metrics gathered by your eBPF program for monitoring, we integrate Prometheus into the setup. Here's how the process works:
 
