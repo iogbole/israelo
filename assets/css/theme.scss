@@ -462,11 +462,12 @@ img, img:hover {
 }
 .article-post {    
     font-size:18px;
+	
     p {
         margin-top:15px;
         margin-bottom:30px;
     }
-      
+	
     code {
         font-size: 15px;
        // color: #0a0a0a;
@@ -481,7 +482,6 @@ img, img:hover {
       //  color:inherit;
     }
 
-   
     div.code-toolbar > .toolbar a, div.code-toolbar > .toolbar button, div.code-toolbar > .toolbar span {
         margin-right:2px;
         margin-left:2px;
