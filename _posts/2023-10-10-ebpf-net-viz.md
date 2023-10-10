@@ -215,7 +215,6 @@ clang -O2 -g -target bpf -c ./ebpf/retrans.c -o ./ebpf/retrans.o -I/usr/include 
 
 ```
 
-
 ### Anatomy of the Go Program
 
 source: [retrans.go](https://github.com/iogbole/ebpf-network-viz/blob/main/retrans.go)
@@ -334,7 +333,6 @@ By combining these two components, you create a seamless pipeline that collects,
 The heart of the real-time monitoring lies in the event loop, which is continuously polling for new events from the perf event ring buffer. Each incoming event is processed and the relevant Prometheus metrics are updated accordingly.
 
 **Listening for Events**
-
 The loop employs the `Read()` method on the perf buffer to listen for new incoming events:
 
 ```go
@@ -350,7 +348,6 @@ for {
 ```
 
 **Event Processing and Metrics Update**
-
 Upon receiving an event, the loop processes it and updates the Prometheus `tcpRetransmissions` metric. The specifics of this processing depend on the structure and content of the events, which are designed to capture various data fields such as timestamps, process IDs, source and destination ports, and so forth.
 
 ```go
@@ -390,7 +387,6 @@ sudo go run retrans.go
 ```
 
 This is also a good time to confirm that the Go HTTP server is up and running: 
-
 <p align="center">
 <img width="1510" alt="go http server" src="https://user-images.githubusercontent.com/2548160/273732043-9f3ba1d3-1059-4bba-8ac5-715ecf73e817.png">
 </p>
