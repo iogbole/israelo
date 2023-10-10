@@ -91,7 +91,7 @@ The diagram below depicts the solution.
 
 ### Overview of the Components
 
-The code can be broadly broken down into the following components:
+This is how the code works at a very high level:
 
 1. **Bytecode Loaded by Go**: The eBPF bytecode is loaded into the kernel using a Go program, which makes use of the `github.com/cilium/ebpf` package.
 
