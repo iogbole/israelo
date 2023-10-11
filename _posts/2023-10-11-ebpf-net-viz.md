@@ -4,8 +4,8 @@ title:  "Monitoring TCP Retransmissions with eBPF, Go, and Prometheus: A Beginne
 author: israel
 categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes, ebpf ]
-image: https://user-images.githubusercontent.com/2548160/273995063-05a4e761-6e4b-4fad-8ceb-6df230301828.png
-date:   2023-10-10 09:01:35 +0300
+image: https://user-images.githubusercontent.com/2548160/274354681-f04f4e97-3c76-454f-a8f2-e36d5385be51.png
+date:   2023-10-11 09:01:35 +0300
 ---
 
 As a Product Manager in tech, I strongly believe it is essential to understand the technology that underpins the products I manage. This knowledge not only allows me to keep pace with the evolving industry trends but also enriches my interactions with both customers and my engineering counterparts.
