@@ -6,6 +6,7 @@ categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes, ebpf ]
 image: https://user-images.githubusercontent.com/2548160/274512682-f06a933c-16e3-4288-a1fa-80237cc4b16d.png
 date:   2023-10-12 09:01:35 +0300
+excerpt: "This is a beginner's guide to eBPF. Learn how to use eBPF, Go, and Prometheus to monitor network events unobtrusively. You'll learn how to use Linux tracepoints to monitor TCP transmissions and use Prometheus to store and visualize the data you collect."
 ---
 
 As a Product Manager in tech, I strongly believe it is essential to understand the technology that underpins the products I manage. This knowledge not only allows me to keep pace with the evolving industry trends but also enriches my interactions with both customers and my engineering counterparts.
