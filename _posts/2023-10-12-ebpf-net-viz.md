@@ -46,10 +46,8 @@ and it will surely mess up your network performance and introduce high CPU usage
 
 The goal of this experiment is simple: To collect all TCP retransmissions from the kernel and push the metrics to Prometheus, as shown below. 
 
-<p align="center">
-<img width="1510" alt="the solution" src="https://user-images.githubusercontent.com/2548160/274725653-9b2ac550-01cc-4015-befb-9539a9b38d03.gif"
-">
-</p>
+<img width="1510" alt="prom" src="https://user-images.githubusercontent.com/2548160/274725653-9b2ac550-01cc-4015-befb-9539a9b38d03.gif">
+
 
 
 ## Why eBPF? 
