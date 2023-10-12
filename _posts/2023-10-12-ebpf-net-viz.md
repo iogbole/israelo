@@ -15,7 +15,11 @@ Recently, I've been working on a product that uses Extended Berkeley Packet Filt
 
 Further, a specific focus for me has been the use of eBPF for monitoring TCP retransmissions, which can occur when a TCP segment goes unacknowledged by its receiver within a designated time frame. My interest in TCP retransmissions stems from a challenging experience troubleshooting intermittent connectivity issues with an APM agent in a customer's production environment, in a previous role. Had eBPF been in my toolkit back then, that painful issue would have been far easier to diagnose and resolve.
 
-This blog aims to chronicle my exploration of eBPF and Go and is targeted at anyone interested in learning eBPF. We will delve into the fundamentals of monitoring network events using eBPF, Go, and Prometheus. The source code is available at [https://github.com/iogbole/ebpf-network-viz](https://github.com/iogbole/ebpf-network-viz). 
+This blog aims to chronicle my exploration of eBPF and Go and is targeted at anyone interested in learning eBPF. We will delve into the fundamentals of monitoring network events using eBPF, Go, and Prometheus. 
+
+> [!Important]
+> The source code is available at [https://github.com/iogbole/ebpf-network-viz](https://github.com/iogbole/ebpf-network-viz). 
+
 
 Let's begin by defining the problem. 
 
