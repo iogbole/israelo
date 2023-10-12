@@ -4,8 +4,8 @@ title:  "Monitoring TCP Retransmissions with eBPF, Go, and Prometheus: A Beginne
 author: israel
 categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes, ebpf ]
-image: https://user-images.githubusercontent.com/2548160/274354681-f04f4e97-3c76-454f-a8f2-e36d5385be51.png
-date:   2023-10-11 09:01:35 +0300
+image: https://user-images.githubusercontent.com/2548160/274512682-f06a933c-16e3-4288-a1fa-80237cc4b16d.png
+date:   2023-10-12 00:01:35 +0300
 ---
 
 As a Product Manager in tech, I strongly believe it is essential to understand the technology that underpins the products I manage. This knowledge not only allows me to keep pace with the evolving industry trends but also enriches my interactions with both customers and my engineering counterparts.
@@ -95,7 +95,7 @@ With your environment now primed, you’re all set to delve into the fascinating
 The diagram below depicts the solution. 
 
 <p align="center">
-<img width="1510" alt="the solution" src="https://user-images.githubusercontent.com/2548160/273732796-16810c09-bf82-4bcb-a2ac-ca3ab04bfbb1.png">
+<img width="1510" alt="the solution" src="https://user-images.githubusercontent.com/2548160/274510771-99bb4583-c7be-4e3e-83fc-283ea99d0195.png">
 </p>
 
 ### Overview of the Components
