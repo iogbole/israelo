@@ -17,8 +17,7 @@ Further, a specific focus for me has been the use of eBPF for monitoring TCP ret
 
 This blog aims to chronicle my exploration of eBPF and Go and is targeted at anyone interested in learning eBPF. We will delve into the fundamentals of monitoring network events using eBPF, Go, and Prometheus. 
 
-> [!Important]
-> The source code is available at [https://github.com/iogbole/ebpf-network-viz](https://github.com/iogbole/ebpf-network-viz). 
+> **The source code is available at [https://github.com/iogbole/ebpf-network-viz](https://github.com/iogbole/ebpf-network-viz)** 
 
 
 Let's begin by defining the problem. 
@@ -36,7 +35,7 @@ TCP retransmissions aren't inherently bad; they're a fundamental part of how TCP
 <img width="600" alt="tcp retransmission" src="https://github-production-user-asset-6210df.s3.amazonaws.com/2548160/273732239-ec8dd025-ea85-4e7f-9ef3-0063ff75f1e0.png">
 </p>
 
-Imagine working on a high-speed, low-latency product and encountering intermittent slowdowns in data transmission. This situation can be tricky to diagnose and could bring your product to its knees. When I faced this issue, I took it upon myself to delve deep and understand what was happening under the hood. **Wireshark led me to the root cause: excessive TCP retransmissions due to a faulty firewall policy**.
+Imagine working on a high-speed, low-latency product and encountering intermittent slowdowns in data transmission. This situation can be tricky to diagnose and could bring your product to its knees. When I faced this issue, I took it upon myself to delve deep and understand what was happening under the hood. **Wireshark led me to the root cause: excessive TCP retransmissions** due to a faulty firewall policy.
 
 One can easily trigger TCP retransmission, by executing: 
 
@@ -45,11 +44,18 @@ sudo tc qdisc add dev eth0 root netem loss 10% delay 100ms
 ```
 and it will surely mess up your network performance and introduce high CPU usage. I was once crazy enough to use 50% on an EC2 instance and it booted me out of SSH connection until I restarted the node via the console.  **Do not try this out at home ;)** 
 
+The goal of this experiment is simple: To collect all TCP retransmissions from the kernel and push the metrics to Prometheus, as shown below. 
+
+<p align="center">
+<img width="1510" alt="the solution" src="https://user-images.githubusercontent.com/2548160/274725653-9b2ac550-01cc-4015-befb-9539a9b38d03.gif"
+">
+</p>
+
 
 ## Why eBPF? 
 eBPF is a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. It is essentially a lightweight, sandboxed virtual machine that resides within the kernel, offering secure and verified access to kernel memory.
 
-Moreso, eBPF code is typically written in a restricted subset of the C language and compiled into eBPF bytecode using a compiler like Clang/LLVM. This bytecode undergoes rigorous verification to ensure that it cannot intentionally or inadvertently jeopardize the integrity of the kernel. Additionally, eBPF programs are guaranteed to execute within a finite number of instructions, making them suitable for performance-sensitive use cases like observability and network security.
+Moreso, eBPF code is typically written in a restricted subset of the `C` language and compiled into eBPF bytecode using a compiler like Clang/LLVM. This bytecode undergoes rigorous verification to ensure that it cannot intentionally or inadvertently jeopardize the integrity of the kernel. Additionally, eBPF programs are guaranteed to execute within a finite number of instructions, making them suitable for performance-sensitive use cases like observability and network security.
 
 Here are some of the key benefits of using eBPF:
 
@@ -344,11 +350,10 @@ By combining these two components, you create a seamless pipeline that collects,
 
 The heart of the go code lies in the event loop, which continuously polls for new events from the perf event buffer. Each incoming event is processed and the relevant Prometheus metrics are updated accordingly.
 
-**Listening for Events**
 The loop employs the `events.Read()` method on the perf buffer to listen for new incoming events:
 
 ```go
-// Listen for events from the perf ring buffer
+        // Listen for events from the perf ring buffer
 	fmt.Println("Monitoring TCP retransmissions...")
 	for {
 		select {
@@ -508,8 +513,8 @@ So grab a cup of coffee, sit back, and enjoy the fruit of your labour!
 
 # Refs
 
-* Must read - https://www.man7.org/linux/man-pages/man2/bpf.2.html
-* Retrans fields: https://github.com/iovisor/bcc/blob/master/tools/tcpretrans_example.txt
-* BPF CORE: https://facebookmicrosites.github.io/bpf/blog/2020/02/19/bpf-portability-and-co-re.html
-* TCP tracepoints: https://www.brendangregg.com/blog/2018-03-22/tcp-tracepoints.html
-* eBPF applications: https://ebpf.io/applications/
+*  Must read - https://www.man7.org/linux/man-pages/man2/bpf.2.html
+*  TCP retrans fields: https://github.com/iovisor/bcc/blob/master/tools/tcpretrans_example.txt
+*  BPF CORE: https://facebookmicrosites.github.io/bpf/blog/2020/02/19/bpf-portability-and-co-re.html
+*  TCP tracepoints: https://www.brendangregg.com/blog/2018-03-22/tcp-tracepoints.html
+*  eBPF applications: https://ebpf.io/applications/
