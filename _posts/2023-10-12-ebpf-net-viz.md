@@ -44,10 +44,9 @@ sudo tc qdisc add dev eth0 root netem loss 10% delay 100ms
 ```
 and it will surely mess up your network performance and introduce high CPU usage. I was once crazy enough to use 50% on an EC2 instance and it booted me out of SSH connection until I restarted the node via the console.  **Do not try this out at home ;)** 
 
-The goal of this experiment is simple: To collect all TCP retransmissions from the kernel and push the metrics to Prometheus, as shown below. 
+The goal of this experiment is simple: to collect all TCP retransmissions from the kernel and push the metrics to Prometheus, so that you can slice and dice the data as well as generate alerts if the retransmission rate exceeds a threshold. 
 
 <img width="1510" alt="prom" src="https://user-images.githubusercontent.com/2548160/274725653-9b2ac550-01cc-4015-befb-9539a9b38d03.gif">
-
 
 
 ## Why eBPF? 
@@ -71,21 +70,21 @@ If you are completely new to eBPF, I recommend checking out the resources in the
 Before we begin, it's important to have your development environment properly configured. While this blog isn't an exhaustive tutorial, I'll outline the key prerequisites briefly. 
 
 ### **Using Lima on MacOS**
-If you're a MacOS user like me, Lima is an excellent way to emulate a Linux environment. It's simple to set up and meshes seamlessly with your existing workflow. To kick things off with Lima, follow these steps:
+If you're a MacOS user like me, Lima is an excellent and easy way to emulate a Linux VM. To kick things off with Lima, follow these steps:
 
-1. Install Lima and launch it with the [ebpf-vm.yaml](https://github.com/iogbole/ebpf-network-viz/blob/main/ebpf-vm.yaml) file:
+1. [Install Lima](https://lima-vm.io/docs/installation/) and launch it with the [ebpf-vm.yaml](https://github.com/iogbole/ebpf-network-viz/blob/main/ebpf-vm.yaml) file:
 
     ```bash
     limactl start ebpf-vm.yaml
     limactl shell ebpf-vm
     ```
-2. If you're fond of Visual Studio Code, you can connect to the Lima VM via SSH:
+2. If you use Visual Studio Code, you can connect to the Lima VM via SSH:
 
     ```bash
     limactl show-ssh ebpf-vm
     ```
-
-    Subsequently, use the SSH command to link up with the remote server through Visual Studio Code.
+    Subsequently, use the SSH command to link up with the remote server from the VS Code on your host machine. Lima handles file sharing and 
+    port forwaring automatically. 
 
 3. After establishing the connection, clone the required repository:
 
