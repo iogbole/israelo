@@ -383,7 +383,7 @@ Next, ensure the go code works:
 
 ```bash 
 
-sudo go run src/main.go
+sudo go run ./src/main.go
 
 ```
 
@@ -474,7 +474,7 @@ sudo tc qdisc add dev eth0 root netem loss 5% delay 100ms
 
 # Loop to send requests to the websites.
 
-for ((i = 1; i &lt;= loop_count; i++)); do
+for ((i = 1; i <= loop_count; i++)); do
     for site in "${websites[@]}"; do
         echo "Sending request to $site (iteration $i)"
         curl -sS "$site" > /dev/null  # s for silent and S for showing errors if they occur.
