@@ -27,7 +27,7 @@
     &:after {
       content: "";
       display: block;
-      padding-bottom: 70%;
+      padding-bottom: 56.25%;
     }
   }
 
@@ -109,6 +109,10 @@
 
     .article__image {
       width: 100%;
+
+      &:after {
+        padding-bottom: 56.25%; // You can adjust this aspect ratio if needed
+      }
     }
 
     .article__content {
@@ -128,6 +132,12 @@
       .article__title {
         font-size: 18px;
         /* Adjust font size for smaller screens */
+      }
+    }
+
+    .article__image {
+      &:after {
+        padding-bottom: 56.25%; // Adjust this aspect ratio for mobile if needed
       }
     }
   }
