@@ -22,8 +22,7 @@
 
   .page-image,
   .post-image {
-    //background-size: cover;
-    object-fit: contain;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-color: $light-gray;
