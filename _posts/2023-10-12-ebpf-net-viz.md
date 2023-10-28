@@ -3,7 +3,7 @@ layout: post
 title:  "Getting Started with eBPF: Monitoring TCP Retransmissions Using eBPF, Go and Prometheus"
 author: israel
 categories: [ 'Cloud Native' ]
-tags: [containers, devops, cloud-native, kubernetes, ebpf ]
+tags: [ observability, devops, cloud-native, ebpf ]
 image: https://user-images.githubusercontent.com/2548160/274512682-f06a933c-16e3-4288-a1fa-80237cc4b16d.png
 date:   2023-10-12 09:01:35 +0300
 excerpt: "This is a beginner's guide to eBPF. Learn how to use eBPF, Go, and Prometheus to monitor network events unobtrusively. You'll learn how to use Linux tracepoints to monitor TCP transmissions and use Prometheus to store and visualize the data you collect."
@@ -11,7 +11,7 @@ excerpt: "This is a beginner's guide to eBPF. Learn how to use eBPF, Go, and Pro
 
 As a Product Manager in tech, I strongly believe it is essential to understand the technology that underpins the products I manage. This knowledge not only allows me to keep pace with the evolving industry trends but also enriches my interactions with both customers and my engineering counterparts.
 
-Recently, I've been working on a product that uses Extended Berkeley Packet Filter (eBPF). eBPF is a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. Intrigued to learn more, I got a copy of Liz Rice's book, ["Learning eBPF"](https://isovalent.com/books/learning-ebpf/). The book is so enlightening that I couldn't resist rolling up my sleeves to get hands-on with this revolutionary technology, albeit a little.
+Recently, I've been working on a product that uses Extended Berkeley Packet Filter (eBPF). eBPF is a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. Intrigued to learn more, I got a copy of Liz Rice's book, ["Learning eBPF"](https://isovalent.com/books/learning-ebpf/). The book is so enlightening that I couldn't resist rolling up my sleeves to get hands-on with this awesome technology, albeit a little.
 
 Further, a specific focus for me has been the use of eBPF for monitoring TCP retransmissions, which can occur when a TCP segment goes unacknowledged by its receiver within a designated time frame. My interest in TCP retransmissions stems from a challenging experience troubleshooting intermittent connectivity issues with an APM agent in a customer's production environment, in a previous role. Had eBPF been in my toolkit back then, that painful issue would have been far easier to diagnose and resolve.
 
@@ -42,7 +42,7 @@ One can easily trigger TCP retransmission, by executing:
 ```bash
 sudo tc qdisc add dev eth0 root netem loss 10% delay 100ms
 ```
-and it will surely mess up your network performance and introduce high CPU usage. I was once crazy enough to use 50% on an EC2 instance and it booted me out of SSH connection until I restarted the node via the console.  **Do not try this out at home ;)** 
+and it will surely mess up your network performance and introduce high CPU usage. I was once crazy enough to use 50% on an EC2 instance and it booted me out of SSH connection until I restarted the node via the console.  **Do not try this at home ;)** 
 
 The goal of this experiment is simple: to collect all TCP retransmissions from the kernel and push the metrics to Prometheus, so that you can slice and dice the data as well as generate alerts if the retransmission rate exceeds a threshold. 
 
@@ -50,7 +50,7 @@ The goal of this experiment is simple: to collect all TCP retransmissions from t
 
 
 ## Why eBPF? 
-eBPF is a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. It is essentially a lightweight, sandboxed virtual machine that resides within the kernel, offering secure and verified access to kernel memory.
+eBPF is a technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. It is essentially a lightweight, sandboxed virtual machine that resides within the kernel, offering secure and verified access to kernel memory.
 
 Moreso, eBPF code is typically written in a restricted subset of the `C` language and compiled into eBPF bytecode using a compiler like Clang/LLVM. This bytecode undergoes rigorous verification to ensure that it cannot intentionally or inadvertently jeopardize the integrity of the kernel. Additionally, eBPF programs are guaranteed to execute within a finite number of instructions, making them suitable for performance-sensitive use cases like observability and network security.
 
