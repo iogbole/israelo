@@ -105,7 +105,7 @@ defaults:
       path: "_posts"
       type: "posts"
     values:
-      permalink: "/blogs/:title/"
+      permalink: "/blog/:title/"
 
 
 include:
