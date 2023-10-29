@@ -7,7 +7,7 @@ categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, profiling, ebpf ]
 image: https://user-images.githubusercontent.com/2548160/180667738-090c541e-0823-44e9-844e-e1a527f6ce6a.jpg
 date:   2022-07-22 15:01:35 +0300
-excerpt: "If your cloud-native observability strategy or solution does not include continuous profiling using eBPF, then you must go back to the drawing board. Here's why..."
+description: "If your cloud-native observability strategy or solution does not include continuous profiling using eBPF, then you must go back to the drawing board. Here's why..."
 
 ---
 

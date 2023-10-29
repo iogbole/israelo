@@ -3,10 +3,10 @@ layout: post
 title:  "The Ultimate CKAD Prep Guide"
 author: israel
 categories: [ 'Cloud Native' ]
-tags: [containers, ckad, kubernetes certification, application, developer, cloud-native ]
+tags: [ containers, ckad, kubernetes certification, application, developer, cloud-native ]
 image: https://user-images.githubusercontent.com/2548160/104125779-ea666400-5350-11eb-8986-333a1ff5662e.png
 date:   2021-01-10 15:01:35 +0300
-excerpt: "The Certified Kubernetes Application Developer (CKAD) program was developed by the Cloud Native Computing Foundation (CNCF). I passed the exam and these notes summarise what you should expect if you’re preparing it." 
+description: "The Certified Kubernetes Application Developer (CKAD) program was developed by the Cloud Native Computing Foundation (CNCF). I passed the exam and these notes summarise what you should expect if you’re preparing it." 
 #permalink: /blog/ckad-prep-guide.html
 ---
 
@@ -55,7 +55,7 @@ I didn’t go through any of the video tutorials on Linux Academy, but what I ca
 5.  **Always return:** You’d need to use `sudo -i` to be able to create or edit files in certain directories, remember to type `exit` when done. Always remember to return to the master node.
 6.  **Use** `**~/.bashrc:**` Due to 4 and 5 above, do not simply type your aliases in the terminal, use `~/.bashrc` for all your aliases so you don’t have to do it all over again when you return to the master node. My `~/.bashrc` aliases in the exam look like this:
 
-```shell
+```cpp
 
 alias k=kubectl  
 alias kns='k config set-context --current --namespace  ' 

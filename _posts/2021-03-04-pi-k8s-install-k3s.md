@@ -3,10 +3,10 @@ layout: post
 title:  "Raspberry Pi Cluster: Setting up K3s Kubernetes using Ansible - Part#3"
 author: israel
 categories: [ 'Cloud Native', 'Pi' ]
-tags: [containers, raspberry,  pi, cloud-native, kubernetes, IoT, edge ]
+tags: [ containers, raspberry,  pi, cloud-native, kubernetes, IoT, edge ]
 image: https://user-images.githubusercontent.com/2548160/110161490-54e1d080-7de5-11eb-8b73-676ce5b0a9c7.jpg
 date:   2021-03-06 15:01:35 +0300
-excerpt: "This tutorial will be a brief walk through the process of getting K3s Kubernetes up and running on Raspberry Pi - Using Ansible..."
+description: "This tutorial will be a brief walk through the process of getting K3s Kubernetes up and running on Raspberry Pi - Using Ansible..."
 #permalink: /draft/pi3
 ---
 
@@ -47,7 +47,7 @@ Rancher has an Ansible playbook that builds a Kubernetes cluster with K3s. Let's
 
 3. Change the working directory to `inventory/pi` and edit the `hosts.ini` file, as shown below:  
     
-   ```sh
+   ```cpp
 
       [master]
       192.168.master.ip.address
@@ -102,7 +102,7 @@ Once it's built, you need to get the kubectl configuration from the master to co
 
 Next, edit `bash_rc` or `bash_profile`  by adding this line:
 
-```bash
+```cpp
 #K8S
 export KUBECONFIG=$KUBECONFIG:~/.kube/config:~/.kube/pi-config
 ```
@@ -119,14 +119,14 @@ Alternatively, edit `~/.kube/pi-config` and change the cluster and context names
 
 Then switch context:
 
-```sh
+```cpp
 kubectl config get-contexts #list contexts
 kubectl config use-context pi  #switch contexts
 
 ```
 ## Well done! 
 
-```sh 
+```cpp 
 
 ~ $ k get nodes
 NAME          STATUS   ROLES                  AGE   VERSION
@@ -149,7 +149,7 @@ You will need an SSL certificate if you intend to expose your Kubernetes service
 
 Running `kubectl` commands from pi master gave me this error.
 
-```sh 
+```cpp 
 pi@pimaster:~ $ kubectl get po
 WARN[2021-01-14T22:33:39.735790976Z] Unable to read /etc/rancher/k3s/k3s.yaml, please start server with --write-kubeconfig-mode to modify kube config permissions
 error: error loading config file "/etc/rancher/k3s/k3s.yaml": open /etc/rancher/k3s/k3s.yaml: permission denied

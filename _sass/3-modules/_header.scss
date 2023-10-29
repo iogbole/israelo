@@ -1,64 +1,114 @@
+/* Header */
 .header {
-  position: relative;
-  height: 100px;
+  .header__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 44px $base-spacing-unit;
+  
+    @media only screen and (max-width: $desktop) {
+      padding: 40px $base-spacing-unit;
+    }
 
-  .header__overlay {
+    @media only screen and (max-width: $mobile) {
+      padding: 32px $base-spacing-unit;
+    }
+  }
+}
+
+/* Logo */
+.logo__link {
+  padding: 4px 0;
+  font-family: $heading-font-family;
+  font-size: 28px;
+  letter-spacing: -1px;
+  line-height: 1;
+  font-weight: 700;
+  transition: color .25s ease;
+
+  &:hover {
+    color: var(--brand-color);
+  }
+}
+
+.logo__image {
+  max-height: 50px;
+}
+
+/* Nav */
+.main-nav {
+  margin-left: auto;
+
+  @media only screen and (max-width: $desktop) {
     position: fixed;
     top: 0;
+    left: 0;
     right: 0;
     bottom: 0;
-    left: 0;
-    z-index: 10;
-    background-color: rgba(17,17,17,0.7);
-    cursor: pointer;
+    z-index: 100;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.5s ease;
-    
-    @media only screen and (max-width: $desktop) {
-      &.is-visible {
-        opacity: 1;
-        visibility: visible;
+    background-color: var(--background-color);
+
+    &.is-open {
+      opacity: 1;
+      visibility: visible;
+      transition: all .25s ease;
+    }
+
+    .nav__list {
+      flex-direction: column;
+      width: 100%;
+
+      .nav__item {
+        display: block;
+        margin: 0;
+
+        &.nav__item-icon {
+          margin-right: 0;
+        }
+
+        .nav__link {
+          display: inline-block;
+          padding: 16px 0;
+          font-size: 18px;
+          transition: color .25s ease;
+
+          &:hover {
+            color: var(--brand-color);
+          }
+        }
       }
     }
   }
 }
 
-.logo {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  
-  .logo__link {
-    font-size: 30px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: $dark;
-    text-decoration: none;
-    &:hover {
-      color: $black;
-    }
-  }
-  
-  .logo__image {
-    max-height: 50px;
-  }
-}
+.main-nav__box {
+  display: flex;
+  align-items: center;
 
-.main-nav {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  .nav-icon__close {
+  .nav__icon-close {
     display: none;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
     font-size: 24px;
-    text-align: right;
+    line-height: 1;
+    border-radius: 50%;
+    color: var(--heading-font-color);
+    background: var(--background-alt-color);
     cursor: pointer;
+
     &:hover {
-      color: $black;
+      .ion-md-close {
+        transform: rotate(90deg);
+      }
+    }
+
+    .ion-md-close {
+      transition: $global-transition;
     }
   }
 
@@ -66,89 +116,137 @@
     display: none;
   }
 
-  .nav__list {
-    white-space: nowrap;
-    
-    .nav__item {
-      display: inline-block;
-
-      .nav__link {
-        display: inline-block;
-        padding: 10px 30px;
-        font-size: 14px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        color: $dark;
-        &:hover {
-          color: $black;
-        }
-      }
-    }
-  }
-
   @media only screen and (max-width: $desktop) {
-    position: fixed;
-    top: 0;
-    left: inherit;
-    right: -300px;
-    bottom: 0;
-    transform: none;
-    z-index: 100;
-    width: 300px;
-    height: 100vh;
-    padding: 40px 30px 30px;
-    transition: right 0.5s cubic-bezier(0.7, 0.4, 0, 1);
-    background: $white;
-    &.is-open {
-      right: 0;
-    }
+    display: block;
 
-    .nav-icon__close {
-      display: block;
+    align-items: center;
+    width: 80%;
+    height: 80vh;
+    padding-top: 180px;
+    margin: 0 auto;
+    text-align: center;
+    overflow-y: auto;
+
+    .nav__icon-close {
+      display: flex;
+      position: absolute;
+      top: 40px;
+      right: 40px;
     }
 
     .nav__title {
-      display: block;
-      padding-left: 30px;
-      padding-bottom: 7px;
-      margin-bottom: 10px;
-      color: $gray;
-      border-bottom: 1px solid $light-gray;
+      display: inline-block;
+      margin-bottom: 12px;
+      font-family: $heading-font-family;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--heading-font-color);
+    }
+  }
+
+  @media only screen and (max-width: $tablet) {
+    padding-top: 100px;
+  }
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+
+  .nav__item {
+    display: inline-block;
+    margin-right: 48px;
+    margin-bottom: 0;
+
+    &.nav__item-icon {
+      margin-right: 12px;
     }
 
-    .nav__list {
-      .nav__item {
-        display: block;
+    .nav__link {
+      position: relative;
+      padding: 4px 0;
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 700;
+      transition: color .25s ease;
+
+      &:hover {
+        color: var(--brand-color);
       }
     }
   }
 }
 
-.nav-buttons {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
+.nav-button {
   font-size: 21px;
-  
-  .nav__icon {
-    color: $dark;
-    cursor: pointer;
+  color: var(--link-color);
+  cursor: pointer;
+
+  .icon__menu {
+    display: none;
+    margin-right: 12px;
+  }
+
+  .icon__menu,
+  .icon__search {
+    transition: color .25s ease;
+
     &:hover {
-      color: $black;
+      color: var(--brand-color);
     }
   }
-  
-  .nav__icon-menu {
+
+  @media only screen and (max-width: $desktop) {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    font-size: 24px;
+
+    .icon__menu {
+      display: block;
+    }
+  }
+}
+
+/* Toggle Theme */
+.toggle-theme {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  user-select: none;
+  cursor: pointer;
+
+  @media only screen and (max-width: $desktop) {
+    padding: 20px 0;
+  }
+}
+
+.toggle-sun,
+.toggle-moon {
+  position: absolute;
+  font-size: 20px;
+  transition: color .25s ease;
+  color: var(--heading-font-color);
+
+  &:hover {
+    color: var(--brand-color);
+  }
+}
+
+.toggle-sun {
+  display: none;
+}
+
+.dark-mode {
+  .toggle-sun {
+    display: block;
+  }
+
+  .toggle-moon {
     display: none;
-    margin-right: 10px;
-    &:hover {
-      color: $black;
-    }
-    
-    @media only screen and (max-width: $desktop) {
-      display: inline-block;
-    }
   }
 }

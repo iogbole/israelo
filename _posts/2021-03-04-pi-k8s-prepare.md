@@ -3,10 +3,10 @@ layout: post
 title:  "Prepare Raspberry Pi to run K3s Kubernetes Cluster - Part#2"
 author: israel
 categories: [ 'Cloud Native', 'Pi' ]
-tags: [containers, raspberry,  pi, cloud-native, kubernetes, IoT, edge, k3s ]
+tags: [ containers, raspberry,  pi, cloud-native, kubernetes, IoT, edge, k3s ]
 image: https://user-images.githubusercontent.com/2548160/110127567-b130fa00-7dbd-11eb-9caa-724d99640c9b.jpg
 date:   2021-03-05 15:01:35 +0300
-excerpt: "This tutorial will be a brief walk through the process of preparing your Raspberry Pi to run Kubernetes Cluster. This setup can be entirely headless..."
+description: "This tutorial will be a brief walk through the process of preparing your Raspberry Pi to run Kubernetes Cluster. This setup can be entirely headless..."
 
 ---
 
@@ -47,7 +47,7 @@ In summary, first, check if Raspberry Pi 64-bit OS is GA. If not, go with Ubuntu
 
 In my case, I  have full control of the container images so I used docker's <a href="https://www.docker.com/blog/multi-arch-images/" target="_blank"> buildx </a> to build multi-architecture images. I am using the Raspberry Pi OS and will upgrade to the 64-bit version as soon as it in GA.
 
-```sh
+```cpp
 docker buildx build --platform linux/amd64, \
                       linux/arm64, \
                       linux/arm/v7 \
@@ -73,7 +73,7 @@ Next, remove the SD card from the RPi, insert the USB drive into a USB 3.0 port 
 
 Open a terminal on the RPi and enter the following commands to enable ssh: 
 
-```sh
+```cpp
 sudo systemctl enable ssh
 sudo systemctl start ssh
 ```
@@ -145,7 +145,7 @@ Login to your router and reserve the IP address by associating your RPi's Mac ad
 Since you will have multiple RPi nodes, it can quickly become challenging to know which Pi you want to target over SSH.
 I'd recommend you change the server hostnames by SSHing to the RPi and issue these commands: 
 
-```sh
+```cpp
 # Update the system 
 sudo apt update 
 sudo apt full-upgrade
@@ -160,7 +160,7 @@ sudo apt install vim
 Suggested naming conventions is -  master, worker1, worker2, etc. 
 Similarly, edit the `/etc/hosts` on your computer to follow suit, for example: 
 
-```sh
+```cpp
 192.168.0.60 nas-worker1
 192.168.0.61 master
 192.168.0.62 worker2

@@ -7,7 +7,7 @@ categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, tracing ]
 image: https://user-images.githubusercontent.com/2548160/179272497-41d5c333-e0ce-4567-99d1-3fe654fbb152.png
 date:  2022-05-20 15:01:35 +0300
-excerpt: "Distributed tracing provides end-to-end visibility and reveals service dependencies – showing how the services respond to each other to fulfil a request..."
+description: "Distributed tracing provides end-to-end visibility and reveals service dependencies – showing how the services respond to each other to fulfil a request..."
 
 ---
 <br>

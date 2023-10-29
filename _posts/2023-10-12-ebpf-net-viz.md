@@ -3,21 +3,23 @@ layout: post
 title:  "Getting Started with eBPF: Monitoring TCP Retransmissions Using eBPF, Go and Prometheus"
 author: israel
 categories: [ 'Cloud Native' ]
-tags: [ observability, devops, cloud-native, ebpf ]
-image: https://user-images.githubusercontent.com/2548160/274512682-f06a933c-16e3-4288-a1fa-80237cc4b16d.png
+featured: true
+tags: [containers, devops, cloud-native, kubernetes, ebpf ]
+image: 'https://user-images.githubusercontent.com/2548160/274512682-f06a933c-16e3-4288-a1fa-80237cc4b16d.png'
 date:   2023-10-12 09:01:35 +0300
-excerpt: "This is a beginner's guide to eBPF. Learn how to use eBPF, Go, and Prometheus to monitor network events unobtrusively. You'll learn how to use Linux tracepoints to monitor TCP transmissions and use Prometheus to store and visualize the data you collect."
----
+description: "This is a beginner's guide to eBPF. Learn how to use eBPF, Go, and Prometheus to monitor network events unobtrusively. You'll learn how to use Linux tracepoints to monitor TCP transmissions and use Prometheus to store and visualize the data you collect."
 
+tags:   [ebpf, observability]
+---
 As a Product Manager in tech, I strongly believe it is essential to understand the technology that underpins the products I manage. This knowledge not only allows me to keep pace with the evolving industry trends but also enriches my interactions with both customers and my engineering counterparts.
 
-Recently, I've been working on a product that uses Extended Berkeley Packet Filter (eBPF). eBPF is a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. Intrigued to learn more, I got a copy of Liz Rice's book, ["Learning eBPF"](https://isovalent.com/books/learning-ebpf/). The book is so enlightening that I couldn't resist rolling up my sleeves to get hands-on with this awesome technology, albeit a little.
+Recently, I've been working on a product that uses Extended Berkeley Packet Filter (eBPF). eBPF is a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. Intrigued to learn more, I got a copy of Liz Rice's book, ["Learning eBPF"](https://isovalent.com/books/learning-ebpf/). The book is so enlightening that I couldn't resist rolling up my sleeves to get hands-on with this revolutionary technology, albeit a little.
 
 Further, a specific focus for me has been the use of eBPF for monitoring TCP retransmissions, which can occur when a TCP segment goes unacknowledged by its receiver within a designated time frame. My interest in TCP retransmissions stems from a challenging experience troubleshooting intermittent connectivity issues with an APM agent in a customer's production environment, in a previous role. Had eBPF been in my toolkit back then, that painful issue would have been far easier to diagnose and resolve.
 
 This blog aims to chronicle my exploration of eBPF and Go and is targeted at anyone interested in learning eBPF. We will delve into the fundamentals of monitoring network events using eBPF, Go, and Prometheus. 
 
-> **The source code is available at [https://github.com/iogbole/ebpf-network-viz](https://github.com/iogbole/ebpf-network-viz)** 
+> The source code is available at [https://github.com/iogbole/ebpf-network-viz](https://github.com/iogbole/ebpf-network-viz)
 
 
 Let's begin by defining the problem. 
@@ -39,10 +41,10 @@ Imagine working on a high-speed, low-latency product and encountering intermitte
 
 One can easily trigger TCP retransmission, by executing: 
 
-```bash
+```c
 sudo tc qdisc add dev eth0 root netem loss 10% delay 100ms
 ```
-and it will surely mess up your network performance and introduce high CPU usage. I was once crazy enough to use 50% on an EC2 instance and it booted me out of SSH connection until I restarted the node via the console.  **Do not try this at home ;)** 
+and it will surely mess up your network performance and introduce high CPU usage. I was once crazy enough to use 50% on an EC2 instance and it booted me out of SSH connection until I restarted the node via the console.  **Do not try this out at home ;)** 
 
 The goal of this experiment is simple: to collect all TCP retransmissions from the kernel and push the metrics to Prometheus, so that you can slice and dice the data as well as generate alerts if the retransmission rate exceeds a threshold. 
 
@@ -50,7 +52,7 @@ The goal of this experiment is simple: to collect all TCP retransmissions from t
 
 
 ## Why eBPF? 
-eBPF is a technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. It is essentially a lightweight, sandboxed virtual machine that resides within the kernel, offering secure and verified access to kernel memory.
+eBPF is a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. It is essentially a lightweight, sandboxed virtual machine that resides within the kernel, offering secure and verified access to kernel memory.
 
 Moreso, eBPF code is typically written in a restricted subset of the `C` language and compiled into eBPF bytecode using a compiler like Clang/LLVM. This bytecode undergoes rigorous verification to ensure that it cannot intentionally or inadvertently jeopardize the integrity of the kernel. Additionally, eBPF programs are guaranteed to execute within a finite number of instructions, making them suitable for performance-sensitive use cases like observability and network security.
 
@@ -74,13 +76,13 @@ If you're a MacOS user like me, Lima is an excellent and easy way to emulate a L
 
 1. [Install Lima](https://lima-vm.io/docs/installation/) and launch it with the [ebpf-vm.yaml](https://github.com/iogbole/ebpf-network-viz/blob/main/ebpf-vm.yaml) file:
 
-    ```bash
+    ```cpp
     limactl start ebpf-vm.yaml
     limactl shell ebpf-vm
     ```
 2. If you use Visual Studio Code, you can connect to the Lima VM via SSH:
 
-    ```bash
+    ```cpp
     limactl show-ssh ebpf-vm
     ```
     Subsequently, use the SSH command to link up with the remote server from the VS Code on your host machine. Lima handles file sharing and 
@@ -88,7 +90,7 @@ If you're a MacOS user like me, Lima is an excellent and easy way to emulate a L
 
 3. After establishing the connection, clone the required repository:
 
-    ```bash
+    ```cpp
     git clone https://github.com/iogbole/ebpf-network-viz.git
     ```
 
@@ -141,7 +143,8 @@ The headers are essential for the program to function correctly. Notably, [`vmli
 
 To generate the `vmlinux.h` file, execute: 
 
-```bash
+
+```cpp
 bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
 ```
 
@@ -174,7 +177,6 @@ struct tcp_retransmit_skb_ctx {
     __u8 saddr_v6[16];
     __u8 daddr_v6[16];
 };
-
 ```
 
 ##### **Finding Data Structures for Other Tracepoints**
@@ -185,7 +187,7 @@ Understanding the data structures associated with tracepoints is a key aspect wh
    
 2. **Reading Format Files**: Within each tracepoint directory, you'll find a `format` file that describes the event structure. This will provide you with the types and names of the fields that are available for that particular tracepoint.
 
-    ```bash
+    ```cpp
     cat /sys/kernel/debug/tracing/events/tcp/tcp_retransmit_skb/format
     ```
 
@@ -212,7 +214,6 @@ struct {
 The function `tracepoint__tcp__tcp_retransmit_skb` is attached to the `tcp_retransmit_skb` tracepoint. Here, various fields are read and stored in an `event` structure.
 
 ```c
-
 SEC("tracepoint/tcp/tcp_retransmit_skb")
 int tracepoint__tcp__tcp_retransmit_skb(struct tcp_retransmit_skb_ctx *ctx) {
  // ... code logic
@@ -223,8 +224,7 @@ int tracepoint__tcp__tcp_retransmit_skb(struct tcp_retransmit_skb_ctx *ctx) {
 
 Compile the eBPF program using the script [`run_clang.sh`](https://github.com/iogbole/ebpf-network-viz/blob/main/run_clang.sh):
 
-```bash
-
+```cpp
 clang -O2 -g -target bpf -c ./ebpf/retrans.c -o ./ebpf/retrans.o -I/usr/include -I/usr/src/linux-headers-$(uname -r)/include  -D __BPF_TRACING__
 
 ```
@@ -238,13 +238,11 @@ source: [main.go](https://github.com/iogbole/ebpf-network-viz/blob/main/src/main
 The code starts by importing necessary Go packages including eBPF and Prometheus libraries.
 
 ```go
-
 import (
     "github.com/cilium/ebpf"
     "github.com/prometheus/client_golang/prometheus"
     // ... other imports
 )
-
 ```
 
 #### Loading the eBPF Program
@@ -252,7 +250,6 @@ import (
 Here, the eBPF bytecode is loaded from the `.o` object file. I opted to load the eBPF bytecode from a pre-compiled .o object file. This object file contains the bytecode of our eBPF program, which is what gets executed within the kernel. I chose this approach to maintain a clear separation of concerns: the compilation of the eBPF program is distinct from its execution. Other examples I have seen use gobpf libraries to load the C code at compile time - this approach might be easier from a CI/CD build process. 
 
 ```go
-
 func main() {
 	// Load eBPF program
 	spec, err := ebpf.LoadCollectionSpec(objFileName)
@@ -275,9 +272,7 @@ func main() {
 The program attaches to the `tcp_retransmit_skb` tracepoint using the `link.Tracepoint` function.
 
 ```go
-
 tp, err := link.Tracepoint("tcp", "tcp_retransmit_skb", prog, nil)
-
 ```
 
 #### Perf Event Buffer
@@ -285,7 +280,6 @@ tp, err := link.Tracepoint("tcp", "tcp_retransmit_skb", prog, nil)
 A perf event buffer is set up to read events from the kernel space.
 
 ```go
-
 // Set up the perf buffer to receive events
 	events, err := perf.NewReader(coll.Maps["events"], os.Getpagesize())
 	if err != nil {
@@ -315,7 +309,6 @@ To expose the metrics gathered by your eBPF program for monitoring, I decided to
 Firstly, define the events and metrics that Prometheus will scrape. In this instance: 
 
 ```go
-
 var tcpRetransmissions = promauto.NewCounterVec(prometheus.CounterOpts{
     Name: "tcp_retransmissions_total",
     Help: "Total number of TCP retransmissions",
@@ -328,7 +321,6 @@ var tcpRetransmissions = promauto.NewCounterVec(prometheus.CounterOpts{
 After defining the metrics, the next step is to expose them through an HTTP endpoint. This is done by starting an HTTP server and mapping the `/metrics` path to a Prometheus handler:
 
 ```go
-
 // Start HTTP server for Prometheus scraping
 http.Handle("/metrics", promhttp.Handler())
 go func() {
@@ -350,29 +342,28 @@ The heart of the go code lies in the event loop, which continuously polls for ne
 The loop employs the `events.Read()` method on the perf buffer to listen for new incoming events:
 
 ```go
-        // Listen for events from the perf ring buffer
-	fmt.Println("Monitoring TCP retransmissions...")
-	for {
-		select {
-		case <-sig:
-			fmt.Println("\nReceived signal, stopping...")
-			return
-		default:
-			record, err := events.Read()
-			if err != nil {
-				if perf.IsUnknownEvent(err) {
-					continue
-				}
-				panic(err)
-			}
+// Listen for events from the perf ring buffer
+fmt.Println("Monitoring TCP retransmissions...")
+for {
+    select {
+    case <-sig:
+        fmt.Println("\nReceived signal, stopping...")
+        return
+    default:
+        record, err := events.Read()
+        if err != nil {
+            if perf.IsUnknownEvent(err) {
+                continue
+            }
+            panic(err)
+        }
 
-			event := tcpRetransmitEvent{}
-			err = binary.Read(bytes.NewReader(record.RawSample), binary.LittleEndian, &event)
-			if err != nil {
-				panic(err)
-			}
+        event := tcpRetransmitEvent{}
+        err = binary.Read(bytes.NewReader(record.RawSample), binary.LittleEndian, &event)
+        if err != nil {
+            panic(err)
+        }
 ...
-
 ```
 
 Upon receiving an event, the loop processes it and updates the Prometheus `tcpRetransmissions` metric. The specifics of this processing depend on the structure and content of the events, which are designed to capture various data fields such as timestamps, process IDs, source and destination ports, and so forth.
@@ -381,10 +372,8 @@ To summarise, the event loop, in combination with the previously described Prome
 
 Next, ensure the go code works: 
 
-```bash 
-
+```cpp 
 sudo go run ./src/main.go
-
 ```
 
 This is also a good time to confirm that the Go HTTP server is up and running: 
@@ -425,8 +414,7 @@ The shell script performs several tasks to ensure Prometheus runs correctly:
 
 3. **Running Prometheus**: Finally, it runs the Prometheus container using nerdctl, mapping it to port 9090.
 
-```bash
-
+```cpp
 #!/bin/bash
 
 IP_ADDRESS=$(ip -4 addr show eth0 | grep -oP '(?&lt;=inet\s)\d+(\.\d+){3}')
@@ -437,7 +425,6 @@ sed -i "s/[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+:2112/${IP_ADDRESS}:2112/g" "$CONFIG
 echo "Updated prometheus.yml with IP address: $IP_ADDRESS"
 sleep 3
 nerdctl run --rm -p 9090:9090 -v "$PWD/prom_config:/etc/prometheus" prom/prometheus
-
 ```
 
 This script automates the process, making it easier to deploy Prometheus within your Lima VM. 
@@ -461,8 +448,7 @@ source : [create_tcp_chaos.sh](https://github.com/iogbole/ebpf-network-viz/blob/
 
 Here's the script that introduces packet loss and latency to `eth0` using `tc`.
 
-```bash
-
+```cpp
 #!/bin/bash
 
 # Define websites to send requests to.
@@ -487,7 +473,6 @@ done
 # Remove the traffic control rule.
 
 sudo tc qdisc del dev eth0 root
-
 ```
 
 Run the script, and you should be able to observe the effects on your Prometheus metrics. Remember to execute the script with appropriate permissions.
@@ -505,7 +490,6 @@ So grab a cup of coffee, sit back, and enjoy the fruit of your labour!
 <p align="center">
 <img width="1510"  src="https://user-images.githubusercontent.com/2548160/273732219-e4b7bcf0-5d4a-456a-8197-543ecbcea061.png">
 </p>
-
 
 
 # Refs

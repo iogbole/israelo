@@ -8,7 +8,7 @@ categories: [ 'Personal', 'Cloud Native', 'Product' ]
 tags: [mba, mentor, product ]
 image: https://user-images.githubusercontent.com/2548160/161992841-90c5fc97-2c8d-4268-b4f3-781c73c4ea9a.jpg
 date:  2022-02-06 15:01:35 +0300
-#excerpt: "eBPF is what JavaScript is to HTML. It is a mechanism for Linux applications to execute code in Linux kernel space..."
+#description: "eBPF is what JavaScript is to HTML. It is a mechanism for Linux applications to execute code in Linux kernel space..."
 
 ---
 

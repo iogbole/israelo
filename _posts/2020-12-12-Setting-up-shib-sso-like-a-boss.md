@@ -5,11 +5,9 @@ author: israel
 categories: [ 'Identity Management', 'Cloud Native'  ]
 tags: [sso, ldap, identity, adfs, shibboleth ]
 image: https://user-images.githubusercontent.com/2548160/178162960-63208a2b-8812-4fae-8920-8d98b09ad890.jpg
-#date:   2021-07-05 06:01:35 +0300
-#permalink: /blog/setup-shib-sso-like-a-boss.html
-#toc: true
+
 date:   2020-12-12 06:01:35 +0300
-excerpt: "Have you ever wondered how SSO work under the hood? I was battered by various complex SSO/LDAP integration issues, I decided to make it personal..."
+description: "Have you ever wondered how SSO work under the hood? I was battered by various complex SSO/LDAP integration issues, I decided to make it personal..."
 ---
 Single Sign-On (SSO) is here to stay, and SSO's importance cannot be overemphasised; but have you ever wondered how SSO work under the hood? After being battered by various complex SSO/LDAP integration issues, I decided to unravel the mystery behind the working principle of this authentication method.
 
@@ -23,7 +21,7 @@ SSO is an authentication method that enables users to securely log in to one or 
 
 There are various types of SSO authentication, such as Kerberos, Smart-card, IWA, SAML, etc.  This blog post focuses on SAML 2.0, which has three main components, as shown in the diagram below:
 
-![SSO]({{ site.baseurl }}/assets/images/sso_comp.jpg)
+![SSO]({{ site.baseurl }}//images/sso_comp.jpg)
 
 I have worked on the Service Provider side of the SSO coin for nearly all of my career; thus, I have seen my fair share of SSO integration complexities and issues.
 
@@ -41,7 +39,7 @@ This post consists mainly of my notes from this rather unusual challenge. It may
 
 The diagram below depicts the end goal of this setup guide:
  
- ![SSO]({{ site.baseurl }}/assets/images/sso_flow.png)
+ ![SSO]({{ site.baseurl }}//images/sso_flow.png)
 
 ### Hardware Requirements
 
@@ -157,21 +155,16 @@ Execute the install script.
 
 Sample response to the install prompts are:
 
->Installation Directory: _[/opt/shibboleth-idp]_
->
->Hostname: _[idp.appd.com]_
->
->SAML EntityID: _[https://idp.appd.com/idp/shibboleth]_
->
->Attribute Scope: _[appd.com]_
-
->Backchannel PKCS12 Password: _#PASSWORD-FOR-BACKCHANNEL#_
->
->Re-enter password: _#PASSWORD-FOR-BACKCHANNEL#_
->
->Cookie Encryption Key Password: _#PASSWORD-FOR-COOKIE-ENCRYPTION#_
->
->Re-enter password: _#PASSWORD-FOR-COOKIE-ENCRYPTION#_
+```c
+Installation Directory: _[/opt/shibboleth-idp]_
+Hostname: _[idp.appd.com]_
+SAML EntityID: _[https://idp.appd.com/idp/shibboleth]_
+Attribute Scope: _[appd.com]_
+Backchannel PKCS12 Password: _#PASSWORD-FOR-BACKCHANNEL#_
+Re-enter password: _#PASSWORD-FOR-BACKCHANNEL#_
+Cookie Encryption Key Password: _#PASSWORD-FOR-COOKIE-ENCRYPTION#_
+Re-enter password: _#PASSWORD-FOR-COOKIE-ENCRYPTION#_
+```
 
 ### Configure Shibboleth
 

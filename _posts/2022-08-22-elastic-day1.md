@@ -7,7 +7,7 @@ categories: [ 'Personal' ]
 tags: ['personal' ]
 image: https://user-images.githubusercontent.com/2548160/206791960-f4eb30a8-8edf-4018-9806-eddd10ed2cbd.png
 date:  2022-08-22 15:01:35 +0300
-excerpt: "Here's to the end of one journey at AppD and the beginning of another at Elastic! As I sit here reflecting on the past five years, I can't help but feel a mix of emotions. On the one hand, I am filled with gratitude for the opportunities and experiences that I had at AppDynamics. On the other hand, I am excited for the new challenges and adventures that await me at Elastic."
+description: "Here's to the end of one journey at AppD and the beginning of another at Elastic! As I sit here reflecting on the past five years, I can't help but feel a mix of emotions. On the one hand, I am filled with gratitude for the opportunities and experiences that I had at AppDynamics. On the other hand, I am excited for the new challenges and adventures that await me at Elastic."
 
 ---
 <br>

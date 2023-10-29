@@ -7,7 +7,7 @@ categories: [ 'Personal' ]
 tags: [coding, kids, STEM]
 image: https://user-images.githubusercontent.com/2548160/179279760-faecb9b2-58a4-43f0-b1bf-c61ab0bbe5ea.png
 date:   2022-07-14 15:01:35 +0300
-excerpt: "Watch my kids as they demystify the concepts of cloud computing, cyber security, cyberbullying, etc. I am a proud #GirlDad..."
+description: "Watch my kids as they demystify the concepts of cloud computing, cyber security, cyberbullying, etc. I am a proud #GirlDad..."
 
 ---
 

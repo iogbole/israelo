@@ -6,7 +6,7 @@ categories: [ 'Personal' ]
 tags: [ award, architect ]
 image: https://user-images.githubusercontent.com/2548160/110439956-061b8b80-80b0-11eb-9946-0d3a0939952d.jpg
 date:   2021-02-01 15:01:35 +0300
-excerpt: "Despite all the odds in 2020...this award means a lot to me, and I will cherish the trophy for a long time..."
+description: "Despite all the odds in 2020...this award means a lot to me, and I will cherish the trophy for a long time..."
 
 ---
 

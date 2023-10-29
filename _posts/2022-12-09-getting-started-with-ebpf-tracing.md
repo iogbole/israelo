@@ -7,7 +7,7 @@ categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes, ebpf, cpu, profiling, flamegraph ]
 image: https://user-images.githubusercontent.com/2548160/206739101-e6a6a80f-8628-4d9f-80f6-de17473e52b4.png
 date:  2022-12-09 15:01:35 +0300
-excerpt: "bpftrace to flamegraph in 3 simple commmands. eBPF allows for the creation of custom programs that can be attached to various points in the kernel, allowing for detailed and efficient monitoring and analysis of system behavior."
+description: "bpftrace to flamegraph in 3 simple commmands. eBPF allows for the creation of custom programs that can be attached to various points in the kernel, allowing for detailed and efficient monitoring and analysis of system behavior."
 
 ---
 
@@ -43,7 +43,7 @@ If you're using a multipass VM, you will need to install <a href="https://wiki.u
 
 3. Install bpftrace command-line utility and the bcc collection tools. 
    
-     ```sh
+     ```cpp
      sudo apt-get install bpfcc-tools linux-headers-$(uname -r)
 
      ```
@@ -51,7 +51,7 @@ If you're using a multipass VM, you will need to install <a href="https://wiki.u
 
 4. We need to visualise the trace with flamegraphs, so you'd need to clone this repo: 
 
-```sh
+```cpp
 
 git clone https://github.com/brendangregg/FlameGraph.git
 
@@ -63,7 +63,7 @@ Let's get started!
 
 Let's start by profiling all processes that are consuming your CPU budget.  
 
-```sh
+```cpp
 
 sudo bpftrace -e 'profile:hz:99 { @[kstack] = count(); }' > trace.data 
 
@@ -80,7 +80,7 @@ Let the above command run for while (min of 2 minutes is recommended), then stop
 
 Let's view the stack trace 
 
-```sh
+```cpp
 less trace.data
 
 Attaching 1 probe...
@@ -117,7 +117,7 @@ A flamegraph is a visualisation tool used to profile the performance of a progra
 
 We will use Brendan's flamegraph tool that was downloaded in step 4 above to convert the bpftrace file to a flamegraph. 
 
-```sh
+```cpp
 
 cd FlameGraph
 

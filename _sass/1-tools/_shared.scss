@@ -2,14 +2,24 @@
  * Shared declarations for certain elements.
  */
 
-h1, h2, h3, h4, h5, h6,
-ul, ol, dl,
-blockquote, p, address,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+dl,
+blockquote,
+p,
+address,
 hr,
 table,
-fieldset, figure,
+fieldset,
+figure,
 pre {
-  margin-bottom: $base-spacing-unit;
+  margin-bottom: 25px;
 }
 
 
@@ -17,7 +27,15 @@ pre {
  * Consistent indentation for lists.
  */
 
-ul, ol,
+ul,
+ol,
 dd {
   margin-left: $base-spacing-unit;
+}
+
+ul,
+ol {
+  li {
+    margin-bottom: 10px;
+  }
 }

@@ -6,7 +6,7 @@ categories: [ 'Personal' ]
 tags: [mum]
 image: https://user-images.githubusercontent.com/2548160/132962957-f7187af1-408f-488b-9df6-c081a091ccc4.jpeg
 date:   2021-07-15 15:01:35 +0300
-excerpt: "R.I.P Mama, though this dark brown grave-sand of yours only adds colours to my tears"
+description: "R.I.P Mama, though this dark brown grave-sand of yours only adds colours to my tears"
 ---
 
 The chill that runs down my spine, the fatigue, the pain...<br>
