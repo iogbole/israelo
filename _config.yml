@@ -101,6 +101,13 @@ defaults:
     values:
       permalink: /:basename:output_ext
 
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      permalink: "/blogs/:title/"
+
+
 include:
   - _pages
 
