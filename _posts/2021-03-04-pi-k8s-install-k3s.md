@@ -81,7 +81,7 @@ Rancher has an Ansible playbook that builds a Kubernetes cluster with K3s. Let's
       k3s_version: v1.20.4%2Bk3s1 # update this 
       ansible_user: pi # update this too 
       systemd_dir: /etc/systemd/system
-      master_ip: "{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
+      master_ip: '{{ hostvars[groups["master"][0]]["ansible_host"] | default(groups["master"][0]) }}'
       extra_server_args: ""
       extra_agent_args: ""
 
