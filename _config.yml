@@ -40,7 +40,7 @@ mailchimp__button__text: Subscribe
 #-------------------------------
 # Gallery Footer Section
 gallery:
-  gallery__title: Gallery
+  gallery__title: Certs & Highlights
   gallery__columns: 3
   gallery__images:
     - alt: "CKAD"
