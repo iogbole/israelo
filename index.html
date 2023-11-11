@@ -1,6 +1,6 @@
 ---
 layout: default
-image: '/images/01.jpg'
+image: '/images/io-bw.jpg'
 ---
 
 {% include hero.html %}
@@ -24,9 +24,9 @@ image: '/images/01.jpg'
     <br><br> <!-- Inserting new lines -->
 
     {% for post in paginator.posts %}
-      {% unless post.featured %}
-        {% include article.html %}
-      {% endunless %}
+    {% unless post.featured %}
+    {% include article.html %}
+    {% endunless %}
     {% endfor %}
     {% endif %}
   </div>
