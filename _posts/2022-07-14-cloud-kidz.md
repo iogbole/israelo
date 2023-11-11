@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "My girls know Cloud Computing, seriously!"
+title:  "My Girls Know Cloud Computing, Seriously!"
 author: israel
 featured: true
 categories: [ 'Personal' ]
@@ -29,14 +29,14 @@ Interestingly, their perspectives are slightly different on each subject. Let's 
 
 **Rochelle**  
 
- <p style="position: relative; padding: 30px 0px 57% 0px; height: 0; overflow: hidden;">
+ <p>
  <iframe src="https://www.youtube.com/embed/M0Uo9UvE3PA" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display: block; margin: 0px auto; position: absolute; top: 0; left: 0;"></iframe>
  </p>
 
 
 **Naomi** 
 
- <p style="position: relative; padding: 30px 0px 57% 0px; height: 0; overflow: hidden;">
+ <p>
  <iframe src="https://www.youtube.com/embed/zPwZnZlhcm8?start=11" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display: block; margin: 0px auto; position: absolute; top: 0; left: 0;"></iframe>
  </p>
 
@@ -44,7 +44,7 @@ Interestingly, their perspectives are slightly different on each subject. Let's 
 
 This was recorded when she was 8 years old. 
 
- <p style="position: relative; padding: 30px 0px 57% 0px; height: 0; overflow: hidden;">
+ <p>
  <iframe src="https://www.youtube.com/embed/UCgDUlSpPLo" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display: block; margin: 0px auto; position: absolute; top: 0; left: 0;"></iframe>
  </p>
 
