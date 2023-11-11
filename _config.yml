@@ -3,7 +3,7 @@
 # Site Settings
 title: israelo.io
 logo: /images/logo.png
-description: Thoughts on Observabilitity, DevOps and Product Management
+description: Holding MBA in Data Analytics and over eight years of experience in the cloud-native observability field, I have developed a profound understanding and expertise in observability product management and strategy. This platform is dedicated to sharing in-depth insights and knowledge on a range of subjects such as DevOps practices, eBPF observability, Cloud-native technologies, and various facets of life.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://israelo.io" # the base hostname & protocol for your site, e.g. http://example.com
 color_scheme: auto # You can choose three modes auto, light, and dark. By default, the auto mode is set, which means the user can choose the light or dark mode themself.
@@ -27,7 +27,8 @@ social:
 # Hero Settings
 hero:
   hero__title: Hey, I’m Israel Ogbole
-  hero__description: Welcome to israelo.io. Holding an MBA in Data Analytics and with over 7 years steeped in the cloud-native observability domain, I've become a trusted voice in observability product management and strategy. Here, you'll find a deep dive into my insights on DevOps, Raspberry Pi, Cloud-native technologies, and life in its varied hues. <br> Additionally, I chronicle the programming adventures of Naomi, my nine-year-old daughter who harbours a love for coding. Delve into my expertise on eBPF, OpenTelemetry, and ML/AIOps.
+  hero__description: With an MBA in Data Analytics and over eight years of experience in the cloud-native observability field, I have developed a profound understanding and expertise in observability product management and strategy. This platform is dedicated to sharing in-depth insights and knowledge on a range of subjects such as DevOps practices, Cloud-native technologies, and various facets of life. <br>In addition to these topics, I also share the programming journey of my daughter, Naomi, a nine-year-old with a burgeoning passion for coding. Her experiences offer a unique perspective on the early adoption of technology skills. <br>Furthermore, I delve into specialised areas of my expertise, including eBPF, OpenTelemetry, and the integration of Machine Learning with AIOps, aiming to provide a thorough and nuanced perspective on these advanced technological areas.
+
   hero__image: "/images/bw.jpg"
 
 #-------------------------------
