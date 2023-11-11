@@ -2,7 +2,7 @@
 layout: post
 title:  "Tribute to Ioannis Christoudis - A colleague & a mentee turned friend "
 author: israel
-categories: [ 'Personal' ]
+categories: [ 'personal' ]
 tags: [ tribute, mentorship, ioannis]
 image: https://user-images.githubusercontent.com/2548160/104447887-54bb1680-5594-11eb-9e21-9c3900d5d7da.png
 date:   2021-01-13 15:01:35 +0300

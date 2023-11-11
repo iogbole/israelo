@@ -27,8 +27,7 @@ social:
 # Hero Settings
 hero:
   hero__title: Hey, I’m Israel Ogbole
-  hero__description: With an MBA in Data Analytics and over eight years of experience in the cloud-native observability field, I have developed a profound understanding and expertise in observability product management and strategy. This platform is dedicated to sharing in-depth insights and knowledge on a range of subjects such as DevOps practices, Cloud-native technologies, and various facets of life. <br>In addition to these topics, I also share the programming journey of my daughter, Naomi, a nine-year-old with a burgeoning passion for coding. Her experiences offer a unique perspective on the early adoption of technology skills. <br>Furthermore, I delve into specialised areas of my expertise, including eBPF, OpenTelemetry, and the integration of Machine Learning with AIOps, aiming to provide a thorough and nuanced perspective on these advanced technological areas.
-
+  hero__description: Holding an MBA in Data Analytics and over eight years in cloud-native observability, I bring rich expertise in product management and strategy in this field. <br><br> This platform explores subjects from DevOps to Cloud-native technologies, interweaving the diverse hues of life.  <br><br> I also chronicle my daughter Naomi's coding journey, a nine-year-old with a growing passion for programming.  <br><br>My focus extends to specialised areas like eBPF, OpenTelemetry, and the fusion of Machine Learning with AIOps, offering a multifaceted perspective on these advanced technologies.
   hero__image: "/images/bw.jpg"
 
 #-------------------------------

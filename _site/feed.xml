@@ -1,0 +1,1302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>israelo.io</title>
+        <description>Holding MBA in Data Analytics and over eight years of experience in the cloud-native observability field, I have developed a profound understanding and expertise in observability product management and strategy. This platform is dedicated to sharing in-depth insights and knowledge on a range of subjects such as DevOps practices, eBPF observability, Cloud-native technologies, and various facets of life.</description>
+        <link>http://localhost:4000/</link>
+        <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+        <pubDate>Sat, 11 Nov 2023 23:35:29 +0000</pubDate>
+        <lastBuildDate>Sat, 11 Nov 2023 23:35:29 +0000</lastBuildDate>
+        <generator>Jekyll v4.3.2</generator>
+        
+            <item>
+                <title>Getting Started with eBPF: Monitoring TCP Retransmissions Using eBPF, Go and Prometheus</title>
+                <description>&lt;p&gt;As a Product Manager in tech, I strongly believe it is essential to understand the technology that underpins the products I manage. This knowledge not only allows me to keep pace with the evolving industry trends but also enriches my interactions with both customers and my engineering counterparts.&lt;/p&gt;
+
+&lt;p&gt;Recently, I’ve been working on a product that uses Extended Berkeley Packet Filter (eBPF). eBPF is a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. Intrigued to learn more, I got a copy of Liz Rice’s book, &lt;a href=&quot;https://isovalent.com/books/learning-ebpf/&quot;&gt;“Learning eBPF”&lt;/a&gt;. The book is so enlightening that I couldn’t resist rolling up my sleeves to get hands-on with this revolutionary technology, albeit a little.&lt;/p&gt;
+
+&lt;p&gt;Further, a specific focus for me has been the use of eBPF for monitoring TCP retransmissions, which can occur when a TCP segment goes unacknowledged by its receiver within a designated time frame. My interest in TCP retransmissions stems from a challenging experience troubleshooting intermittent connectivity issues with an APM agent in a customer’s production environment, in a previous role. Had eBPF been in my toolkit back then, that painful issue would have been far easier to diagnose and resolve.&lt;/p&gt;
+
+&lt;p&gt;This blog aims to chronicle my exploration of eBPF and Go and is targeted at anyone interested in learning eBPF. We will delve into the fundamentals of monitoring network events using eBPF, Go, and Prometheus.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The source code is available at &lt;a href=&quot;https://github.com/iogbole/ebpf-network-viz&quot;&gt;https://github.com/iogbole/ebpf-network-viz&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Let’s begin by defining the problem.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-ghost-in-the-network-tcp-retransmissions&quot;&gt;The Ghost in the Network: TCP Retransmissions&lt;/h2&gt;
+
+&lt;p&gt;TCP retransmissions aren’t inherently bad; they’re a fundamental part of how TCP/IP networks function. However, when they occur frequently, they can signify network issues that lead to poor application performance. A high number of retransmissions can cause:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Increased Latency&lt;/strong&gt;: Packets have to be sent again, which takes extra time.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Higher CPU Usage&lt;/strong&gt;: Both sending and receiving systems have to do additional work to handle the retransmissions.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Bandwidth Inefficiency&lt;/strong&gt;: Retransmissions consume bandwidth that could be better used by new data.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;User Experience Degradation&lt;/strong&gt;: All the above contribute to a laggy or suboptimal user experience.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img width=&quot;600&quot; alt=&quot;tcp retransmission&quot; src=&quot;https://github-production-user-asset-6210df.s3.amazonaws.com/2548160/273732239-ec8dd025-ea85-4e7f-9ef3-0063ff75f1e0.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Imagine working on a high-speed, low-latency product and encountering intermittent slowdowns in data transmission. This situation can be tricky to diagnose and could bring your product to its knees. When I faced this issue, I took it upon myself to delve deep and understand what was happening under the hood. &lt;strong&gt;Wireshark led me to the root cause: excessive TCP retransmissions&lt;/strong&gt; due to a faulty firewall policy.&lt;/p&gt;
+
+&lt;p&gt;One can easily trigger TCP retransmission, by executing:&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tc&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qdisc&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dev&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eth0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;netem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ms&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;and it will surely mess up your network performance and introduce high CPU usage. I was once crazy enough to use 50% on an EC2 instance and it booted me out of SSH connection until I restarted the node via the console.  &lt;strong&gt;Do not try this out at home ;)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The goal of this experiment is simple: to collect all TCP retransmissions from the kernel and push the metrics to Prometheus, so that you can slice and dice the data as well as generate alerts if the retransmission rate exceeds a threshold.&lt;/p&gt;
+
+&lt;p&gt;&lt;img width=&quot;1510&quot; alt=&quot;prom&quot; src=&quot;https://user-images.githubusercontent.com/2548160/274725653-9b2ac550-01cc-4015-befb-9539a9b38d03.gif&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;why-ebpf&quot;&gt;Why eBPF?&lt;/h2&gt;
+&lt;p&gt;eBPF is a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. It is essentially a lightweight, sandboxed virtual machine that resides within the kernel, offering secure and verified access to kernel memory.&lt;/p&gt;
+
+&lt;p&gt;Moreso, eBPF code is typically written in a restricted subset of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C&lt;/code&gt; language and compiled into eBPF bytecode using a compiler like Clang/LLVM. This bytecode undergoes rigorous verification to ensure that it cannot intentionally or inadvertently jeopardize the integrity of the kernel. Additionally, eBPF programs are guaranteed to execute within a finite number of instructions, making them suitable for performance-sensitive use cases like observability and network security.&lt;/p&gt;
+
+&lt;p&gt;Here are some of the key benefits of using eBPF:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Safety and security&lt;/strong&gt;: eBPF programs are sandboxed and verified, which means that they cannot harm the kernel or the system as a whole.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: eBPF programs are extremely efficient and can be used to implement complex functionality without impacting system performance.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Flexibility&lt;/strong&gt;: eBPF can be used to implement a wide range of functionality, including network monitoring, asset discovery, security, profiling, performance tracing, and more.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Functionally, eBPF allows you to run this restricted C code in response to various events, such as timers, network events, or function calls within both the kernel and user space. These event hooks are often referred to as ‘probes’—&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kprobes&lt;/code&gt; for kernel function calls, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uprobes&lt;/code&gt; for user-space function calls, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tracepoints&lt;/code&gt; for pre-defined hooks in the Linux kernel.&lt;/p&gt;
+
+&lt;p&gt;In the context of this blog post, we’ll be focusing on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tracepoints&lt;/code&gt;, specifically leveraging the &lt;code&gt;&lt;em&gt;tcp_retransmit_skb&lt;/em&gt;&lt;/code&gt;  tracepoint for monitoring TCP retransmissions.&lt;/p&gt;
+
+&lt;p&gt;If you are completely new to eBPF, I recommend checking out the resources in the reference section below, starting with &lt;a href=&quot;https://ebpf.io/what-is-ebpf/&quot;&gt;What is eBPF&lt;/a&gt;?&lt;/p&gt;
+
+&lt;h2 id=&quot;preparation-and-environment-setup&quot;&gt;Preparation and Environment Setup&lt;/h2&gt;
+&lt;p&gt;Before we begin, it’s important to have your development environment properly configured. While this blog isn’t an exhaustive tutorial, I’ll outline the key prerequisites briefly.&lt;/p&gt;
+
+&lt;h3 id=&quot;using-lima-on-macos&quot;&gt;&lt;strong&gt;Using Lima on MacOS&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;If you’re a MacOS user like me, Lima is an excellent and easy way to emulate a Linux VM. To kick things off with Lima, follow these steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://lima-vm.io/docs/installation/&quot;&gt;Install Lima&lt;/a&gt; and launch it with the &lt;a href=&quot;https://github.com/iogbole/ebpf-network-viz/blob/main/ebpf-vm.yaml&quot;&gt;ebpf-vm.yaml&lt;/a&gt; file:&lt;/p&gt;
+
+    &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;n&quot;&gt;limactl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebpf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;yaml&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;limactl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shell&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebpf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vm&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;If you use Visual Studio Code, you can connect to the Lima VM via SSH:&lt;/p&gt;
+
+    &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;n&quot;&gt;limactl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ssh&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebpf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vm&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;Subsequently, use the SSH command to link up with the remote server from the VS Code on your host machine. Lima handles file sharing and 
+ port forwaring automatically.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;After establishing the connection, clone the required repository:&lt;/p&gt;
+
+    &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//github.com/iogbole/ebpf-network-viz.git&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;manual-setup-on-linux&quot;&gt;&lt;strong&gt;Manual Setup on Linux&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;If you’re opting for a manual setup on Linux, refer to the script section in the &lt;a href=&quot;https://github.com/iogbole/ebpf-network-viz/blob/main/ebpf-vm.yaml#L18&quot;&gt;ebpf-vm.yaml&lt;/a&gt; file.&lt;/p&gt;
+
+&lt;p&gt;With your environment now primed, you’re all set to delve into the fascinating world of eBPF!&lt;/p&gt;
+
+&lt;h2 id=&quot;the-solution&quot;&gt;The Solution&lt;/h2&gt;
+
+&lt;p&gt;The diagram below depicts the solution.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img width=&quot;1510&quot; alt=&quot;the solution&quot; src=&quot;https://user-images.githubusercontent.com/2548160/274510771-99bb4583-c7be-4e3e-83fc-283ea99d0195.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&quot;overview-of-the-components&quot;&gt;Overview of the Components&lt;/h3&gt;
+
+&lt;p&gt;This is how the code works at a very high level:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Bytecode Loaded by Go&lt;/strong&gt;: The eBPF bytecode is loaded into the kernel using a Go program, which makes use of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;github.com/cilium/ebpf&lt;/code&gt; package.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;eBPF Code Hooks to Tracepoints&lt;/strong&gt;: The eBPF program uses the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tracepoint/tcp/tcp_retransmit_skb&lt;/code&gt; to monitor TCP retransmissions. This allows the code to trigger whenever a TCP packet is retransmitted.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Collect Retransmission Events&lt;/strong&gt;: The data relating to the retransmitted packets—such as IP addresses, ports, and the protocol family are collected in a structured manner.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Use of eBPF Maps&lt;/strong&gt;: eBPF maps are used to communicate between the eBPF code running in the kernel and the Go application running in user space.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Perf Buffer&lt;/strong&gt;: A perf event buffer is used to read the events generated by the eBPF code.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Exposed to HTTP&lt;/strong&gt;: The Go application exposes the metrics over HTTP on port 2112.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Prometheus Scrapes Metrics&lt;/strong&gt;: Finally, Prometheus is configured to scrape these exposed metrics for monitoring or alerting purposes.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;anatomy-of-the-ebpf-c-code&quot;&gt;Anatomy of the eBPF C Code&lt;/h3&gt;
+&lt;p&gt;source: &lt;a href=&quot;https://github.com/iogbole/ebpf-network-viz/blob/main/src/ebpf/retrans.c&quot;&gt;retrans.c&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;bpf-co-re&quot;&gt;BPF CO-RE&lt;/h4&gt;
+
+&lt;p&gt;The headers are essential for the program to function correctly. Notably, &lt;a href=&quot;https://github.com/iogbole/ebpf-network-viz/blob/main/src/ebpf/vmlinux.h&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmlinux.h&lt;/code&gt;&lt;/a&gt; is a header generated by BPF CO-RE. BPF CO-RE (Compile Once, Run Everywhere) enhances the portability of eBPF programs across different kernel versions. It resolves as much as possible at compile time, using placeholders for kernel-specific information that can only be determined at runtime. When the program is loaded into the kernel, these placeholders are populated with actual values. This flexibility eliminates the need for recompilation when deploying on different kernel versions. Through BPF CO-RE, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmlinux.h&lt;/code&gt; header is generated to represent kernel structures, making it easier to write eBPF programs that are not tightly bound to specific kernels.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&quot;vmlinux.h&quot;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;bpf/bpf_helpers.h&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;bpf/bpf_endian.h&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#include&lt;/span&gt; &lt;span class=&quot;cpf&quot;&gt;&amp;lt;bpf/bpf_tracing.h&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To generate the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmlinux.h&lt;/code&gt; file, execute:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;bpftool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;btf&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dump&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;btf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vmlinux&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;format&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vmlinux&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;data-structures&quot;&gt;Data Structures&lt;/h4&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;event&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tcp_retransmit_skb_ctx&lt;/code&gt; structures are defined to hold the information related to TCP retransmissions. The structures collect various fields such as timestamps, process IDs, source and destination ports, and more.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u64&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timestamp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u32&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u16&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;saddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;daddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;saddr_v6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;daddr_v6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u16&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;family&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Struct to receive context from tracepoint&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tcp_retransmit_skb_ctx&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u64&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_pad0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;skbaddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;skaddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u16&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u16&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u16&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;family&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;saddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;daddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;saddr_v6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__u8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;daddr_v6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;finding-data-structures-for-other-tracepoints&quot;&gt;&lt;strong&gt;Finding Data Structures for Other Tracepoints&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;Understanding the data structures associated with tracepoints is a key aspect when you’re diving into eBPF programs for monitoring or debugging. While I focused on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tcp_retransmit_skb&lt;/code&gt; tracepoint in this blog, you may wish to explore other tracepoints. Here’s how you can discover the necessary data structures for those:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Locate Tracepoint Definitions&lt;/strong&gt;: Typically, tracepoints are defined within the Linux Kernel source code. The definitions can usually be found under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/sys/kernel/debug/tracing/events/&lt;/code&gt; directory on a Linux system with the tracing subsystem enabled. Navigate through the folders to find the tracepoint of interest.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Reading Format Files&lt;/strong&gt;: Within each tracepoint directory, you’ll find a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;format&lt;/code&gt; file that describes the event structure. This will provide you with the types and names of the fields that are available for that particular tracepoint.&lt;/p&gt;
+
+    &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;n&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tracing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;events&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tcp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tcp_retransmit_skb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;This will display the format for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tcp_retransmit_skb&lt;/code&gt; tracepoint as an example.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;By familiarising yourself with the format files and possibly the kernel source code, you can create or adapt eBPF programs to tap into a wide range of system events, not just TCP retransmissions.&lt;/p&gt;
+
+&lt;h4 id=&quot;bpf-maps&quot;&gt;BPF Maps&lt;/h4&gt;
+
+&lt;p&gt;The BPF map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;events&lt;/code&gt; is defined as a perf event array. This map serves as a communication channel between user space (Go program) and kernel space (eBPF program).&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__uint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BPF_MAP_TYPE_PERF_EVENT_ARRAY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__uint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__u32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;__uint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__u32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;events&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SEC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.maps&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;tracepoint-function&quot;&gt;Tracepoint Function&lt;/h4&gt;
+
+&lt;p&gt;The function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tracepoint__tcp__tcp_retransmit_skb&lt;/code&gt; is attached to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tcp_retransmit_skb&lt;/code&gt; tracepoint. Here, various fields are read and stored in an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;event&lt;/code&gt; structure.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;SEC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tracepoint/tcp/tcp_retransmit_skb&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;tracepoint__tcp__tcp_retransmit_skb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tcp_retransmit_skb_ctx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// ... code logic&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;compiling-the-ebpf-code&quot;&gt;Compiling the eBPF Code&lt;/h4&gt;
+
+&lt;p&gt;Compile the eBPF program using the script &lt;a href=&quot;https://github.com/iogbole/ebpf-network-viz/blob/main/run_clang.sh&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;run_clang.sh&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;clang&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;O2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bpf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ebpf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;retrans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ebpf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;retrans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;I&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;usr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;I&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;usr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;linux&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uname&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__BPF_TRACING__&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;the-go-program&quot;&gt;The Go Program&lt;/h3&gt;
+
+&lt;p&gt;source: &lt;a href=&quot;https://github.com/iogbole/ebpf-network-viz/blob/main/src/main.go&quot;&gt;main.go&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;import-packages&quot;&gt;Import Packages&lt;/h4&gt;
+
+&lt;p&gt;The code starts by importing necessary Go packages including eBPF and Prometheus libraries.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;github.com/cilium/ebpf&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;github.com/prometheus/client_golang/prometheus&quot;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;// ... other imports&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;loading-the-ebpf-program&quot;&gt;Loading the eBPF Program&lt;/h4&gt;
+
+&lt;p&gt;Here, the eBPF bytecode is loaded from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.o&lt;/code&gt; object file. I opted to load the eBPF bytecode from a pre-compiled .o object file. This object file contains the bytecode of our eBPF program, which is what gets executed within the kernel. I chose this approach to maintain a clear separation of concerns: the compilation of the eBPF program is distinct from its execution. Other examples I have seen use gobpf libraries to load the C code at compile time - this approach might be easier from a CI/CD build process.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;// Load eBPF program&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebpf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LoadCollectionSpec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objFileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nb&quot;&gt;panic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebpf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewCollectionWithOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebpf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CollectionOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;Programs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebpf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ProgramOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;c&quot;&gt;//Verbose to catch eBPF verifier issues&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;LogLevel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;LogSize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;m&quot;&gt;65535&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;....&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;attach-to-tracepoint&quot;&gt;Attach to Tracepoint&lt;/h4&gt;
+
+&lt;p&gt;The program attaches to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tcp_retransmit_skb&lt;/code&gt; tracepoint using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;link.Tracepoint&lt;/code&gt; function.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;tp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;link&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tracepoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tcp&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;tcp_retransmit_skb&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;perf-event-buffer&quot;&gt;Perf Event Buffer&lt;/h4&gt;
+
+&lt;p&gt;A perf event buffer is set up to read events from the kernel space.&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;// Set up the perf buffer to receive events&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;events&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;perf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Maps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;events&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Getpagesize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nb&quot;&gt;panic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;defer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;events&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The Perf Event Buffer plays an essential part in bridging the gap between user-space and kernel-space communication. This buffer is a data structure that’s set up to read events directly from the kernel. Essentially, it acts as a queuing mechanism, holding data that your eBPF program collects from various probes until your user-space application is ready to process it.&lt;/p&gt;
+
+&lt;p&gt;Here’s how it generally works:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Your eBPF program attaches to specific kernel functions or tracepoints and collects data, such as packet information in the case of networking or syscall information for system-level observability.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;This data is then pushed to the Perf Event Buffer.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Your user-space application, written in Go, in this case, then reads from this buffer to retrieve the data for further analysis or action.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The &lt;strong&gt;&lt;a href=&quot;https://www.kernel.org/doc/html/next/bpf/ringbuf.html&quot;&gt;BPF ring buffer&lt;/a&gt;&lt;/strong&gt; is a more modern alternative to Perf Event buffers, suitable for newer Kernel version&lt;/p&gt;
+
+&lt;h3 id=&quot;exposing-metrics-to-prometheus&quot;&gt;Exposing Metrics to Prometheus&lt;/h3&gt;
+
+&lt;p&gt;To expose the metrics gathered by your eBPF program for monitoring, I decided to use Prometheus in the setup. Here’s what I did:&lt;/p&gt;
+
+&lt;h4 id=&quot;prometheus-metrics-definition&quot;&gt;Prometheus Metrics Definition&lt;/h4&gt;
+
+&lt;p&gt;Firstly, define the events and metrics that Prometheus will scrape. In this instance:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tcpRetransmissions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;promauto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewCounterVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prometheus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CounterOpts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;tcp_retransmissions_total&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Total number of TCP retransmissions&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ip_version&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;src_ip&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;src_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;dst_ip&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;dst_port&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;starting-the-http-server&quot;&gt;Starting the HTTP Server&lt;/h4&gt;
+
+&lt;p&gt;After defining the metrics, the next step is to expose them through an HTTP endpoint. This is done by starting an HTTP server and mapping the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/metrics&lt;/code&gt; path to a Prometheus handler:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;// Start HTTP server for Prometheus scraping&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Handle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/metrics&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;promhttp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;go&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ListenAndServe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;:2112&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;panic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}()&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In this example, the HTTP server listens on port 2112, and Prometheus is configured to scrape metrics from this endpoint. When Prometheus accesses the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/metrics&lt;/code&gt; path, it invokes the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;promhttp.Handler()&lt;/code&gt;, which in turn retrieves the metric data stored in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tcpRetransmissions&lt;/code&gt;. This makes the data available for Prometheus to collect.&lt;/p&gt;
+
+&lt;p&gt;By combining these two components, you create a seamless pipeline that collects, exposes, and monitors TCP retransmission metrics in near real-time.&lt;/p&gt;
+
+&lt;h4 id=&quot;the-event-loop-and-metrics-update&quot;&gt;The Event Loop and Metrics Update&lt;/h4&gt;
+
+&lt;p&gt;The heart of the go code lies in the event loop, which continuously polls for new events from the perf event buffer. Each incoming event is processed and the relevant Prometheus metrics are updated accordingly.&lt;/p&gt;
+
+&lt;p&gt;The loop employs the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;events.Read()&lt;/code&gt; method on the perf buffer to listen for new incoming events:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;// Listen for events from the perf ring buffer&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Monitoring TCP retransmissions...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Received signal, stopping...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;events&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;perf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsUnknownEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;nb&quot;&gt;panic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tcpRetransmitEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;binary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;record&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RawSample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;binary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LittleEndian&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nb&quot;&gt;panic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Upon receiving an event, the loop processes it and updates the Prometheus &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tcpRetransmissions&lt;/code&gt; metric. The specifics of this processing depend on the structure and content of the events, which are designed to capture various data fields such as timestamps, process IDs, source and destination ports, and so forth.&lt;/p&gt;
+
+&lt;p&gt;To summarise, the event loop, in combination with the previously described Prometheus setup, allows the system to efficiently collect, process, and expose metrics for TCP retransmissions in a manner that is  consistent with other monitoring and observability tools.&lt;/p&gt;
+
+&lt;p&gt;Next, ensure the go code works:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;go&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;run&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;go&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is also a good time to confirm that the Go HTTP server is up and running:&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;
+&lt;img width=&quot;1510&quot; alt=&quot;go http server&quot; src=&quot;https://user-images.githubusercontent.com/2548160/273732043-9f3ba1d3-1059-4bba-8ac5-715ecf73e817.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&quot;setting-up-prometheus-in-the-lima-vm-using-nerdctl&quot;&gt;Setting Up Prometheus in the Lima VM using nerdctl&lt;/h3&gt;
+
+&lt;p&gt;Since the development environment is within a Lima VM, it’s advantageous to leverage &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nerdctl&lt;/code&gt; for container management. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nerdctl&lt;/code&gt; is a Docker-compatible CLI tool for containers, which is already bundled with Lima. Here’s how to set up Prometheus using a custom configuration and a shell script for automation.&lt;/p&gt;
+
+&lt;h4 id=&quot;prometheus-configuration-prometheusyml&quot;&gt;Prometheus Configuration: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;prometheus.yml&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;source: &lt;a href=&quot;https://github.com/iogbole/ebpf-network-viz/blob/main/prom_config/prometheus.yml&quot;&gt;prometheus.yml&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;prometheus.yml&lt;/code&gt; configuration specifies how often Prometheus scrapes metrics and from where. In this case, it is configured to scrape the metrics exposed by the Go application running on port 2112.&lt;/p&gt;
+
+&lt;p&gt;Here’s the content of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;prometheus.yml&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;global&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;scrape_interval&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;15s&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;scrape_configs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;job_name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;TCPRetrans&apos;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;static_configs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;targets&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;127.0.0.1:2112&apos;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;shell-script-for-automated-setup&quot;&gt;Shell Script for Automated Setup&lt;/h4&gt;
+
+&lt;p&gt;The shell script performs several tasks to ensure Prometheus runs correctly:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Getting the IP Address&lt;/strong&gt;: The script first retrieves the IP address of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eth0&lt;/code&gt; on the host machine.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Updating Configuration&lt;/strong&gt;: It then replaces the IP address in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;prometheus.yml&lt;/code&gt; configuration file to point to the correct address where the Go application is exposing metrics.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Running Prometheus&lt;/strong&gt;: Finally, it runs the Prometheus container using nerdctl, mapping it to port 9090.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#!/bin/bash
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;IP_ADDRESS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ip&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;addr&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;show&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eth0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;oP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inet&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;# Replace the IP address in the prometheus.yml file.
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CONFIG_FILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;prom_config/prometheus.yml&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;s/[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+:2112/${IP_ADDRESS}:2112/g&quot;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$CONFIG_FILE&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Updated prometheus.yml with IP address: $IP_ADDRESS&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;nerdctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;run&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9090&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9090&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$PWD/prom_config:/etc/prometheus&quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prometheus&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This script automates the process, making it easier to deploy Prometheus within your Lima VM.&lt;/p&gt;
+
+&lt;p&gt;Since Lima also does automatic port forwarding, you should be able to access Prometheus on your host machine at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;localhost:9090&lt;/code&gt; and the metrics exposed by the Go application at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;localhost:2112/metrics&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Check and ensure that the job_name is registered.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img width=&quot;1510&quot; alt=&quot;prom_config&quot; src=&quot;https://user-images.githubusercontent.com/2548160/273732084-60e7b5fa-d165-4740-ac64-10acc8636c62.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;create-tcp-chaos-testing-it-all-out&quot;&gt;Create TCP Chaos: Testing It All Out&lt;/h2&gt;
+
+&lt;p&gt;To put the eBPF program and Prometheus monitoring into action, you need to introduce network issues in the VM. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tc&lt;/code&gt; (traffic control) command in Linux allows you to simulate network issues for testing purposes. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;create_tcp_chaos.sh&lt;/code&gt; shell script below automates this process, first creating the chaos and then removing it after the test.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-create_tcp_chaossh-shell-script&quot;&gt;The create_tcp_chaos.sh Shell Script&lt;/h3&gt;
+
+&lt;p&gt;source : &lt;a href=&quot;https://github.com/iogbole/ebpf-network-viz/blob/main/create_tcp_chaos.sh&quot;&gt;create_tcp_chaos.sh&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Here’s the script that introduces packet loss and latency to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eth0&lt;/code&gt; using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tc&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#!/bin/bash
+&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;# Define websites to send requests to.
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;websites&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://example.com&quot;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;https://www.google.com&quot;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;https://www.wikipedia.org&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;# Set the number of iterations for the loop.
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loop_count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;# Introduce network latency and packet loss using tc.
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tc&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qdisc&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dev&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eth0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;netem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt; &lt;span class=&quot;mx&quot;&gt;100ms&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;# Loop to send requests to the websites.
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop_count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;site&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;${websites[@]}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Sending request to $site (iteration $i)&quot;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;curl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sS&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$site&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;null&lt;/span&gt;  &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;silent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;showing&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;errors&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;they&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;occur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Wait&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;second&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;wget&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$site&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;null&lt;/span&gt;  &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redirects&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stdout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;we&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;don&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;want&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;save&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;done&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;done&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;# Remove the traffic control rule.
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tc&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qdisc&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;del&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dev&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eth0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Run the script, and you should be able to observe the effects on your Prometheus metrics. Remember to execute the script with appropriate permissions.&lt;/p&gt;
+
+&lt;h2 id=&quot;grab-a-coffee-reap-the-rewards&quot;&gt;Grab a coffee: Reap the Rewards&lt;/h2&gt;
+
+&lt;p&gt;Head over to your Prometheus interface and type tcp_retransmissions_total into the query bar. Switch to the graph view and marvel at the results of your hard work.&lt;/p&gt;
+
+&lt;p&gt;You’re now in a position to set up alerts for TCP retransmissions. A common benchmark to consider is that a retransmission rate of 2% or greater generally indicates network issues that warrant attention.&lt;/p&gt;
+
+&lt;p&gt;So grab a cup of coffee, sit back, and enjoy the fruit of your labour!&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img width=&quot;1510&quot; src=&quot;https://user-images.githubusercontent.com/2548160/273732219-e4b7bcf0-5d4a-456a-8197-543ecbcea061.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h1 id=&quot;refs&quot;&gt;Refs&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.man7.org/linux/man-pages/man2/bpf.2.html&quot;&gt;Must read - Linux Man Page&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/iovisor/bcc/blob/master/tools/tcpretrans_example.txt&quot;&gt;TCP retrans fields&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://facebookmicrosites.github.io/bpf/blog/2020/02/19/bpf-portability-and-co-re.html&quot;&gt;BPF CORE&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.brendangregg.com/blog/2018-03-22/tcp-tracepoints.html&quot;&gt;TCP tracepoints&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://ebpf.io/applications/&quot;&gt;eBPF applications&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                <pubDate>Thu, 12 Oct 2023 07:01:35 +0100</pubDate>
+                <link>http://localhost:4000/blog/ebpf-net-viz/</link>
+                <guid isPermaLink="true">http://localhost:4000/blog/ebpf-net-viz/</guid>
+                
+                <category>ebpf</category>
+                
+                <category>observability</category>
+                
+                
+                <category>Cloud Native</category>
+                
+            </item>
+        
+            <item>
+                <title> The Importance of Passion in Product Management: A Non-Textbook Lesson</title>
+                <description>&lt;p&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;passion-breaks-inertia&quot;&gt;Passion breaks inertia!&lt;/h1&gt;
+
+&lt;p&gt;As a product manager, you’re responsible for overseeing the development and success of your product. It’s a challenging role that requires a broad range of skills and expertise. While there are many lessons that you’ll learn in the course of your career, one of the most valuable non-textbook lessons is the importance of having a strong passion for your product.&lt;/p&gt;
+
+&lt;p&gt;Passion is what keeps you going, even when things get tough. It helps you to stay focused on your product’s narrative and to keep refining it until it resonates with your target audience. A great example of this philosophy in action is the Amazon PR/FAQ framework, which encourages product managers to write a press release and a set of frequently asked questions about their product before it’s even built. This exercise forces you to think about your product’s value proposition, its key features, and how it will solve your customers’ problems.&lt;/p&gt;
+
+&lt;p&gt;Another important aspect of having a passion for your product is the ability to communicate it effectively to others. As a product manager, you’ll need to pitch your product to a wide range of stakeholders, including executives, investors, and customers. The key is to tell your product’s story in a compelling way that resonates with your audience.&lt;/p&gt;
+
+&lt;p&gt;But passion alone isn’t enough. You also need to be open to feedback, particularly negative feedback from customers. This feedback is invaluable in helping you to identify and address any issues with your product, so you can continue to improve it. As Nick Bogaty once said, “A complaining customer is a customer that cares…they are less likely to churn…”. So, embrace negative feedback and use it to make your product even better.&lt;/p&gt;
+
+&lt;p&gt;In conclusion, having a strong passion for your product is one of the most important things you can do as a product manager. It helps you to stay focused, communicate effectively, and make your product better. So, get into the trenches, get ship done, and passionately tell your product’s story.&lt;/p&gt;
+
+&lt;p&gt;Passion breaks inertia!&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;⚠ DISCLAIMER&lt;/strong&gt;
+Opinions expressed are solely my own and do not express the views or opinions of my employer.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+</description>
+                <pubDate>Sun, 05 Mar 2023 12:01:35 +0000</pubDate>
+                <link>http://localhost:4000/blog/product-passion/</link>
+                <guid isPermaLink="true">http://localhost:4000/blog/product-passion/</guid>
+                
+                <category>product-led</category>
+                
+                <category>containers</category>
+                
+                <category>devops</category>
+                
+                <category>product</category>
+                
+                
+                <category>Reading</category>
+                
+                <category>Book</category>
+                
+                <category>Cloud Native</category>
+                
+                <category>Product Management</category>
+                
+            </item>
+        
+            <item>
+                <title>Why Product Managers Must Champion their Products</title>
+                <description>&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;mastering-the-art-of-product-advocacy-why-product-managers-must-champion-their-products&quot;&gt;Mastering the Art of Product Advocacy: Why Product Managers Must Champion their Products&lt;/h2&gt;
+
+&lt;p&gt;As a product manager, one of the most important roles you have is to champion your product. You must be the product’s primary advocate both within your organisation and outside of it. Whether you are launching a new product or improving an existing one, your success as a product manager depends on your ability to effectively champion your product.&lt;/p&gt;
+
+&lt;p&gt;Here are some key reasons why product managers must champion their product:&lt;/p&gt;
+
+&lt;h4 id=&quot;you-must-understand-your-product&quot;&gt;You must understand your product.&lt;/h4&gt;
+
+&lt;p&gt;As the product manager, you are the one who knows your product inside and out, and this means understanding every detail about its features, design, and functionality. You understand how it works, what its strengths and weaknesses are, and what makes it unique in the market. This knowledge puts you in the best position to champion your product and communicate its value to others.&lt;/p&gt;
+
+&lt;p&gt;One of the most effective ways to understand your product is to test it just like your customers would. By putting yourself in their shoes, you can identify areas that need improvement, and ensure that your product is meeting the needs of your target audience.&lt;/p&gt;
+
+&lt;p&gt;In addition to testing the product, some product managers, including me,  take it a step further by reviewing pull requests. This allows them to see exactly what changes are being made to the product, and how those changes will affect its functionality and user experience. By being involved in the development process at this level, product managers can ensure that the product is meeting the needs of the users, and that any changes made are aligned with the product’s overall vision and strategy.&lt;/p&gt;
+
+&lt;p&gt;Do all you can to understand your product, and craft your product story!&lt;/p&gt;
+
+&lt;p class=&quot;aligncenter&quot;&gt;
+&lt;img class=&quot;post-image&quot; src=&quot;https://user-images.githubusercontent.com/2548160/220751210-56466586-75ea-4068-bcb6-cba376294331.jpg&quot; alt=&quot;AMS&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h4 id=&quot;you-can-help-shape-the-products-direction&quot;&gt;You can help shape the product’s direction.&lt;/h4&gt;
+
+&lt;p&gt;As the product manager, you have significant influence over the direction of your product. By championing your product, you can help steer it in the right direction and ensure that it meets the needs of your customers. You can also help prioritise features and improvements based on customer feedback and market trends.&lt;/p&gt;
+
+&lt;p&gt;One key way to champion your product is to gather and use customer feedback. User research is essential in product development, and customer feedback is a critical component of user research. You must get diverse opinions, not just good, nice feedback. It’s easy to get caught up in the positive feedback and miss the negative comments. However, it’s important to pay attention to negative feedback and use it to make improvements.&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;A complaining customer is a customer that cares&lt;/b&gt;. If a customer takes the time to provide negative feedback, it means they care enough about your product to want it to be better. Negative feedback can be hard to hear, but it’s essential to listen to it and take it on board.&lt;/p&gt;
+
+&lt;p&gt;Customer feedback is invaluable for improving your product. It can help you identify areas where your product falls short and provide insights into what customers want and need. By using customer feedback to make improvements, you can create a product that better meets the needs of your customers.&lt;/p&gt;
+
+&lt;h4 id=&quot;you-can-rally-support-for-your-product&quot;&gt;You can rally support for your product.&lt;/h4&gt;
+
+&lt;p&gt;When you are launching a new product or making improvements to an existing one, you need to get buy-in from a variety of stakeholders. This could include executives, developers, designers, and sales teams. By championing your product, you can rally support from these stakeholders and get everyone working together to make the product a success.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-can-you-effectively-champion-your-product&quot;&gt;How can you effectively champion your product?&lt;/h2&gt;
+
+&lt;p&gt;So, how can you effectively champion your product? Here are some tips:&lt;/p&gt;
+
+&lt;p class=&quot;aligncenter&quot;&gt;
+&lt;img class=&quot;lazyimg&quot; src=&quot;https://user-images.githubusercontent.com/2548160/220751269-b8d67780-b9f5-467c-ac18-53b1ed1838ab.jpg&quot; alt=&quot;AMS&quot; width=&quot;2592&quot; height=&quot; 1252&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&quot;know-your-audience&quot;&gt;Know your audience.&lt;/h3&gt;
+&lt;p&gt;When you’re championing your product, you need to tailor your message to your audience. This means understanding what’s important to them and how your product can help them achieve their goals.&lt;/p&gt;
+
+&lt;h3 id=&quot;be-passionate&quot;&gt;Be passionate.&lt;/h3&gt;
+&lt;p&gt;If you’re not passionate about your product, it will be difficult to get others excited about it. Make sure you genuinely believe in your product and its potential to make a difference.&lt;/p&gt;
+
+&lt;h3 id=&quot;collaborate-with-others&quot;&gt;Collaborate with others.&lt;/h3&gt;
+&lt;p&gt;Championing your product is not a one-person job. You need to work collaboratively with others, including designers, developers, and sales teams, to ensure that everyone is aligned and working toward the same goals.&lt;/p&gt;
+
+&lt;h3 id=&quot;be-adaptable&quot;&gt;Be adaptable.&lt;/h3&gt;
+&lt;p&gt;To be a successful product manager, adaptability and agility are essential traits. You should be willing to pivot when necessary and try new approaches if something isn’t working. It’s important to have an open mind and listen to feedback from others, but it’s equally important to make informed decisions that consider tradeoffs rather than taking unnecessary shortcuts. Cutting corners can lead to the accumulation of technical debt, which can ultimately slow down velocity and create problems in the long run. Therefore, prioritize building a solid foundation for your product and always weigh the tradeoffs before making a decision.&lt;/p&gt;
+
+&lt;h3 id=&quot;use-data-to-support-your-claims&quot;&gt;Use data to support your claims.&lt;/h3&gt;
+&lt;p&gt;When you’re trying to convince others of the value of your product, it’s important to back up your claims with data. Use customer feedback, market research, and other data points to support your arguments.&lt;/p&gt;
+
+&lt;p class=&quot;aligncenter&quot;&gt;
+&lt;img class=&quot;lazyimg&quot; src=&quot;https://user-images.githubusercontent.com/2548160/220751333-dcc3218f-8133-4872-a787-967ee902052f.jpg&quot; alt=&quot;AMS&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;In conclusion, product managers must champion their product to be successful. By understanding the product, rallying support, shaping the product’s direction, tailoring your message, being passionate, using data, collaborating with others, and being adaptable, you can effectively champion your product and ensure its success. Remember, a complaining customer is a customer that cares, so be sure to get diverse opinions, not just good, nice feedback. Use customer feedback to make improvements, and you’ll create a product that your customers will love.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;⚠ DISCLAIMER&lt;/strong&gt;
+Opinions expressed are solely my own and do not express the views or opinions of my employer.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+</description>
+                <pubDate>Wed, 22 Feb 2023 12:01:35 +0000</pubDate>
+                <link>http://localhost:4000/blog/product-champion/</link>
+                <guid isPermaLink="true">http://localhost:4000/blog/product-champion/</guid>
+                
+                <category>product-led</category>
+                
+                <category>containers</category>
+                
+                <category>devops</category>
+                
+                <category>product</category>
+                
+                
+                <category>Reading</category>
+                
+                <category>Book</category>
+                
+                <category>Cloud Native</category>
+                
+                <category>Product Management&apos;</category>
+                
+            </item>
+        
+            <item>
+                <title>Product-Led Growth - Key takeaways</title>
+                <description>&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;product-led-growth-how-to-build-a-product-that-sells-itself&quot;&gt;Product-Led Growth: How to Build a Product That Sells Itself&lt;/h2&gt;
+
+&lt;p&gt;I read the book over the Christmas holidays, and here’s a summary of my key takeaways. Wes made the book available for free at &lt;a href=&quot; https://productled.com/book&quot;&gt;productled.com&lt;/a&gt;, but please encourage him by &lt;a href=&quot;https://www.amazon.com/Product-Led-Growth-Build-Product-Itself-ebook/dp/B07P6288ZF&quot;&gt; buying &lt;/a&gt; a copy.&lt;/p&gt;
+
+&lt;p&gt;Let’s dig in.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Product-Led Growth: How to Build a Product That Sells Itself&lt;/code&gt;  is a comprehensive guide to building and growing a successful product-led business.&lt;/p&gt;
+
+&lt;p&gt;Authored by Wes Bush, the book covers a range of topics related to product-led growth, including choosing the right growth model, designing an effective onboarding experience, building a community around your product, using data to drive product development, and learning from the successes of other companies. Through a combination of practical advice, case studies, and tools such as the MOAT framework and the Bowling Alley framework, the book provides a wealth of information and insights for anyone looking to drive growth through their product.&lt;/p&gt;
+
+&lt;h2 id=&quot;key-takeaways&quot;&gt;Key takeaways&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Product-led growth is becoming increasingly important in today’s business landscape due to the shift towards digital experiences and the increasing importance of customer experience.&lt;/li&gt;
+  &lt;li&gt;There are various approaches that companies can take to drive product-led growth, including free trials, freemium models, and demos. It’s important to choose the right approach for your business and optimize it for maximum effectiveness.&lt;/li&gt;
+  &lt;li&gt;Designing an effective onboarding experience is key to driving adoption and retention of your product. It’s important to delight and educate users during the onboarding process and gather valuable data about their experiences.&lt;/li&gt;
+  &lt;li&gt;Building a strong community around your product can help drive adoption, retention, and word-of-mouth marketing. It’s important to create and nurture a community that fosters engagement and a sense of belonging.&lt;/li&gt;
+  &lt;li&gt;Data and metrics are crucial for driving product development and growth. It’s important to track the right metrics to measure the success of your product-led growth efforts and use data to identify growth opportunities and optimize your product and marketing efforts.&lt;/li&gt;
+  &lt;li&gt;Learning from the successes of other companies can provide valuable insights for your own product-led growth efforts. It’s important to study the strategies and tactics used by successful product-led companies and apply those lessons to your own business.&lt;/li&gt;
+  &lt;li&gt;The future of product-led growth will be driven by the continued importance of customer experience and the impact of emerging technologies such as artificial intelligence and virtual reality. Companies will need to focus on creating seamless, personalized experiences to stand out in an increasingly crowded market.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;summary-by-chapter&quot;&gt;Summary by Chapter&lt;/h2&gt;
+
+&lt;p&gt;Here is a summary of each chapter of the book organised by chapter:&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-1-why-is-product-led-growth-of-rising-importance&quot;&gt;Chapter 1: Why Is Product-Led Growth of Rising Importance?&lt;/h3&gt;
+
+&lt;p&gt;In this chapter, the author discusses the reasons why product-led growth is becoming increasingly important in the business world. He points to the shift towards digital experiences and the increasing importance of customer experience as key drivers of this trend. He also discusses the benefits of product-led growth, including the ability to scale more quickly and to drive customer loyalty through a strong product offering.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-2-choose-your-weaponfree-trial-freemium-or-demo&quot;&gt;Chapter 2: Choose Your Weapon—Free Trial, Freemium, or Demo?&lt;/h3&gt;
+
+&lt;p&gt;This covers the different approaches that companies can take to drive product-led growth, including free trials, freemium models, and demos. He provides advice on how to choose the right approach for your business and how to effectively implement it. He also discusses the pros and cons of each approach and provides guidance on how to optimise them for maximum effectiveness.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-3-ocean-conditions-are-you-in-a-red--or-blue-ocean-business&quot;&gt;Chapter 3: Ocean Conditions: Are You in a Red- or Blue-Ocean Business?&lt;/h3&gt;
+
+&lt;p&gt;Wes discusses the concept of red-ocean and blue-ocean businesses and how to determine which type of business you are in. He explains that red-ocean businesses are highly competitive and focused on competing for a limited market share, while blue-ocean businesses focus on creating new markets and finding untapped opportunities. He provides guidance on how to analyse your business and determine which approach is best for you.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-4-audience-do-you-have-a-top-down-or-bottom-up-selling-strategy&quot;&gt;Chapter 4: Audience: Do You Have a Top-Down or Bottom-Up Selling Strategy?&lt;/h3&gt;
+
+&lt;p&gt;In this chapter, the author discusses the concept of top-down and bottom-up selling strategies and how to determine which approach is best for your business. He explains that top-down selling involves targeting decision makers within an organisation and convincing them to adopt your product, while bottom-up selling involves targeting individual users and convincing them to advocate for your product within their organisation. He provides guidance on how to analyse your target audience and choose the right selling strategy for your business.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-5-time-to-value-how-fast-can-you-showcase-value&quot;&gt;Chapter 5: Time-to-Value: How Fast Can You Showcase Value?&lt;/h3&gt;
+
+&lt;p&gt;The author discusses the importance of showcasing the value of your product as quickly as possible. He explains that the faster you can demonstrate the value of your product, the more likely users are to adopt it and become loyal customers. He provides strategies for optimising the time-to-value of your product and how to measure the effectiveness of your efforts.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-6-choose-your-product-led-growth-model-with-the-moat-framework&quot;&gt;Chapter 6: Choose Your Product-Led Growth Model with the MOAT Framework&lt;/h3&gt;
+
+&lt;p&gt;Wes introduces the MOAT framework, a tool for determining the best product-led growth model for your business. He explains that the MOAT framework is based on the concept of a “moat,” or a competitive advantage that protects a business from competitors. He discusses how to use the MOAT framework to identify your business’s moat and choose the right growth model based on your competitive advantage.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-7-build-a-product-led-foundation&quot;&gt;Chapter 7: Build a Product-Led Foundation&lt;/h3&gt;
+
+&lt;p&gt;This chapter covers the importance of building a solid foundation for your product-led business. He covers key considerations, such as identifying your target market, defining your value proposition, and developing a product roadmap. He also provides guidance on how to create a strong product culture and build a team that is aligned with your product-led growth goals.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-8-understand-your-value&quot;&gt;Chapter 8: Understand Your Value&lt;/h3&gt;
+
+&lt;p&gt;In this chapter, the author discusses the importance of understanding the value that your product offers to customers. He covers how to identify and quantify
+the value that your product delivers and how to communicate that value effectively to potential customers.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-9-communicate-your-value&quot;&gt;Chapter 9: Communicate Your Value&lt;/h3&gt;
+
+&lt;p&gt;In this chapter, the author discusses strategies for effectively communicating the value of your product to potential customers. He covers the importance of crafting a clear and compelling value proposition and provides guidance on how to create marketing materials that effectively convey the benefits of your product.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-10-deliver-on-your-value&quot;&gt;Chapter 10: Deliver on Your Value&lt;/h3&gt;
+
+&lt;p&gt;This chapter covers the importance of delivering on the value that you have promised to customers. He discusses how to ensure that your product meets the needs and expectations of your customers and provides strategies for continuously improving your product to maintain customer satisfaction.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-11-the-most-common-mistake-that-new-product-led-businesses-make&quot;&gt;Chapter 11: The Most Common Mistake that New Product-Led Businesses Make&lt;/h3&gt;
+
+&lt;p&gt;Wes discusses the most common mistakes that new product-led businesses make and provides guidance on how to avoid them. He covers common pitfalls such as over-promising, under-delivering, and neglecting customer feedback.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-12-develop-an-optimization-process&quot;&gt;Chapter 12: Develop an Optimization Process&lt;/h3&gt;
+
+&lt;p&gt;The author covers the importance of continuously optimising your product and marketing efforts to drive growth. He discusses how to use data and metrics to identify opportunities for optimisation and provides strategies for iterating on your product and marketing efforts.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-13-the-bowling-alley-framework&quot;&gt;Chapter 13: The Bowling Alley Framework&lt;/h3&gt;
+
+&lt;p&gt;This chapter introduces the Bowling Alley framework, a tool for analysing and optimising your product-led growth efforts. He explains how to use the Bowling Alley framework to identify and prioritize growth opportunities and provides guidance on how to implement and track progress towards your growth goals.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-14-increase-your-average-revenue-per-user-arpu&quot;&gt;Chapter 14: Increase Your Average Revenue Per User (ARPU)&lt;/h3&gt;
+
+&lt;p&gt;In this chapter, the author discusses strategies for increasing your Average Revenue Per User (ARPU) and maximizing the lifetime value of your customers. He covers techniques for upselling and cross-selling, as well as how to create a customer loyalty program to drive repeat business. He also discusses the importance of pricing strategy and provides guidance on how to determine the right pricing for your product.&lt;/p&gt;
+
+&lt;p&gt;In summary,the book is a valuable resource for anyone looking to drive growth through their product. Whether you’re a startup founder, product manager, or marketer, this book offers practical advice and real-world examples to help you create a product that sells itself.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;⚠ DISCLAIMER&lt;/strong&gt;
+Opinions expressed are solely my own and do not express the views or opinions of my employer.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+</description>
+                <pubDate>Sat, 07 Jan 2023 12:01:35 +0000</pubDate>
+                <link>http://localhost:4000/blog/product-led-growth/</link>
+                <guid isPermaLink="true">http://localhost:4000/blog/product-led-growth/</guid>
+                
+                <category>product-led</category>
+                
+                <category>plg</category>
+                
+                <category>personal</category>
+                
+                <category>product</category>
+                
+                
+                <category>Reading</category>
+                
+                <category>Book</category>
+                
+                <category>Product Management</category>
+                
+            </item>
+        
+            <item>
+                <title>How to get started with CPU Profiling using eBPF</title>
+                <description>&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;why-ebpf&quot;&gt;Why eBPF?&lt;/h2&gt;
+
+&lt;p&gt;eBPF (extended Berkeley Packet Filter) is a powerful and versatile tool for observability and monitoring in Linux systems. It allows for the creation of custom programs that can be attached to various points in the kernel, allowing for detailed and efficient monitoring and analysis of system behavior.&lt;/p&gt;
+
+&lt;p&gt;eBPF provides a number of benefits over traditional observability tools. One of the biggest advantages is its ability to operate at the kernel level, allowing for deep visibility into the inner workings of the system. This can provide valuable insights into performance and behavior that would otherwise be difficult or impossible to obtain.&lt;/p&gt;
+
+&lt;p class=&quot;aligncenter&quot;&gt;
+[Related Article: &lt;a href=&quot;https://www.israelo.io/blog/ebpf/&quot; target=&quot;_blank&quot;&gt; eBPF in plain English &lt;/a&gt; ]
+&lt;/p&gt;
+
+&lt;p&gt;Another key benefit of eBPF is its flexibility. eBPF programs can be attached to a wide range of kernel functions and events, allowing for a high degree of customisation and tailoring to specific needs. This makes eBPF an ideal tool for a wide range of applications, from simple performance monitoring to complex debugging and troubleshooting.&lt;/p&gt;
+
+&lt;p&gt;eBPF also has the advantage of being relatively lightweight and efficient. The programs are compiled into a specialized bytecode format that can be easily executed by the kernel, reducing overhead and enabling real-time monitoring and analysis. This makes eBPF a valuable tool for monitoring and optimizing systems with high performance requirements.&lt;/p&gt;
+
+&lt;p&gt;Despite these benefits, eBPF does have some limitations and challenges. One of the biggest challenges is the learning curve required to effectively use eBPF. The tool is powerful but can be complex, and requires a good understanding of kernel internals and system behavior. Additionally, eBPF programs can be difficult to debug and troubleshoot, especially for those new to the tool.&lt;/p&gt;
+
+&lt;p&gt;The objective of this blog is to give new starters a gentle hands-on introduction to eBPF tracing. These are steps that I wished I had when I got started.&lt;/p&gt;
+
+&lt;p&gt;If you’re new to eBPF tracing, here are some steps to get started with eBPF tracing.&lt;/p&gt;
+
+&lt;h2 id=&quot;system-setup&quot;&gt;System Setup&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;First, you will need a Linux OS. In my case, I used an Ubuntu &lt;a href=&quot;https://multipass.run/&quot; target=&quot;_blank&quot;&gt;Multipass&lt;/a&gt; VM on M1 MacOs. 
+If you’re using a multipass VM, you will need to install &lt;a href=&quot;https://wiki.ubuntu.com/Debug%20Symbol%20Packages&quot; target=&quot;_blank&quot;&gt;debug symbol packages&lt;/a&gt; first. Alternatively, you may use this &lt;a href=&quot;https://github.com/iovisor/bpftrace/blob/master/Vagrantfile&quot; target=&quot;_blank&quot;&gt;Vagrant file &lt;/a&gt; to spin up a VM with all the bcc tools you need.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Make sure your Linux kernel is up-to-date. eBPF was introduced in Linux kernel 3.15, so you’ll need at least version 4.1 to use the eBPF tracing commands in this post. You can check your kernel version by running the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uname -r &lt;/code&gt; command.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Install bpftrace command-line utility and the bcc collection tools.&lt;/p&gt;
+
+    &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bpfcc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tools&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;linux&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uname&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We need to visualise the trace with flamegraphs, so you’d need to clone this repo:&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//github.com/brendangregg/FlameGraph.git&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Let’s get started!&lt;/p&gt;
+
+&lt;h2 id=&quot;cpu-profiling&quot;&gt;CPU Profiling&lt;/h2&gt;
+
+&lt;p&gt;Let’s start by profiling all processes that are consuming your CPU budget.&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bpftrace&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;profile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hz&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;99&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kstack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; 
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The above command will sample all running processes 99 times per second. The on-CPU profile samples answer two fundamental questions:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Where are you - This essentially interrupts the CPU cores at 99Hz and collects the CPU’s answer for the “where are you” question.&lt;/li&gt;
+  &lt;li&gt;How did you get here - The historical information on how the CPU got to where it is super important to formulate the stack traces.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Also, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kstack&lt;/code&gt; returns the kernel stack trace. This is used as a key for the map, so that it can be frequency counted. There is also &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ustack&lt;/code&gt; for the user-level stack trace should you wish to use that instead.&lt;/p&gt;
+
+&lt;p&gt;Let the above command run for while (min of 2 minutes is recommended), then stop it by executing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CTLR + C&lt;/code&gt; .&lt;/p&gt;
+
+&lt;p&gt;Let’s view the stack trace&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;less&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Attaching&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;probe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+
+&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;truncated&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;do_page_fault&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;384&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;do_translation_fault&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;156&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;do_mem_abort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;76&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;el0_ia&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;148&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;el0t_64_sync_handler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;292&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;el0t_64_sync&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;420&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dict_repeat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;lzma2_lzma&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;424&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;xz_dec_lzma2_run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;144&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dec_block&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;444&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dec_main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;764&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;xz_dec_run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;68&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;squashfs_xz_uncompress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;212&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;squashfs_decompress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;112&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;squashfs_read_data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;212&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The output is a stack traces which consist of process details, and a single number - this represents the number of times this stack trace was sampled.&lt;/p&gt;
+
+&lt;h3 id=&quot;analyse-cpu-stack-trace-using-flamegraphs&quot;&gt;Analyse CPU stack trace using flamegraphs&lt;/h3&gt;
+
+&lt;p&gt;Next, let’s visualise the stack traces in flamegrapsh so we can easily analyse the result of our CPU profile.&lt;/p&gt;
+
+&lt;p&gt;A flamegraph is a visualisation tool used to profile the performance of a program. It shows a graphical representation of the call stack, with the width of each frame representing the amount of time the program spends in that particular function or method. Flamegraphs are commonly used to identify performance bottlenecks and hot spots in a program, as well as to optimise the program’s performance. They can be generated using a variety of tools, including performance profilers and tracing tools.&lt;/p&gt;
+
+&lt;p&gt;We will use Brendan’s flamegraph tool that was downloaded in step 4 above to convert the bpftrace file to a flamegraph.&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;n&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FlameGraph&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stackcollapse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bpftrace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;folded&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flamegraph&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inverted&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;folded&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;traceflamegraph&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;svg&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, load up the traceflamegraph.svg in your browser and analyse&lt;/p&gt;
+
+&lt;p class=&quot;aligncenter&quot;&gt;
+&lt;img class=&quot;lazyimg&quot; src=&quot;https://user-images.githubusercontent.com/2548160/206728975-dab2d420-6cbe-4039-934e-8e18239410f1.svg&quot; /&gt; 
+&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;pprof&quot;&gt;PPROF&lt;/h2&gt;
+
+&lt;p&gt;Most profiling tools uses the &lt;a href=&quot;https://github.com/google/pprof&quot; target=&quot;_blank&quot;&gt;pprof&lt;/a&gt; format it is a convenient and efficient way to store and share profiling data, and is widely used in the world of software engineering.&lt;/p&gt;
+
+&lt;p&gt;There are several other reasons to use the pprof format for profiling:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;pprof is a standardised format that is supported by many different profiling tools, so you can use the same format regardless of which tool you are using. This makes it easier to share and compare profiles generated by different tools.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;pprof is designed to be a compact, efficient format for storing profiling data. This makes it faster and easier to transfer and store large profiling datasets.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;pprof includes support for a variety of different types of profiling data, including CPU, memory, and network usage. This makes it a versatile format that can be used for a wide range of profiling tasks.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;pprof is a text-based format, which makes it easy to read and manipulate using simple command-line tools. This can be useful for quickly extracting and analyzing specific pieces of information from a profile.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;So instead of the folded file format example above, you may consider converting your profiling data into pprof format instead.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;In summary, eBPF tracing can be a powerful and versatile tool for Linux users. With a little bit of setup and the right eBPF programs, you can monitor and analyze your system in ways that were previously impossible.&lt;/p&gt;
+
+&lt;p&gt;Give it a try and see what insights you can uncover!&lt;/p&gt;
+
+&lt;h2 id=&quot;refs&quot;&gt;Refs&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;https://github.com/iovisor/bpftrace&lt;/li&gt;
+  &lt;li&gt;https://www.brendangregg.com/flamegraphs.html&lt;/li&gt;
+  &lt;li&gt;https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html&lt;/li&gt;
+  &lt;li&gt;https://wiki.ubuntu.com/Debug%20Symbol%20Packages&lt;/li&gt;
+  &lt;li&gt;https://github.com/iovisor/bpftrace/blob/master/docs/tutorial_one_liners.md#lesson-9-profile-on-cpu-kernel-stacks&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;⚠ DISCLAIMER&lt;/strong&gt;
+Opinions expressed are solely my own and do not express the views or opinions of my employer.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+</description>
+                <pubDate>Fri, 09 Dec 2022 12:01:35 +0000</pubDate>
+                <link>http://localhost:4000/blog/getting-started-with-ebpf-tracing/</link>
+                <guid isPermaLink="true">http://localhost:4000/blog/getting-started-with-ebpf-tracing/</guid>
+                
+                <category>containers</category>
+                
+                <category>devops</category>
+                
+                <category>cloud-native</category>
+                
+                <category>kubernetes</category>
+                
+                <category>ebpf</category>
+                
+                <category>cpu</category>
+                
+                <category>profiling</category>
+                
+                <category>flamegraph</category>
+                
+                
+                <category>Cloud Native</category>
+                
+            </item>
+        
+            <item>
+                <title>Day1 @ Elastic</title>
+                <description>&lt;p&gt;&lt;br /&gt;
+As I sit here reflecting on the past five years, I can’t help but feel a mix of emotions. On the one hand, I am filled with gratitude for the opportunities and experiences that I had at AppDynamics. On the other hand, I am excited for the new challenges and adventures that await me at Elastic.&lt;/p&gt;
+
+&lt;p&gt;I joined AppDynamics in 2017 from Microsoft. Little did I know at the time, the company would become a second home to me, and the people I worked with would become like family.&lt;/p&gt;
+
+&lt;p&gt;During my time at AppDynamics, I was fortunate enough to work on some truly groundbreaking projects. I was lucky enough to pioneer the work on auto-instrumenting &lt;a href=&quot;https://www.appdynamics.com/blog/product/kubernetes-windows-container-monitoring/&quot; target=&quot;_blank&quot;&gt; Windows container workloads on Kubernetes &lt;/a&gt;,and I saw first-hand the impact it had on our customers and the sweet $3.5M in ARR for that fiscal year. I also had the chance to co-create the widely adopted &lt;a hre=&quot;https://github.com/CiscoDevNet/ConfigMyApp&quot; target=&quot;_blank&quot;&gt; AppDynamics  ConfigMyApp &lt;/a&gt; tool - a Monitoring as code tool that let customers perform CRUD operations &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;as code&lt;/code&gt; from their CI/CD pipeline -  on dashboards, health rules, business transactions configurations, etc. Wow, the joy of seeing my code run in production was epic. It didn’t stop there, I led the intiative to create the first &lt;a href=&quot;https://github.com/CiscoDevNet/appdynamics-ansible&quot; target=&quot;_blank&quot;&gt; AppDynamics Ansible Collection &lt;/a&gt; that manages all agent installation and &lt;b&gt;configurations as code&lt;/b&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;i&gt; Pro Tip: view on &lt;a href=&quot;https://terminalizer.com/view/405023a64449&quot;&gt;terminalizer&lt;/a&gt; &lt;/i&gt;&lt;/p&gt;
+&lt;p class=&quot;aligncenter&quot;&gt;
+&lt;img class=&quot;lazyimg&quot; src=&quot;https://github.com/iogbole/blog.israelo/blob/dev/blog/ansible.gif?raw=true&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Then I changed roles from a hands-on Solutions Architect to an Engineering Product Manager.&lt;/p&gt;
+
+&lt;p&gt;As a Product Manager, I brought my years of experience and customer empathy that I have developed from the field to the table as I helped build AppDynamics Cloud from scratch. I used my expertise to understand the needs of our customers and build a product that met those needs and exceeded their expectations. I was the Product Manager for Cloud Monitoring (AWS, Azure &amp;amp; GCP integration and correlation with K8s services), I also Product Managed Tagging and filtering, I blogged about it &lt;a href=&quot;https://www.appdynamics.com/blog/cloud/getting-started-with-tags-in-appdynamics-cloud/&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt; when it GA’ed. I’m proud of the work that I did to help take AppDynamics Cloud from zero to GA.&lt;/p&gt;
+
+&lt;p&gt;But as the saying goes, all good things must come to an end. And after five amazing years, I have decided to move on to the next chapter of my career. I am excited to let you all know that I will be joining Elastic as a Principal Product Manager.&lt;/p&gt;
+
+&lt;p&gt;For those who may not be familiar, Elastic is a leading provider of open-source search, analytics and observability solutions. The company’s technology is used by some of the world’s biggest brands to power their applications and make data more accessible and actionable.&lt;/p&gt;
+
+&lt;p&gt;I will be working on integrating prodfiler.com - a whole-system, continuous profiling solution that is powered by eBPF, into the Elastic Observability suite, as well as find a product market fit for it.&lt;/p&gt;
+
+&lt;p&gt;As I begin this new journey, I am filled with excitement and anticipation. I am looking forward to working with the talented team at Elastic and contributing to the development of their cutting-edge technology. I am also eager to learn from my new colleagues and continue to grow.&lt;/p&gt;
+
+&lt;p&gt;In closing, I want to express my heartfelt thanks to everyone at AppDynamics who helped me along the way. I will always cherish the memories and lessons that I gained during my time there. And to my new friends and colleagues at Elastic, I can’t wait to see what the future holds for us. Here’s to the next chapter!&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;⚠ DISCLAIMER&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Opinions expressed are solely my own and do not express the views or opinions of my employer.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+</description>
+                <pubDate>Mon, 22 Aug 2022 13:01:35 +0100</pubDate>
+                <link>http://localhost:4000/blog/elastic-day1/</link>
+                <guid isPermaLink="true">http://localhost:4000/blog/elastic-day1/</guid>
+                
+                <category>personal</category>
+                
+                
+                <category>Personal</category>
+                
+            </item>
+        
+            <item>
+                <title>When I die, will you miss me?</title>
+                <description>&lt;p&gt;Lately, morbid thoughts about my own demise have occupied my mind. I’ll be honest and say it felt incredibly strange and uncomfortable at first, but as time went on, I saw a shift in my perspective, my values, and a desire to find &lt;strong&gt;meaning&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;That’s what this post is about. I won’t try to be articulate here; I am just going to write…&lt;/p&gt;
+
+&lt;p&gt;Before you label me a nutcase or say “my number 6 is not correct“ (which is a Nigerian way of saying someone has gone mad), let me fill you in a little: I recently watched my beloved mother as she took her last breath whilst reclined on my chest. I still get flashbacks ever-so-often. Also, in the last month, I travelled miles to visit the grave of a dear friend whom I lost during the COVID lock-down - to say a final goodbye. I lost my Dad when I was just 14.  So maybe something happened to my number 6 due to all these events - and I can’t help but ask myself certain questions about &lt;strong&gt;when it’s my turn to die&lt;/strong&gt;. When I lay six feet below in the tranquillity of the grave-yard:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If I were to die tonight, would I be doing what I am just about to do?&lt;/li&gt;
+  &lt;li&gt;If I were to write my own eulogy (just like I wrote my Mum’s ), what would I like to put in there?&lt;/li&gt;
+  &lt;li&gt;Who will miss me when I die?&lt;/li&gt;
+  &lt;li&gt;What will I be missed for?&lt;/li&gt;
+  &lt;li&gt;Should I even effing care who misses me or what for? After all, I’d be gone, right?&lt;/li&gt;
+  &lt;li&gt;Do dead people miss their loved ones? I doubt it. But if I could, who would I miss the most and why?&lt;/li&gt;
+  &lt;li&gt;Am I scared of dying?&lt;/li&gt;
+  &lt;li&gt;I know that  Kubernetes, Observability,  MBA, the house, the cars, the stocks will bear no meaning, but how about love, will that fade too?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are things that I will never know by living, only in dying - so my curious mind can’t help but learn to embrace and accept this inevitable appointment with death that we all must keep.&lt;/p&gt;
+
+&lt;p&gt;Furthermore, these are some of the ways in which these issues are shaping me:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;I say NO with much more ease than before. Honestly, if it doesn’t add value, I am not wasting my precious time on it - no matter who’s involved.&lt;/li&gt;
+  &lt;li&gt;I eschew individuals, social media, movies, and other media that peddle and nurture vanity.&lt;/li&gt;
+  &lt;li&gt;Find meaning in my vocational work. Create a lasting impact in my work.  If it’s just for the paycheck, then it’s not worth it. Leave -  find a new cheese station.&lt;/li&gt;
+  &lt;li&gt;I feel a lot stress-free - almost like a bird that has just been released from captivity. Free from unnecessary worries, what they/he/she think or don’t think of me. It doesn’t matter.&lt;/li&gt;
+  &lt;li&gt;Gratitude - for the seemingly small things in life.&lt;/li&gt;
+  &lt;li&gt;Be nice - even to strangers. Everyone is dealing with one challenge or the other, and we all want the same thing for ourselves and our families. Just don’t be an ass-hole, Israel.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now, I have to try and finish that eulogy soon. It’s a lot of crap at the moment.&lt;/p&gt;
+
+&lt;p&gt;This whole thing is vanity. Vanity upon vanity.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;When you die, will I miss you?&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+</description>
+                <pubDate>Thu, 28 Jul 2022 13:01:35 +0100</pubDate>
+                <link>http://localhost:4000/blog/death/</link>
+                <guid isPermaLink="true">http://localhost:4000/blog/death/</guid>
+                
+                <category>kids</category>
+                
+                <category>death</category>
+                
+                
+                <category>Personal</category>
+                
+            </item>
+        
+            <item>
+                <title>Why Continuous Profiling is a &apos;must have&apos; in your Observability Strategy</title>
+                <description>&lt;p&gt;Over the last 6 months, I have been passively researching Continuous Profiling (in my private time) in the context of cloud-native observability.&lt;/p&gt;
+
+&lt;p&gt;My research was underpinned by the following questions:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;What is Continuous Profiling and why should I care?&lt;/li&gt;
+  &lt;li&gt;How does Continuous Profiling apply to large-scale distributed, ephemeral, compute instances?&lt;/li&gt;
+  &lt;li&gt;Can one truly profile “continuously” in production? Is the overhead worth the trouble?&lt;/li&gt;
+  &lt;li&gt;Are the recent advancements in eBPF making a difference? See my post on &lt;a href=&quot;https://www.israelo.io/blog/ebpf/&quot;&gt;eBPF in Plain English&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;What does Gartner think of Continuous Profiling?&lt;/li&gt;
+  &lt;li&gt;What are observability vendors doing about this?&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I will share the answers to these questions in this blog post, albeit at a high level.&lt;/p&gt;
+
+&lt;p&gt;But before I dig into the details, I would like to start with the conclusions that I drew from my research. Yes, I like Button Line Up Front (BLUF) a lot:&lt;/p&gt;
+
+&lt;h2 id=&quot;whats-the-conclusion&quot;&gt;What’s the conclusion?&lt;/h2&gt;
+
+&lt;p&gt;Profiling is measuring what part of your application is consuming a particular resource.  &lt;strong&gt;Continuous&lt;/strong&gt; Profiling adds time dynamics to the definition above; it provides **always-on **profiling data from app environments. This includes being able to aggregate and understand data from a production system in an observability tool in a similar way to what traditional APM tools do with instrumentation and metrics.&lt;/p&gt;
+
+&lt;p&gt;Continuous &lt;strong&gt;distributed&lt;/strong&gt; profiling is the next disruptor of observability. When combined with recent advances in eBPF (particularly in the Linux user space), Continuous distributed profiling (with emphasis on &lt;strong&gt;distributed&lt;/strong&gt;) will truly enable DevOps and SRE engineers to probe their applications (i.e. user space events) and infrastructure (hardware, network performance, security) without knowing the questions to ask in advance. It is the bedrock for “truly” discovering unknown unknowns in a distributed microservices architecture, but only a few observability vendors are doing it well. In fact, none of the big observability players has harnessed the power of eBPF in Continuous &lt;strong&gt;distributed&lt;/strong&gt; profiling. As a matter of fact, only a few have continuous profiling features, let alone on eBPF.&lt;/p&gt;
+
+&lt;h2 id=&quot;why&quot;&gt;Why?&lt;/h2&gt;
+
+&lt;p&gt;Because most of the big observability players do profiling by instrumentation, which is synonymous with a driver who frequently takes his/her eyes off the road. Profiling by instrumentation is built on the principle of taking system snapshots based on certain pre-define events or frequency, this is analogous to a security guard on duty who only wakes up from his sleep when someone knocks at his gate. Dangerous. This is why organisations need an observability solution that continuously profiles their workloads.&lt;/p&gt;
+
+&lt;p&gt;Furthermore, I have lost track of how many times I’ve had to set up instrumentation agents to decrease snapshot collection owing to overhead concerns.  It is always a difficult decision because the customer would like to get the profiled call graphs during a performance issue, but you cannot have the agent collect snapshots aggressively during this time because it exacerbates the performance issue.&lt;/p&gt;
+
+&lt;p&gt;Instrumentation profiling is not the best. Are you familiar with Linux’s Kill -3 command? It terminates the PID, dumps the JVM core, and resumes the PID. Too much of it is not good. Anyway, that’s a different blog post topic.&lt;/p&gt;
+
+&lt;p&gt;The meta-point is that organisations must shift from the dominant instrumentation profiling approach to continuous profiling solutions, and eBPF makes it possible to do this without overbearing the application and/or infrastructure.&lt;/p&gt;
+
+&lt;p&gt;Furthermore, agent bytecode instrumentation does not only introduce performance overhead; it often requires app or container restarts. The multi-agent (app, infra, etc) nature of this approach also makes it cumbersome to install, configure, and upgrade agents at scale. Only Continuous Profiling on eBPF can alleviate the agent overhead concerns; it also provides continuous visibility and profiling call graphs at no extra performance overhead cost, and it eliminates the need for a separate app, infra, and sometimes security agents. eBPF provides holistic visibility into the kernel and user space. It completely eradicates the need to instrument the application, which literally means allowing someone else’s app (called agents) to attach itself to your organisation’s critical application by completely &lt;strong&gt;re-transforming&lt;/strong&gt; your application’s bytecode.&lt;/p&gt;
+
+&lt;p&gt;Did you know that agents can also go as far as re-defining your application classes? &lt;em&gt;Say what? Say what…?&lt;/em&gt; Yes, using the &lt;a href=&quot;https://docs.oracle.com/en/java/javase/11/docs/api/java.instrument/java/lang/instrument/Instrumentation.html&quot;&gt;Java Instrumentation API&lt;/a&gt; for example, the API contains the following commonly used methods:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;retransformClasses&lt;/em&gt; – facilitates the instrumentation of already loaded classes by adding byte-code&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;redefineClasses&lt;/em&gt; – redefine the supplied set of classes using the supplied class files, meaning that the class will be fully replaced, not modified as with &lt;em&gt;retransformClasses&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;addTransformer—adds&lt;/em&gt; a transformer to the instrumentation engine&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;getAllLoadedClasses&lt;/em&gt; – returns an array of all classes currently loaded by the JVM&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;removeTransformer&lt;/em&gt; – unregisters the supplied transformer&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now you see why I fell in love with eBPF because it eliminates the need for bytecode instrumentation? Given the option, I would rather not ingest any other black-box agents into my application.&lt;/p&gt;
+
+&lt;p&gt;Finally, most instrumentation profiling agents in the market today are designed to instrument only well-known libraries, function calls, and protocols such as HTTP(S), JDBC, ADO.Net, and message bus, among others. This is why I have spent hours (sometimes days) working with customers to apply &lt;strong&gt;custom instrumentation&lt;/strong&gt; to their applications—which literally means instructing the agent to instrument a less-known protocol, background task, or some other legacy library.&lt;/p&gt;
+
+&lt;p&gt;My point is, if typical app agents are pre-wired to instrument certain parts of the applications, then how can they claim to discover all unknown unknowns across the full stack? This is why I would make instrumentation an opportunity cost in favour of eBPF. eBPF is event-driven,and it allows developers to package the user space application logic to be executed in the Linux kernel space as bytecode.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;In summary, Continuous Distributed Profiling is the future of observability because, unlike instrumentation profiling, it provides always-on visibility into the entire stack. When combined with eBPF, you can use one agent to get app visibility, infrastructure visibility, network visibility, and security visibility across the entire fleet in a safe and secure manner.&lt;/p&gt;
+
+&lt;h2 id=&quot;but-there-are-a-few-drawbacks&quot;&gt;But there are a few drawbacks:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;eBPF is only currently supported on Linux 4.4. Although Microsoft is actively working on adding &lt;a href=&quot;https://github.com/microsoft/ebpf-for-windows&quot;&gt;eBPF support to Windows&lt;/a&gt; - including eBPF support for HyperVisor-enforced Code Integrity (HVCI).&lt;/li&gt;
+  &lt;li&gt;eBPF does not play nice with serverless technologies since customers do not have access to deploy eBPF probes to these servers. The eBPF eco-system is asking for it. There’s an &lt;a href=&quot;https://github.com/aws/containers-roadmap/issues/1027&quot;&gt;open request for AWS to support eBPF on Fargate&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;eBPF is hard to begin with. As a result, there are not a lot of Product Managers in the industry today who can fully articulate the benefits of eBPF, especially as it relates to Continuous Profiling in observability.&lt;/li&gt;
+  &lt;li&gt;Finding Developers and Architects that have a good grasp of C, Go and a strong understanding of the inner workings of the Linux kernel can be a challenge.&lt;/li&gt;
+  &lt;li&gt;eBPF requires elevated privilege access to do its magic, but the community is generally comfortable with this because eBPF is fail-proof. It cannot break the kernel either.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;lamentation&quot;&gt;Lamentation&lt;/h2&gt;
+
+&lt;p&gt;I just realised that this is no longer a BLUF. I broke my own rule, but I didn’t want to stop my flow. Since the summary of research turned into a full-blown blog, I would have to write a part 2 post on this subject — to specifically answer the six cardinal questions above.&lt;/p&gt;
+
+&lt;p&gt;Watch this space!&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;⚠ DISCLAIMER&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Opinions expressed are solely my own and do not express the views or opinions of my employer.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+                <pubDate>Fri, 22 Jul 2022 13:01:35 +0100</pubDate>
+                <link>http://localhost:4000/blog/continuous-profiling/</link>
+                <guid isPermaLink="true">http://localhost:4000/blog/continuous-profiling/</guid>
+                
+                <category>containers</category>
+                
+                <category>devops</category>
+                
+                <category>cloud-native</category>
+                
+                <category>profiling</category>
+                
+                <category>ebpf</category>
+                
+                
+                <category>Cloud Native</category>
+                
+            </item>
+        
+            <item>
+                <title>Product Leaders must focus on Orginial Insigts - Jetu</title>
+                <description>&lt;p&gt;&lt;em&gt;These are wise words from Jetu Patel, EVP &amp;amp; GM, Security and Collaboration at Cisco.&lt;/em&gt;
+&lt;em&gt;I admire him a lot!&lt;/em&gt;. &lt;em&gt;He posted it to LinkedIn, and I believe every PM needs to know and consciously avoid these obsessions.&lt;/em&gt; &lt;em&gt;I copied his post here as a reference note for me..&lt;/em&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Measure yourself with the frequency and quality of original insights that you and your team come up with that make your value unique.&lt;/p&gt;
+
+&lt;p&gt;If the predominant thinking becomes competitor obsessed, by definition your “original insights quotient” will drop as will your relevance.&lt;/p&gt;
+
+&lt;p&gt;Here are the traps I’ve fallen into and when I’ve avoided them, progress has been much more likely:&lt;/p&gt;
+
+&lt;h2 id=&quot;competitor-obsession&quot;&gt;Competitor Obsession&lt;/h2&gt;
+
+&lt;p&gt;Leads to systemic loss of original insights. Catch-up is almost never a good strategy unless your explicit position is that you own a monopoly and will leverage your distribution with a good enough product. Maybe 3 companies in the world can probably do this. It’s infinitely easier to do something different and win than to try and catch-up and win.&lt;/p&gt;
+
+&lt;h2 id=&quot;resource-scarcity-obsession&quot;&gt;Resource Scarcity Obsession&lt;/h2&gt;
+
+&lt;p&gt;Leads to apathy. Accept your investment envelope and start thinking of the way to win with what you have. Abundance is seldom the reason companies win. Scarcity is seldom the reason companies lose. Having too much resource can cause failure because it doesn’t force you to focus.&lt;/p&gt;
+
+&lt;h2 id=&quot;shiny-object-obsession&quot;&gt;Shiny Object Obsession&lt;/h2&gt;
+
+&lt;p&gt;Leads to randomization. Teams need intense focus to deeply think about problems that they can solve uniquely. Don’t chase shiny objects, chase problems. Continuous shiny object pursuits dissipate focus and prevent you at being world class at anything. It is great to be responsive to market movements. It is terrible to be reactive to market hypes.&lt;/p&gt;
+
+&lt;h2 id=&quot;complexity-obsession&quot;&gt;Complexity Obsession&lt;/h2&gt;
+
+&lt;p&gt;Leads to mis-alignment. Relaying complex thoughts makes us feel smart. But leaves people confused. Default state of all things left unattended leads to complexity. Achieving simplicity is hard and against the grain. But so so so necessary for success at scale. Also, simplicity and sophistication don’t have to be competing alternatives. Sophistication is different from complexity.&lt;/p&gt;
+
+&lt;p&gt;5) Risk Elimination Obsession —&amp;gt; Leads to indecision. We must constantly de-risk. Try to minimize risk. But learn to make strong judgement calls with incomplete data. Waiting for a complete set of data before making a call is not why we get paid to go to work. We get paid to use our judgement to be decisive with just the right amount of data. Otherwise known as strong decisions with incomplete data. Companies that win big are fast and right more than they are wrong.&lt;/p&gt;
+
+&lt;h2 id=&quot;concensus-obsession&quot;&gt;Concensus Obsession&lt;/h2&gt;
+
+&lt;p&gt;Leads to loss of speed in businesses. Time is our enemy in business. Speed and a sense of urgency is so essential to success. By all means get buyin from co-workers. But don’t look confuse concensus and alignment. They are two very different things. And if you spend 80% of your time aligning vs building, you’re seeking unanimous concensus and calling it alignment.&lt;/p&gt;
+
+&lt;p&gt;Net net. Seek original insights, solve real customer problems that they are willing to pay for and obsess on customer delight at scale. Rest will follow.&lt;/p&gt;
+
+&lt;p&gt;– Jetu Patel&lt;/p&gt;
+</description>
+                <pubDate>Mon, 18 Jul 2022 13:01:35 +0100</pubDate>
+                <link>http://localhost:4000/blog/pm-original-insights/</link>
+                <guid isPermaLink="true">http://localhost:4000/blog/pm-original-insights/</guid>
+                
+                <category>mentor</category>
+                
+                <category>product</category>
+                
+                
+                <category>Personal</category>
+                
+                <category>Cloud Native</category>
+                
+                <category>Product</category>
+                
+            </item>
+        
+            <item>
+                <title>My girls know Cloud Computing, seriously!</title>
+                <description>&lt;p&gt;I am a proud #GirlDad. We try to expose our girls to activities they enjoy, such as cooking, ballet, gymnastics, and so on, in the hope that they will eventually discover what they want to do with their lives when they are adults.&lt;/p&gt;
+
+&lt;p&gt;However, I am slightly biased - I teach them coding and computing - with the hope they fall in love with IT. I described my approach in the &lt;a href=&quot;https://www.israelo.io/blog/kids-who-code/&quot; target=&quot;_blank&quot;&gt;Tips To Get Your Kids Excited About Coding&lt;/a&gt; blog post. Check it out!&lt;/p&gt;
+
+&lt;p&gt;It’s incredible how fast they understand the concepts. I usually have them present what they have learned to me. This time, I took the pleasure of recording their presentations.&lt;/p&gt;
+
+&lt;p&gt;Watch as my beautiful 9 and 6 year olds ‘demystify’ (LoL) the concepts of:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The Internet&lt;/li&gt;
+  &lt;li&gt;Cloud Computing&lt;/li&gt;
+  &lt;li&gt;Cyber Security and&lt;/li&gt;
+  &lt;li&gt;Cyber Bullying.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Interestingly, their perspectives are slightly different on each subject. Let’s watch!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Rochelle&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p style=&quot;position: relative; padding: 30px 0px 57% 0px; height: 0; overflow: hidden;&quot;&gt;
+ &lt;iframe src=&quot;https://www.youtube.com/embed/M0Uo9UvE3PA&quot; width=&quot;100%&quot; height=&quot;100%&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; style=&quot;display: block; margin: 0px auto; position: absolute; top: 0; left: 0;&quot;&gt;&lt;/iframe&gt;
+ &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Naomi&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p style=&quot;position: relative; padding: 30px 0px 57% 0px; height: 0; overflow: hidden;&quot;&gt;
+ &lt;iframe src=&quot;https://www.youtube.com/embed/zPwZnZlhcm8?start=11&quot; width=&quot;100%&quot; height=&quot;100%&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; style=&quot;display: block; margin: 0px auto; position: absolute; top: 0; left: 0;&quot;&gt;&lt;/iframe&gt;
+ &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Naomi loves to cook and to code&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This was recorded when she was 8 years old.&lt;/p&gt;
+
+&lt;p style=&quot;position: relative; padding: 30px 0px 57% 0px; height: 0; overflow: hidden;&quot;&gt;
+ &lt;iframe src=&quot;https://www.youtube.com/embed/UCgDUlSpPLo&quot; width=&quot;100%&quot; height=&quot;100%&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; style=&quot;display: block; margin: 0px auto; position: absolute; top: 0; left: 0;&quot;&gt;&lt;/iframe&gt;
+ &lt;/p&gt;
+
+&lt;p&gt;Read &lt;a href=&quot;https://www.israelo.io/blog/kids-who-code/&quot; target=&quot;_blank&quot;&gt; this blog post &lt;/a&gt; to learn more on why and how to get your kids excited about coding.&lt;/p&gt;
+</description>
+                <pubDate>Thu, 14 Jul 2022 13:01:35 +0100</pubDate>
+                <link>http://localhost:4000/blog/cloud-kidz/</link>
+                <guid isPermaLink="true">http://localhost:4000/blog/cloud-kidz/</guid>
+                
+                <category>coding</category>
+                
+                <category>kids</category>
+                
+                <category>STEM</category>
+                
+                
+                <category>Personal</category>
+                
+            </item>
+        
+    </channel>
+</rss>
