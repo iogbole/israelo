@@ -3,7 +3,7 @@
 # Site Settings
 title: israelo.io
 logo: /images/logo.png
-description: Holding MBA in Data Analytics and over eight years of experience in the cloud-native observability field, I have developed a profound understanding and expertise in observability product management and strategy. This platform is dedicated to sharing in-depth insights and knowledge on a range of subjects such as DevOps practices, eBPF observability, Cloud-native technologies, and various facets of life.
+description: I write about eBPF, containers, Kubernetes, and OTel, and journal my daughter Naomi's coding journey here, a nine-year-old with a budding passion for programming. When I'm not working, you'll find me teaching my girls how to code, embarking on long bike trips that sometimes turn into hikes in good weather, playing chess, or enjoying meals and drinks with friends.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://israelo.io" # the base hostname & protocol for your site, e.g. http://example.com
 color_scheme: auto # You can choose three modes auto, light, and dark. By default, the auto mode is set, which means the user can choose the light or dark mode themself.
