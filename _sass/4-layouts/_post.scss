@@ -32,10 +32,11 @@
   .post__author {
     margin-right: 10px;
     font-weight: 700;
-    
+
     .author-name {
       color: $gray;
       border-bottom: 1px solid transparent;
+
       &:hover {
         border-bottom: 1px solid $gray;
       }
@@ -43,35 +44,37 @@
   }
 
   .post__tags {
-   .post__tags-tag {
-     position: relative;
-     padding-left: 15px;
-     font-weight: 700;
-     &:before {
-       content: "";
-       position: absolute;
-       top: 50%;
-       left: 0;
-       transform: translateY(-50%);
-       width: 5px;
-       height: 5px;
-       border-radius: 50%;
-       background: $dark;
-     }
-   } 
+    .post__tags-tag {
+      position: relative;
+      padding-left: 15px;
+      font-weight: 700;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: $dark;
+      }
+    }
   }
 }
 
 .post-image {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: $light-gray;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: $light-gray;
+
   &:after {
     content: "";
     display: table;
     width: 100%;
-    min-height: 300px;
+    min-height: 0;
     padding-top: 50%;
   }
 }
@@ -80,7 +83,7 @@
   margin: 80px auto;
 
   &.post-no-image {
-    margin: 0 auto 80px; 
+    margin: 0 auto 80px;
   }
 
   @media only screen and (max-width: $mobile) {
@@ -118,6 +121,7 @@
       a {
         font-size: 18px;
         color: $gray;
+
         &:hover {
           color: $dark;
         }
@@ -136,6 +140,7 @@
   .prev,
   .next {
     flex: 1 0 50%;
+
     &:last-child {
       padding-right: 0;
     }
@@ -148,9 +153,11 @@
       background-repeat: no-repeat;
       background-color: $light-gray;
       transition: .35s ease-in-out;
+
       &:hover {
         opacity: 0.9;
       }
+
       &:after {
         content: "";
         display: table;
@@ -166,7 +173,7 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       text-align: center;
-      
+
       a {
         display: inline-block;
         max-width: 250px;
@@ -176,6 +183,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         color: $dark;
+
         &:hover {
           color: $black;
         }
@@ -201,7 +209,7 @@
 
   @media only screen and (max-width: $tablet) {
     flex-wrap: wrap;
-    
+
     .prev,
     .next {
       flex: 1 0 100%;
@@ -216,6 +224,7 @@
   @media only screen and (max-width: $mobile) {
     margin-bottom: 40px;
     padding-bottom: 40px;
+
     .prev,
     .next {
       .post__nav__image {

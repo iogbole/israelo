@@ -7,7 +7,7 @@ categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes, ebpf, cpu, profiling, flamegraph ]
 image: https://user-images.githubusercontent.com/2548160/206739101-e6a6a80f-8628-4d9f-80f6-de17473e52b4.png
 date:  2022-12-09 15:01:35 +0300
-excerpt: "bpftrace to flamegraph in 3 simple commmands..."
+excerpt: "bpftrace to flamegraph in 3 simple commmands. eBPF allows for the creation of custom programs that can be attached to various points in the kernel, allowing for detailed and efficient monitoring and analysis of system behavior."
 
 ---
 
