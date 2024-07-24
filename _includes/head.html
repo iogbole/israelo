@@ -38,10 +38,13 @@
 
   <script>
     {% if site.color_scheme == "auto" %}
-    if (localStorage.getItem("theme") === "dark") {
-      document.documentElement.setAttribute("dark", "");
-      document.documentElement.classList.add('dark-mode');
-    }
+      if (localStorage.getItem("theme") === "light") {
+        document.documentElement.setAttribute("light", "");
+        document.documentElement.classList.add('light-mode');
+      } else {
+        document.documentElement.setAttribute("dark", "");
+        document.documentElement.classList.add('dark-mode');
+      }
     {% elsif site.color_scheme == "light" %}
       document.documentElement.setAttribute("light", "");
       document.documentElement.classList.add('light-mode');
@@ -49,12 +52,16 @@
       document.documentElement.setAttribute("dark", "");
       document.documentElement.classList.add('dark-mode');
     {% else %}
-    if (localStorage.getItem("theme") === "dark") {
-      document.documentElement.setAttribute("dark", "");
-      document.documentElement.classList.add('dark-mode');
-    }
+      if (localStorage.getItem("theme") === "light") {
+        document.documentElement.setAttribute("light", "");
+        document.documentElement.classList.add('light-mode');
+      } else {
+        document.documentElement.setAttribute("dark", "");
+        document.documentElement.classList.add('dark-mode');
+      }
     {% endif %}
   </script>
+
 
   <style>
   {% capture include_to_scssify %}
