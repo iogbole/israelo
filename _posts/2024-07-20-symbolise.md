@@ -3,7 +3,6 @@ layout: post
 title:  "Symbolisation: Cracking the code with ELF and DWARF"
 author: israel
 categories: [ 'Product' ]
-featured: true
 tags: [ product ]
 image: https://github.com/user-attachments/assets/6cc09baf-b329-4ea5-92ba-7ef1ee1d59b1
 date:   2024-06-28 15:01:35 +0300
