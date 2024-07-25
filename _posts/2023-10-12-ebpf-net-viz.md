@@ -21,6 +21,12 @@ This blog aims to chronicle my exploration of eBPF and Go and is targeted at any
 
 > The source code is available at [https://github.com/iogbole/ebpf-network-viz](https://github.com/iogbole/ebpf-network-viz)
 
+Join the conversation on [LinkedIn](https://www.linkedin.com/posts/israelo_getting-started-with-ebpf-monitoring-tcp-activity-7118243397844316160-TdL6/)
+
+<p align="center">
+<img width="670" alt="LinkedInM" src="https://github.com/user-attachments/assets/05bd6fde-d487-4f77-9071-95cf4088d7ec">
+
+</p>
 
 Let's begin by defining the problem. 
 
