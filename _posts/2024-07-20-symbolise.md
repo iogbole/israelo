@@ -56,10 +56,6 @@ By understanding the fundamentals of DWARF, ELF, and symbolisation, developers c
 
 A symbol in profiling is a combination of a file name, function name, and line number, uniquely identifying a line of code. A stack trace is a list of these symbols, representing a sequence of function calls ending in the currently executing function. Each line in this list is a stack frame.
 
-scss
-
-Copy code
-
 ```cpp
 (fileA, function1, 10) -> 
 (fileB, function2, 20) -> 
@@ -71,9 +67,6 @@ This stack trace indicates that `function4` in `fileD` at line 40 called `functi
 
 #### Example of an Unsymbolised Stack Trace
 
-rust
-
-Copy code
 
 ```cpp
 345223 -> 
@@ -91,17 +84,12 @@ Profilers collect these unsymbolised stack traces from native code programs and 
 
 Tools like `addr2line` are often used to perform this task. Here's a basic example:
 
-bash
 
-Copy code
 
 `addr2line -e my_program 345223` 
 
 This command would attempt to translate the address `345223` into a symbol using the information in the executable file `my_program`. The output might look something like:
 
-makefile
-
-Copy code
 
 `my_program.c:123` 
 
