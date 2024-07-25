@@ -60,7 +60,7 @@ scss
 
 Copy code
 
-```
+```cpp
 (fileA, function1, 10) -> 
 (fileB, function2, 20) -> 
 (fileC, function3, 30) -> 
@@ -75,7 +75,7 @@ rust
 
 Copy code
 
-```
+```cpp
 345223 -> 
 232678 -> 
 785645 -> 
