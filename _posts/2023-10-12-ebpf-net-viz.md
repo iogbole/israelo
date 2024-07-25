@@ -16,7 +16,7 @@ As a Product Manager in tech, I strongly believe it is essential to understand t
 Recently, I've been working on a product that uses Extended Berkeley Packet Filter (eBPF). eBPF is a revolutionary technology that allows users to extend the functionality of the Linux kernel without having to modify the kernel code itself. Intrigued to learn more, I got a copy of Liz Rice's book, ["Learning eBPF"](https://isovalent.com/books/learning-ebpf/). The book is so enlightening that I couldn't resist rolling up my sleeves to get hands-on with this revolutionary technology, albeit a little.
 
 
-![LinkedIn](https://github.com/user-attachments/assets/05bd6fde-d487-4f77-9071-95cf4088d7ec#wide)
+![LinkedIn](https://github.com/user-attachments/assets/05bd6fde-d487-4f77-9071-95cf4088d7ec)
 *Join the conversation on [LinkedIn](https://www.linkedin.com/posts/israelo_getting-started-with-ebpf-monitoring-tcp-activity-7118243397844316160-TdL6/)*
 
 
