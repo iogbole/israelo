@@ -41,11 +41,11 @@ I believe great products are born from a deep understanding of customer pain poi
 
 ### My Background
 
--   MBA in Data Analytics, Arden University, Coventry, UK
+-   MBA in Data Analytics, Distinction - read - https://israelo.io/blog/mba-grad/ 
     
--   MSc in Telecommunications Engineering, Middlesex University, London, UK
+-   MSc in Telecommunications Engineering, Distinction
     
--   BSc in Computer Science, Markudi, Nigeria
+-   BSc in Computer Science, 2:1
     
 -   HashiCorp Certified: Terraform Associate
     
@@ -58,4 +58,4 @@ I believe great products are born from a deep understanding of customer pain poi
 -   Microsoft Certified Solution Architect: Azure Cloud Platform
     
 
-Hit me up ayttime - https://israelo.io/contact/
+Hit me up - https://israelo.io/contact/
