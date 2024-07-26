@@ -7,7 +7,9 @@ image: 'https://user-images.githubusercontent.com/2548160/278883116-1e5ec95c-7e3
 
 ### About Me
 
-With over a decade of experience shaping the cloud-native observability landscape, I've honed my skills as a product leader, seamlessly blending deep technical expertise with a relentless focus on customer needs. I've successfully launched multiple products, including six from the ground up, driving substantial revenue growth and addressing customer churn. However, it's through the challenges and missteps that I've gained the most valuable insights, shaping my ability to deliver exceptional products.
+With over a decade of experience shaping the cloud-native observability landscape, I've honed my skills as a product leader, seamlessly blending deep technical expertise with a relentless focus on customer needs. I've successfully launched multiple products, including six from the ground up, driving substantial revenue growth and addressing customer churn. 
+
+That said, it's through the challenges and missteps that I've gained the **most** valuable insights, shaping my ability to deliver exceptional products.
 
 Currently at Elastic, I'm leading a multi-faceted charter: 
 
