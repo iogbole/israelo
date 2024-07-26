@@ -2,8 +2,8 @@
 layout: post
 title:  "Symbolisation: Cracking the code with ELF and DWARF"
 author: israel
-categories: [ 'Product' ]
-tags: [ product ]
+categories: [ 'Cloud Native' ]
+tags: [containers, devops, cloud-native, kubernetes, ebpf ]
 image: https://github.com/user-attachments/assets/6cc09baf-b329-4ea5-92ba-7ef1ee1d59b1
 date:   2024-06-28 15:01:35 +0300
 description: "Symbolisation converts raw memory addresses into human-readable symbols. The roles of DWARF and ELF in the symbolisation process is explored." 
