@@ -5,35 +5,57 @@ permalink: /about/
 image: 'https://user-images.githubusercontent.com/2548160/278883116-1e5ec95c-7e32-4de7-9f36-2a57c8a4d1f7.png'
 ---
 
-I am a product leader with over 7 years of experience in the cloud-native observability sector, bringing a rich background in software engineering and architecture. Driven by customer-centricity and continuous innovation, I thrive on creating products that resonate deeply with users. Over the past year, I've championed three key product initiatives from inception to GA, achieving a notable reduction in churn and a significant increase in Annual Revenue.
+### About Me
 
-Currently leading product efforts at Elastic, I collaborate with a talented and globally distributed team spanning engineering, UX, and marketing, as we navigate the intricate terrains of product discovery, design, and development. My role is accentuated by my passion for cloud-native technologies, backed by a unique blend of leadership, technical proficiency, and analytical prowess. As a tech enthusiast who transitioned into product management, I embody the 'techie-turned-PM' philosophy.
+With over a decade of experience shaping the cloud-native observability landscape, I've honed my skills as a product leader, seamlessly blending deep technical expertise with a relentless focus on customer needs. I've successfully launched multiple products, including six from the ground up, driving substantial revenue growth and addressing customer churn. However, it's through the challenges and missteps that I've gained the most valuable insights, shaping my ability to deliver exceptional products.
 
-For those keen on engaging with a seasoned professional with extensive expertise in observability and a consistent track record of elevating products from 0 to 1, I welcome meaningful conversations and potential collaborations.
+Currently at Elastic, I'm leading a multi-faceted charter: 
 
-## My Philosophy
-In the realm of product management, I operate with a distinct ethos – one forged at the intersection of technology, business, and analytics. I describe it as the 'techie-turned-PM' spirit. This unique blend empowers me to bridge the often elusive gap between technical intricacies and business imperatives, delivering tangible value.
+-   **Elastic Universal Profiling:** This **eBPF**-based profiling solution was quite the journey! I joined the team shortly after Elastic acquired optimyze.cloud. My mission? Find product-market fit for "prodfiler," integrate it with the Elastic stack, launch it publicly, and open-source it. The cherry on top? Contributing it to the OpenTelemetry project. Leading a team of successful founders as PM, I helped build trust, achieve milestones, and witness the power of open-source collaboration. Launching, open-sourcing, and contributing to OTel – that takes some serious product know-how!
+-   **eBPF Kubernetes Observability:** Think "pixie project" on steroids! Leading the product charter for this solution, we're auto-discovering L4 connectivity, metering it like Cilium Hubble, aggregating L7 traffic, and seamlessly integrating with OTel – all while automatically including and correlating profiling signals. We're even building towards automatic language app instrumentation. This means customers get a faster time-to-value with automatic insights, ditching the manual setup struggles they face today.
+-   **BI and Telemetry:** Let's talk data! I passionately advocated for the lack of data impacting critical business and product decisions. Guess what? I got tasked with fixing it! Assembling a data-loving team, we set a clear strategy and goal: "know our customers" by centralizing data insights, mining inferences, and identifying patterns. My role as PM was clear: paint a picture of the future and why we should reach for it. The team grew from 2 to 5, with external talent joining the internal crew. We're fueled by the power of data-driven decision making!
+-   **Cloud Observability (New!):** Since July 2024, I begun PM-leading Cloud Observability. My mission? Making it ridiculously easy for customers to ingest logs, metrics, and traces from AWS, Azure, and GCP. While the Elastic Agent approach exists, my immediate focus is driving the agentless, push-based approach using solutions like AWS Firehose, Cloudwatch metrics, and GCP Dataflow. But most importantly, I keep reminding the team that our job doesn't end at data ingestion. Defining how customers use data to unlock insights is paramount!
 
-## What Drives Me
-Central to my leadership approach is a profound commitment to understanding and addressing the authentic needs of our customers. I prioritise identifying the true problem at hand, eschewing the allure of mere consensus. The journey, from the initial stages of discovery and design to the final phases of development, is fueled by my relentless pursuit of groundbreaking innovation. I am impassioned by the challenges we surmount and the transformative solutions we craft, with the end-user consistently at the epicentre of our endeavours.
+Prior to my current role at Elastic, I was an Engineering Product Manager at **Cisco AppDynamics**.
 
-## My Current Role
-At Elastic, my mandate is extensive. I steer a diverse team scattered across the globe, comprising engineers, UX designers, and marketing aficionados. Our collective mission revolves around the eBPF-based Continuous Profiling product, seamlessly integrating with avant-garde platforms like OpenTelemetry and ML/AIOps.
+I started as the Product Manager for Cloud-Native Observability, which became the very first feature to launch with the release of AppDynamics Cloud (which was later rebranded to Cisco Observability Cloud). I also expanded my charter into **tagging**. This was a challenging task, as it required collaboration across teams, cross-PMs, and platforms to execute the ingestion of tags and labels from Kubernetes, cloud services, and even custom tags. I defined how customers could use this powerful tool to find the "needle in the haystack." 
 
-## My Expertise
-- Mastery over Cloud-Native Technologies
-- Adeptness in Data-Driven Decision Making
-- Proficient Leadership & Team Management
-- Robust Analytical & Problem-Solving Skills
+Prior to becoming a PM at AppDynamics, I was a Solutions Architect, focusing on presales (Q3-Q4) and post-sales (mostly Q1-Q2).  
 
-## Education
-- **MBA in Data Analytics** - Arden University, Coventry, UK 
-- **MSc in Telecommunications Engineering** - Middlesex University, London, UK 
-- **BSc in Computer Science** - Markudi, Nigeria.
+I thrive in fast-paced environments, collaborating closely with engineering, design, and marketing teams to deliver exceptional products. My journey from software engineer to product leader gives me a unique perspective, enabling me to bridge the gap between technical complexity and business impact.
 
-## Certifications
-- HashiCorp Certified: Terraform Associate
-- Certified Kubernetes Application Developer
-- Google Cloud Platform Certified Architect 
-- The Open Group Framework (TOGAF 9) Certified 
-- Microsoft Certified Solution Architect: Azure Cloud Platform
+
+![enter image description here](https://user-images.githubusercontent.com/2548160/220749559-b16a0aac-9624-42b3-ab61-0c87a7cc326c.jpg#wide)
+
+### My Approach
+
+I believe great products are born from a deep understanding of customer pain points. It's not about building what’s popular, but what truly solves problems. I'm driven by innovation and the thrill of turning ideas into reality. Data-driven decision making is at the core of my approach, ensuring we're always building the right thing.
+
+### My Skills
+
+-   **Technical Depth:** Strong foundation in cloud-native technologies and architecture.
+-   **Customer Focus:** Passionate about understanding and meeting customer needs.
+-   **Leadership:** Proven ability to build and inspire high-performing teams.
+-   **Strategic Thinking:** Skilled at crafting product vision and roadmap.
+-   **Analytical Mindset:** Data-driven approach to decision making.
+
+### My Background
+
+-   MBA in Data Analytics, Arden University, Coventry, UK
+    
+-   MSc in Telecommunications Engineering, Middlesex University, London, UK
+    
+-   BSc in Computer Science, Markudi, Nigeria
+    
+-   HashiCorp Certified: Terraform Associate
+    
+-   Certified Kubernetes Application Developer
+    
+-   Google Cloud Platform Certified Architect
+    
+-   The Open Group Framework (TOGAF 9) Certified
+    
+-   Microsoft Certified Solution Architect: Azure Cloud Platform
+    
+
+Hit me up ayttime - https://israelo.io/contact/
