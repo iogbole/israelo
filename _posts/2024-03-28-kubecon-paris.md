@@ -37,10 +37,9 @@ Their talk exceeded expectations, including a crash course on Turing completenes
 
 > I had to take a selfie; my daughter would never forgive me otherwise! "Dad, are you watching Liz's coding video again?" 😂
 
-
-
-![LinkedIn](https://github.com/user-attachments/assets/8dc3c87b-b4b7-4844-841f-ae75ab6325c4#wide)
 *Join the conversation on [LinkedIn](https://www.linkedin.com/posts/israelo_ebpf-activity-7178699786080919552-TQmc)*
+![LinkedIn](https://github.com/user-attachments/assets/8dc3c87b-b4b7-4844-841f-ae75ab6325c4)
+
 
   
 
