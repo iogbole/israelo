@@ -11,9 +11,9 @@ With over a decade of experience shaping the cloud-native observability landscap
 
 That said, it's through the challenges and missteps that I've gained the **most** valuable insights, shaping my ability to deliver exceptional products.
 
-Currently at Elastic, I'm leading a multi-faceted charter: 
+Currently at Elastic, I'm leading multiple product charters: 
 
--   **Elastic Universal Profiling:** This **eBPF**-based profiling solution was quite the journey! I joined the team shortly after Elastic acquired optimyze.cloud. My mission? Find product-market fit for "prodfiler," integrate it with the Elastic stack, launch it publicly, and open-source it. The cherry on top? Contributing it to the OpenTelemetry project. Leading a team of successful founders as PM, I helped build trust, achieve milestones, and witness the power of open-source collaboration. Launching, open-sourcing, and contributing to OTel – that takes some serious product know-how! Read all the blogposts on this amazing journey from here - https://www.elastic.co/blog/author/israel-ogbole
+-   **Elastic Universal Profiling:** This **eBPF**-based profiling solution was quite the journey! I joined the team shortly after Elastic acquired optimyze.cloud. My mission? Find product-market fit for "prodfiler," integrate it with the Elastic stack, launch it publicly, and open-source it. The cherry on top? Contributing it to the OpenTelemetry project. Leading a team of successful founders as PM, I helped build trust, achieve milestones, and witness the power of open-source collaboration. Launching, open-sourcing, and contributing to OTel – that takes some serious product know-how! Read all the blogposts on this amazing journey from here - [https://www.elastic.co/blog/author/israel-ogbole](https://www.elastic.co/blog/author/israel-ogbole)
 
 -   **eBPF Kubernetes Observability:** Think "pixie project" on steroids! Leading the product charter for this solution, we're auto-discovering L4 connectivity, metering it like Cilium Hubble, aggregating L7 traffic, and seamlessly integrating with OTel – all while automatically including and correlating profiling signals. We're even building towards automatic language app instrumentation. This means customers get a faster time-to-value with automatic insights, ditching the manual setup struggles they face today.
 -   **BI and Telemetry:** Let's talk data! I passionately advocated for the lack of data impacting critical business and product decisions. Guess what? I got tasked with fixing it! Assembling a data-loving team, we set a clear strategy and goal: "know our customers" by centralizing data insights, mining inferences, and identifying patterns. My role as PM was clear: paint a picture of the future and why we should reach for it. The team grew from 2 to 5, with external talent joining the internal crew. We're fueled by the power of data-driven decision making!
@@ -42,9 +42,9 @@ I believe great products are born from a deep understanding of customer pain poi
 -   **Strategic Thinking:** Skilled at crafting product vision and roadmap.
 -   **Analytical Mindset:** Data-driven approach to decision making.
 
-### My Background
+### My Tech Background
 
--   MBA in Data Analytics, Distinction - read - https://israelo.io/blog/mba-grad/ 
+-   MBA in Data Analytics, Distinction - [Learn more](https://israelo.io/blog/mba-grad/) 
     
 -   MSc in Telecommunications Engineering, Distinction
     
@@ -61,4 +61,4 @@ I believe great products are born from a deep understanding of customer pain poi
 -   Microsoft Certified Solution Architect: Azure Cloud Platform
     
 
-Hit me up - https://israelo.io/contact/
+[Let's talk](https://israelo.io/contact/)
