@@ -28,16 +28,7 @@ I had to take a selfie; my daughter would never forgive me otherwise! "Dad, are 
   
   
 
-### In pictures
-
-  
-
-#### OpenTelemetry and Continuous Profiling
-
-
-OpenTelemetry's growing emphasis on continuous profiling is setting it up as the standard for observability. Continuous profiling is transforming application monitoring and optimization.
-
-  
+### In pictures 
 
 ![enter image description here](https://media.licdn.com/dms/image/D4E22AQGxPu8MqtIxiQ/feedshare-shrink_2048_1536/0/1711364186230?e=1724889600&v=beta&t=I2Y0XPcq3ha9XdLrj8Fo6d9-zs3nVjagcqcm5CiJgec)
 
@@ -49,14 +40,6 @@ OpenTelemetry's growing emphasis on continuous profiling is setting it up as the
   
 
 ![enter image description here](https://media.licdn.com/dms/image/D4E22AQHorkPzLeacuw/feedshare-shrink_2048_1536/0/1711489957314?e=1724889600&v=beta&t=RbYuZCGF0A_HtR9WDCzI6--h6WSmlyj_ECYfJ9fKPkw)
-
-  
-
-### Community and Collaboration
-
-  
-
-Reconnecting with the cloud-native community was a highlight. Sharing my passion for continuous profiling and Elastic's contributions to OpenTelemetry was incredibly rewarding. The chance to learn from peers and collaborate on new ideas was invaluable.
 
   
 
