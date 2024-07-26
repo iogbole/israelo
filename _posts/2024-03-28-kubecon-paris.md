@@ -6,7 +6,7 @@ categories: [ 'Cloud Native' ]
 tags: [containers, devops, cloud-native, kubernetes, ebpf ]
 image: https://media.licdn.com/dms/image/D4E22AQFu7O7IqCHY8Q/feedshare-shrink_2048_1536/0/1711489960450?e=1724889600&v=beta&t=2eE1XQ6xwM63jJchX8sYNWaQ77J9KVHJoCfNqPxH8CQ 
 date:   2024-03-28 15:01:35 +0300
-description: "Symbolisation converts raw memory addresses into human-readable symbols. The roles of DWARF and ELF in the symbolisation process is explored." 
+description: "eBPF, AI, GPU, sustainability and WASM were the top topics, but there's more...lots of pictures" 
 
 ---
 
