@@ -1,11 +1,10 @@
 ---
 layout: page
-title: About
+title: About Israel Ogbole
 permalink: /about/
 image: 'https://user-images.githubusercontent.com/2548160/278883116-1e5ec95c-7e32-4de7-9f36-2a57c8a4d1f7.png'
 ---
 
-### About Me
 
 With over a decade of experience shaping the cloud-native observability landscape, I've honed my skills as a product leader, seamlessly blending deep technical expertise with a relentless focus on customer needs. I've successfully launched multiple products, including six from the ground up, driving substantial revenue growth and addressing customer churn. 
 
