@@ -1,4 +1,16 @@
 /* Post + Page */
+
+
+.post__content {
+  a {
+    color: var(--midnight-blue);
+
+    &:hover {
+      color: var(--pink);
+    }
+  }
+}
+
 .post-head,
 .page-head {
   margin-bottom: 48px;
@@ -16,12 +28,13 @@
   }
 }
 
+
 .post-image,
 .page-image {
   position: relative;
   transform: translate(0);
-  padding-top: 90%;
-  min-height: 280px;
+  padding-top: 56.25%;
+  min-height: 0;
   border-radius: 8px;
   overflow: hidden;
   background: var(--background-alt-color);
@@ -115,7 +128,7 @@
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 20px;
-  
+
   .post__tag {
     padding: 12px 16px;
     margin: 4px 8px 4px 0;
@@ -128,7 +141,7 @@
     color: var(--heading-font-color);
     transition: none;
     background-color: var(--background-alt-color);
-  
+
     &:last-child {
       margin-right: 0;
     }
@@ -138,6 +151,7 @@
     margin-bottom: 16px;
   }
 }
+
 
 .post__title,
 .page__title {
@@ -184,11 +198,12 @@
 
   .post__meta-bottom {
     display: flex;
-    flex-direction: column;
+    align-items: center;
   }
 
   .post__author {
     display: inline-block;
+    margin-right: 10px;
     margin-bottom: 7px;
     font-size: 16px;
     font-weight: 500;
@@ -225,7 +240,8 @@
     }
   }
 
-  img, .js-reframe {
+  img,
+  .js-reframe {
     border-radius: 8px;
     overflow: hidden;
 
@@ -311,7 +327,7 @@
   }
 
   @media only screen and (max-width: $mobile) {
-     margin-top: 60px;
+    margin-top: 60px;
 
     .row .col:last-child {
       margin-bottom: 0;
@@ -353,9 +369,9 @@
   }
 
   @media only screen and (max-width: $mobile) {
-     &.is-open {
-       margin: 0 auto;
-     }
+    &.is-open {
+      margin: 0 auto;
+    }
   }
 }
 
@@ -373,7 +389,7 @@
     margin-bottom: 0;
     color: var(--text-alt-color);
   }
-  
+
   @media only screen and (max-width: $mobile) {
     .error__title {
       font-size: 68px;
@@ -386,7 +402,7 @@
   margin-top: 80px;
 
   @media only screen and (max-width: $mobile) {
-     margin-top: 60px;
+    margin-top: 60px;
 
     .row .col:last-child {
       margin-bottom: 0;

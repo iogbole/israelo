@@ -1,4 +1,6 @@
-*, *::after, *::before {
+*,
+*::after,
+*::before {
   box-sizing: border-box;
 }
 
@@ -63,14 +65,14 @@ blockquote {
   position: relative;
   margin: 40px 0;
   padding-left: 26px;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1.7;
-  font-weight: 900;
+  font-weight: 400;
   border-left: 4px solid var(--brand-color);
   color: var(--heading-font-color);
 
   p {
-    margin-bottom: 10px;
+    margin-bottom: 7px;
   }
 
   cite {
@@ -118,7 +120,7 @@ img,
     font-weight: normal;
     text-align: center;
     color: var(--heading-font-color);
-  
+
     a {
       font-weight: 500;
       border-bottom: 1px solid var(--border-color);
@@ -129,7 +131,7 @@ img,
         border-color: var(--link-color-hover);
       }
     }
-  
+
     @media only screen and (max-width: $mobile) {
       margin-top: 12px;
     }
@@ -183,6 +185,7 @@ table th {
 table tr {
   background-color: var(--tr-color);
   transition: all .3s ease;
+
   &:nth-child(even) {
     background-color: transparent;
   }
