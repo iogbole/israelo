@@ -34,6 +34,9 @@
   --tr-color: var(--light-gray);
 
   --syntax-highlighting-background: #0f140f;
+
+  --inline-code-color: #e83e8c; /* Default inline code color */
+
 }
 
 :root[dark] {
@@ -66,4 +69,7 @@
   --tr-color: #080b12;
 
   --syntax-highlighting-background: #1b3141fc;
+
+  --inline-code-color: #50e6a3eb; /* Inline code color for dark mode */
+
 }

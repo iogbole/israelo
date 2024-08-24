@@ -132,7 +132,7 @@ samp {
 code {
   font-family: monospace, monospace;
   font-size: 87.5%;
-  color: #e83e8c;
+  color: var(--inline-code-color);
   word-wrap: break-word;
 
   // Streamline the style when inside anchors to avoid broken underline and more
