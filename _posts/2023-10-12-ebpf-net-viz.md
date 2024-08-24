@@ -112,7 +112,7 @@ With your environment now primed, you’re all set to delve into the fascinating
 The diagram below depicts the solution. 
 
 <p align="center">
-<img width="1510" alt="the solution" src="https://user-images.githubusercontent.com/2548160/274510771-99bb4583-c7be-4e3e-83fc-283ea99d0195.png#wide">
+<img width="1510" alt="the solution" src="https://user-images.githubusercontent.com/2548160/274510771-99bb4583-c7be-4e3e-83fc-283ea99d0195.png">
 </p>
 
 ### Overview of the Components
