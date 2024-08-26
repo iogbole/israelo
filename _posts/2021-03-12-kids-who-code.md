@@ -2,7 +2,7 @@
 layout: post
 title:  "Tips To Get Your Kids Excited About Coding"
 author: israel
-featured: true
+featured: false
 categories: [ 'personal' ]
 tags: [ coding, kids, STEM ]
 image: https://user-images.githubusercontent.com/2548160/177959061-3e80836c-716d-4899-8abc-8c5e8fbb267e.png
