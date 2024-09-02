@@ -41,33 +41,25 @@ Their talk exceeded expectations, including a crash course on Turing completenes
 ![LinkedIn](https://github.com/user-attachments/assets/8dc3c87b-b4b7-4844-841f-ae75ab6325c4)
 
 
-  
-
 ### In pictures 
 
-![enter image description here](https://media.licdn.com/dms/image/D4E22AQGxPu8MqtIxiQ/feedshare-shrink_2048_1536/0/1711364186230?e=1724889600&v=beta&t=I2Y0XPcq3ha9XdLrj8Fo6d9-zs3nVjagcqcm5CiJgec)
+![1711489957314](https://github.com/user-attachments/assets/b978b546-ef17-4103-abee-f0ee9ccc4c77)
 
-  
+![1711489957507](https://github.com/user-attachments/assets/47bf21ed-6429-4d3b-b164-abe8101fb429)
 
-![enter image description here](https://media.licdn.com/dms/image/D4E22AQEC1N3ZEGfRxw/feedshare-shrink_2048_1536/0/1711364177834?e=1724889600&v=beta&t=Qd80h40g6aC77A2MAMsWNbBhUECB0Uz76Pf0a9R08K0)
+![1711364186230](https://github.com/user-attachments/assets/48c2f625-7aec-41a3-baab-b04bab2ace95)
 
+![1711364177834](https://github.com/user-attachments/assets/90b4ac7c-51df-4c03-a2ed-6dd18234fe46)
 
-  
+![1711364177350](https://github.com/user-attachments/assets/c0a8fd28-25f0-428c-a622-e7d99ac33b05)
 
-![enter image description here](https://media.licdn.com/dms/image/D4E22AQHorkPzLeacuw/feedshare-shrink_2048_1536/0/1711489957314?e=1724889600&v=beta&t=RbYuZCGF0A_HtR9WDCzI6--h6WSmlyj_ECYfJ9fKPkw)
+![1711364179839](https://github.com/user-attachments/assets/fc45b695-c48a-426b-8c03-565796d93689)
 
-  
+![1711364179742](https://github.com/user-attachments/assets/c8af050e-39bb-4903-b296-9e17e4a0d7ea)
 
-![enter image description here](https://media.licdn.com/dms/image/D4E22AQG8aA4p0ZXABQ/feedshare-shrink_2048_1536/0/1711364179839?e=1724889600&v=beta&t=at3fqPeyFJjTDKhrAgLcYOwobwuioS9AKLB1zrHR4Oc)
+![1711364186496](https://github.com/user-attachments/assets/4fc51f45-69f0-47af-8c34-50a98d2e58b6)
 
-  
+![1711364177895](https://github.com/user-attachments/assets/4f5af8fe-365e-4d9d-bd93-fb96b36b09d6)
 
-![enter image description here](https://media.licdn.com/dms/image/D4E22AQEO03Gw5M6tUA/feedshare-shrink_800/0/1711364186496?e=1724889600&v=beta&t=DJoTcKjYzQeg5conMlwbN1pOrpGGbX3jaMQWuzxpfbU)
-
-  
-
-![enter image description here](https://media.licdn.com/dms/image/D4E22AQEuMLRB4xNn3g/feedshare-shrink_1280/0/1711364177895?e=1724889600&v=beta&t=6CLbaBFwyyQzLHLCE1oHnE0wDUPhKcKcv8rOnb529AI)
-
-  
   
 That's it!
