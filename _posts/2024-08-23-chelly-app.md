@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How my 8-Year-Old Daughter Designed Her First App in Figma."
+title:  "Code & Communication: The Keys My 8-Year-Old Uses to Design Apps"
 author: israel
 categories: [ 'personal' ]
 tags: [kids, coding, stem ]
@@ -23,7 +23,6 @@ She wants kids to be able to share their creations on social media as a feature.
 Watch the trailer for yourself. 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/lih4yXVza7M?si=zPy8YCFKaIDr1UHv" title="Rochelle App" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
 
 
 ## Wireframing Her Vision
