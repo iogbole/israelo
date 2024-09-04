@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How My 8-Year-Old Daughter Designed Her First App"
+title:  "How my 8-Year-Old Daughter Designed Her First App in Figma."
 author: israel
 categories: [ 'personal' ]
 tags: [kids, coding, stem ]
