@@ -16,10 +16,14 @@ I’m constantly amazed by my daughter Rochelle, and today was no exception 🤩
 
 Recently, Rochelle came up with a brilliant concept: a kid-friendly mobile app that serves as a creativity canvas for children. Her idea? To unlock kids’ imaginations and bring their creativity to life in a fun, interactive way. We discussed what motivates her to create this app, and I was blown away by how well-thought-out her vision was 😲. It was like she had been planning this for years.
 
+**I didn't expect the Twitter to X reaction** 
 
-> "The success or failure of a product strongly depends on the user experience" Rochelle Ogbole 
+She wants kids to be able to share their creations on social media as a feature. The look on her face when I told her that Twitter is now called X was priceless—she was genuinely surprised. *"Why would they do that? What does 'X' even mean?" she asked. Then she added, "Well, I’m going to stick with Twitter, Daddy."* I’ll respect her opinion on that!
 
-<iframe width="560" height="315" src="https://youtube.com/watch?v=lih4yXVza7M&si=kcjDBin6bQILddMO" title="Rochelle App" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+Watch the trailer for yourself. 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lih4yXVza7M?si=zPy8YCFKaIDr1UHv" title="Rochelle App" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
 
 ## Wireframing Her Vision
