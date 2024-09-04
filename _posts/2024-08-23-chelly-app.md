@@ -4,7 +4,7 @@ title:  "How My 8-Year-Old Daughter Designed Her First App"
 author: israel
 categories: [ 'personal' ]
 tags: [kids, coding, stem ]
-image: https://github.com/user-attachments/assets/e3ee62df-201d-4c05-9cae-dbcc4b96d756
+image: https://github.com/user-attachments/assets/72e25b5d-44cd-4470-ad61-0006d2e50ab8
 date:   2024-09-04 01:01:35 +0300
 description: "From sketching wireframes to mastering Figma in just a few hours, she took charge of the entire design process. Along the way, she learned not only the technical side but also the importance of communication." 
 
